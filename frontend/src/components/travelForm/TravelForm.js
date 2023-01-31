@@ -32,7 +32,7 @@ const TravelForm = (props) => {
             min="0.0"
             value={distance}
             onChange={handleChange(setDistance)}
-            className="pl-1 invalid:border-pink-500 invalid:text-pink-500 border-2 rounded peer"
+            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-500 invalid:border-red-500 border-2 rounded peer"
           />
           {/* <br />
           <p className="invisible peer-invalid:visible">Invalid distance</p> */}
@@ -49,7 +49,7 @@ const TravelForm = (props) => {
             value={passengers}
             onChange={handleChange(setPassengers)}
             // pattern="\d*"
-            className="pl-1 invalid:border-pink-500 invalid:text-pink-500 border-2 rounded"
+            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-500 invalid:border-red-500 border-2 rounded peer"
           />
         </div>
 
