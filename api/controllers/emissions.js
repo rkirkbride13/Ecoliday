@@ -8,6 +8,9 @@ const EmissionsController = {
     if(req.query.passengers === undefined || req.query.distance === undefined ) {
       res.status(400).send();
       return
+    } else if(isNaN(req.query.passengers) || isNaN(req.query.distance)) {
+      res.status(400).send();
+      return
     }
 
     fetch(URL, {

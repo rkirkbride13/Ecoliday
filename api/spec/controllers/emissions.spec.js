@@ -4,6 +4,22 @@ require("jest-fetch-mock").enableMocks();
 
 describe("/emissions", () => {
   describe("/plane", () => {
+    test("response code is 400 if the passengers query parameter is not numerical", async () => {
+
+      let response = await request(app).get("/emissions/plane?distance=100&passengers=person");
+
+      expect(response.status).toEqual(400);
+  
+    });
+
+    test("response code is 400 if the distance query parameter is not numerical", async () => {
+
+      let response = await request(app).get("/emissions/plane?distance=one&passengers=1");
+      
+      expect(response.status).toEqual(400);
+  
+    });
+
     test("response code is 400 if no query parameters are given", async () => {
 
       let response = await request(app).get("/emissions/plane");
