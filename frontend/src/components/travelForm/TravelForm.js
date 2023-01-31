@@ -22,8 +22,8 @@ const TravelForm = (props) => {
     <div id="travelForm" className="mt-20">
       <h1 className="text-3xl mb-10">Plan your journey...</h1>
       <form onSubmit={handleSubmit}>
-        <div id="distance" className="mb-10 text-xl mx-auto">
-          <label for="distance-input">Distance:</label>
+        <div id="distance" className="mb-5 text-xl mx-auto">
+          <label for="distance-input">Distance (km):</label>
           <br />
           <input
             id="distance-input"
@@ -32,13 +32,14 @@ const TravelForm = (props) => {
             min="0.0"
             value={distance}
             onChange={handleChange(setDistance)}
-            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-500 invalid:border-red-500 border-2 rounded peer"
+            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 invalid:border-red-600 border-2 rounded peer"
           />
-          {/* <br />
-          <p className="invisible peer-invalid:visible">Invalid distance</p> */}
+          <p className="invisible peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+            Must be a positive whole number
+          </p>
         </div>
 
-        <div id="passengers" className="mb-10 text-xl">
+        <div id="passengers" className="mb-5 text-xl">
           <label for="passengers-input">Number of Passengers: </label>
           <br />
           <input
@@ -49,15 +50,18 @@ const TravelForm = (props) => {
             value={passengers}
             onChange={handleChange(setPassengers)}
             // pattern="\d*"
-            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-500 invalid:border-red-500 border-2 rounded peer"
+            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 invalid:border-red-600 border-2 rounded peer"
           />
+          <p className="invisible peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+            Must be a positive whole number
+          </p>
         </div>
 
         <input
           data-cy="travelFormSubmit"
           type="submit"
           value="Submit"
-          className="btn bg-green-600 border-0"
+          className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"
         />
       </form>
     </div>
