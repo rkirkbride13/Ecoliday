@@ -5,6 +5,16 @@ require("dotenv").config({ path: "./config.env" });
 // const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
+
+const emissionsRouter = require("./routes/emissions");
+
+//route setup
+app.use("/emissions", emissionsRouter);
+
+//catch 404 and forward to error handler
+
+//error handler
+
 // app.use(require("./routes/record"));
 // get driver connection
 // const dbo = require("./db/conn");
@@ -17,16 +27,16 @@ app.use(express.json());
 //   console.log(`Server is running on port: ${port}`);
 // });
 
-const Temp = require("./models/test");
+// const Temp = require("./models/test");
 
-app.post("/temp", async (req, res) => {
-  await Temp.create({ message: req.body.message });
-  res.status(200).json({ message: "OK" });
-});
+// app.post("/temp", async (req, res) => {
+//   await Temp.create({ message: req.body.message });
+//   res.status(200).json({ message: "OK" });
+// });
 
-app.get("/temp", async (req, res) => {
-  const messages = await Temp.find({});
-  res.status(200).json({ messages: messages });
-});
+// app.get("/temp", async (req, res) => {
+//   const messages = await Temp.find({});
+//   res.status(200).json({ messages: messages });
+// });
 
 module.exports = app;
