@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
-import TravelForm from '../travelForm/TravelForm'
+import React, { useState } from "react";
+import TravelForm from "../travelForm/TravelForm";
 
 function App() {
   return (
-    <TravelForm/>
+    <div id="main-container" className="flex justify-center">
+      <TravelForm />
+    </div>
   );
 }
 

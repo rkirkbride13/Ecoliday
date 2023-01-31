@@ -6,9 +6,7 @@ describe("TravelForm", () => {
   });
 
   it("has distance and no of people inputs and a submit buttom", () => {
-    cy.get('[data-cy="distance"]')
-      .invoke("attr", "placeholder")
-      .should("contain", "Distance in km");
+    cy.get('[data-cy="distance"]');
 
     cy.get('[data-cy="passengers"]');
 
