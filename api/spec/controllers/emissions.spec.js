@@ -4,14 +4,11 @@ require("jest-fetch-mock").enableMocks();
 
 describe("/emissions", () => {
   describe("/plane", () => {
-    test("response code is 200", async () => {
-      fetch.mockResponse(
-        JSON.stringify({
-          co2e: 63.094792,
-        })
-      );
+    test("response code is 400 if no query parameters are given", async () => {
+
       let response = await request(app).get("/emissions/plane");
-      expect(response.status).toEqual(200);
+      expect(response.status).toEqual(400);
+  
     });
 
     test("response code is 200 when given distance and passengers params", async () => {

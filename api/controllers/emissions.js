@@ -4,6 +4,12 @@ const EmissionsController = {
   GetPlaneEmissions: (req, res) => {
     let data = "";
     const URL = "https://beta3.api.climatiq.io/estimate";
+
+    if(req.query.passengers === undefined || req.query.distance === undefined ) {
+      res.status(400).send();
+      return
+    }
+
     fetch(URL, {
       headers: {
         "Content-Type": "application/json",
@@ -26,13 +32,17 @@ const EmissionsController = {
         },
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+      
+        return response.json()
+      })
       .then((responseData) => {
         data = responseData;
         console.log(responseData);
         res.status(200).json({ message: "ok", co2e: data.co2e });
       })
       .catch((error) => {
+        // res.status(404);
         console.error(error);
       });
   },
