@@ -11,16 +11,12 @@ const TravelForm = (props) => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    let response = await fetch('/temp', {
-      method: 'POST',
-      headers: {
-        "Content-Type" : "application/json"
-      },
-      body: JSON.stringify({message: '100kg'})
-    })
-  }
+    let response = await fetch(
+      `/emissions/plane?distance=${distance}&passengers=${passengers}`
+    );
+  };
 
   return (
     <div id="travelForm">
@@ -43,7 +39,7 @@ const TravelForm = (props) => {
           onChange={handleChange(setPassengers)}
         />
 
-        <input data-cy="travelFormSubmit" type="submit" value="Submit"/>
+        <input data-cy="travelFormSubmit" type="submit" value="Submit" />
       </form>
     </div>
   );

@@ -18,7 +18,7 @@ describe("TravelForm", () => {
   });
 
   it("user can type in the field", () => {
-    cy.intercept("POST", "/temp", {co2e: '100kg'}).as(
+    cy.intercept("GET", "/emissions/plane?distance=1000&passengers=2").as(
       "emissionRequest"
     );
 
@@ -26,9 +26,6 @@ describe("TravelForm", () => {
     cy.get('[data-cy="passengers"]').type("2");
     cy.get('[data-cy="travelFormSubmit"]').click();
 
-    cy.wait("@emissionRequest").then((interception) => {
-      expect(interception.request.body.message).to.eq("100kg")
-    });
+    cy.wait("@emissionRequest");
   });
-
 });
