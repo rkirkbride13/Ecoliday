@@ -84,4 +84,54 @@ describe("/emissions", () => {
     expect(response.status).toEqual(200);
     expect(response.body.co2e).toEqual(63.094792);
   });
+
+  test("calls fetch for Petrol car co2e value", async () => {
+    fetch.mockResponse(
+      JSON.stringify({
+        co2e: 63.094792,
+      })
+    );
+    let response = await request(app).get(
+      "/emissions?distance=100&passengers=1"
+    );
+
+    expect(fetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        body: expect.stringContaining(
+          "passenger_vehicle-vehicle_type_car-fuel_source_petrol-engine_size_na-vehicle_age_na-vehicle_weight_na",
+          "fuel_combustion",
+          "2022"
+        ),
+      })
+    );
+
+    expect(response.status).toEqual(200);
+    expect(response.body.co2e).toEqual(63.094792);
+  });
+
+  test("calls fetch for EV car co2e value", async () => {
+    fetch.mockResponse(
+      JSON.stringify({
+        co2e: 63.094792,
+      })
+    );
+    let response = await request(app).get(
+      "/emissions?distance=100&passengers=1"
+    );
+
+    expect(fetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        body: expect.stringContaining(
+          "passenger_vehicle-vehicle_type_car-fuel_source_bev-engine_size_na-vehicle_age_na-vehicle_weight_na",
+          "electricity_generation",
+          "2022"
+        ),
+      })
+    );
+
+    expect(response.status).toEqual(200);
+    expect(response.body.co2e).toEqual(63.094792);
+  });
 });
