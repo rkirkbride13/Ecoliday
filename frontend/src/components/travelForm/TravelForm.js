@@ -29,14 +29,14 @@ const TravelForm = ({
     event.preventDefault();
 
     await fetch(
-      `/emissions/plane?distance=${distance}&passengers=${passengers}`
+      `/emissions?distance=${distance}&passengers=${passengers}`
     )
       .then((response) => {
         return response.json();
       })
       .then((responseData) => {
-        // console.log(responseData.co2e);
-        setEmissions(responseData.co2e);
+        // console.log(responseData.emissions);
+        setEmissions(responseData.emissions);
         setRenderEmissions(true);
       });
   };

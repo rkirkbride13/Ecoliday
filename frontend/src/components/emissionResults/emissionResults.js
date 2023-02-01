@@ -4,7 +4,6 @@ const EmissionResults = ({
   distance,
   emissions,
   renderEmissions,
-  passengers,
 }) => {
   if (renderEmissions === true) {
     return (
@@ -25,11 +24,11 @@ const EmissionResults = ({
               <div
                 data-cy="total-emissions"
                 className="mb-5 text-xl mx-auto badge badge-lg"
-              >{`CO2e (Total): ${emissions.toFixed(1)} kg`}</div>
+              >{`CO2e (Total): ${emissions.plane.total.toFixed(1)} kg`}</div>
               <div
                 data-cy="person-emissions"
                 className="mb-5 text-xl mx-auto badge badge-lg"
-              >{`CO2e (Per Person): ${(emissions / passengers).toFixed(
+              >{`CO2e (Per Person): ${(emissions.plane.perPassenger).toFixed(
                 1
               )} kg`}</div>
             </div>

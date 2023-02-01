@@ -28,7 +28,7 @@ describe("TravelForm", () => {
   });
 
   it("request is sent when form is submitted", () => {
-    cy.intercept("GET", "/emissions/plane?distance=1000&passengers=2").as(
+    cy.intercept("GET", "/emissions?distance=1000&passengers=2").as(
       "emissionRequest"
     );
 

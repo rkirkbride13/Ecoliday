@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TravelForm from "../travelForm/TravelForm";
-import EmissionResults from "../emissionResults/EmissionResults";
+import EmissionResults from "../emissionResults/emissionResults";
 
 const App = () => {
   const [distance, setDistance] = useState("");
@@ -23,7 +23,6 @@ const App = () => {
         distance={distance}
         emissions={emissions}
         renderEmissions={renderEmissions}
-        passengers={passengers}
       />
     </div>
   );
