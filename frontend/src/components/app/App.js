@@ -9,7 +9,7 @@ const App = () => {
   const [renderEmissions, setRenderEmissions] = useState(false);
 
   return (
-    <div id="main-container" className="flex justify-center align-middle">
+    <div id="main-container" className="flex justify-center mt-40">
       <TravelForm
         distance={distance}
         setDistance={setDistance}
