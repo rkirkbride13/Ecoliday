@@ -39,6 +39,12 @@ const CheckQuery = (req, res) => {
   } else if (isNaN(req.query.passengers) || isNaN(req.query.distance)) {
     res.status(400).send();
     return false;
+  } else if (req.query.distance < 0 || req.query.passengers < 1) {
+    res.status(400).send();
+    return false;
+  } else if (!Number.isInteger(parseFloat(req.query.passengers))) {
+    res.status(400).send();
+    return false;
   }
   return true;
 };
