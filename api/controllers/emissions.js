@@ -1,18 +1,22 @@
+const CheckQuery = (req, res) => {if (
+  req.query.passengers === undefined ||
+  req.query.distance === undefined
+) {
+  res.status(400).send();
+  return false;
+} else if (isNaN(req.query.passengers) || isNaN(req.query.distance)) {
+  res.status(400).send();
+  return false;
+} return true}
+
 const EmissionsController = {
+
   GetPlaneEmissions: (req, res) => {
+    if (!CheckQuery(req, res)) {
+      return
+    }
     let data = "";
     const URL = "https://beta3.api.climatiq.io/estimate";
-
-    if (
-      req.query.passengers === undefined ||
-      req.query.distance === undefined
-    ) {
-      res.status(400).send();
-      return;
-    } else if (isNaN(req.query.passengers) || isNaN(req.query.distance)) {
-      res.status(400).send();
-      return;
-    }
 
     fetch(URL, {
       headers: {
@@ -48,7 +52,7 @@ const EmissionsController = {
         // res.status(404);
         console.error(error);
       });
-  },
+  }
 };
 
 module.exports = EmissionsController;
