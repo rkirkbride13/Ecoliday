@@ -4,6 +4,7 @@ import TravelForm from "../travelForm/TravelForm";
 const App = () => {
   const [distance, setDistance] = useState("");
   const [passengers, setPassengers] = useState("");
+  const [emissions, setEmissions] = useState("");
 
   return (
     <div id="main-container" className="flex justify-center">
@@ -12,6 +13,8 @@ const App = () => {
         setDistance={setDistance}
         passengers={passengers}
         setPassengers={setPassengers}
+        emissions={emissions}
+        setEmissions={setEmissions}
       />
     </div>
   );
