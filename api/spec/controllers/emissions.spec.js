@@ -81,8 +81,6 @@ describe("/emissions", () => {
       })
     );
 
-    expect(response.status).toEqual(200);
-    expect(response.body.co2e).toEqual(63.094792);
   });
 
   test("calls fetch for Petrol car co2e value", async () => {
@@ -106,8 +104,6 @@ describe("/emissions", () => {
       })
     );
 
-    expect(response.status).toEqual(200);
-    expect(response.body.co2e).toEqual(63.094792);
   });
 
   test("calls fetch for EV car co2e value", async () => {
@@ -131,7 +127,37 @@ describe("/emissions", () => {
       })
     );
 
-    expect(response.status).toEqual(200);
-    expect(response.body.co2e).toEqual(63.094792);
   });
+
+  test('fetch results are grouped into single response, for total emissions', async () => {
+    fetch.mockResponseOnce(
+      JSON.stringify({
+        co2e: 63.094792,
+      })
+    );
+    fetch.mockResponseOnce(
+      JSON.stringify({
+        co2e: 20.094792,
+      })
+    );
+    fetch.mockResponseOnce(
+      JSON.stringify({
+        co2e: 10.094792,
+      })
+    );
+    fetch.mockResponseOnce(
+      JSON.stringify({
+        co2e: 1.094792,
+      })
+    );
+
+    let response = await request(app).get(
+      "/emissions?distance=100&passengers=1"
+    );
+
+    expect(response.body.emissions.plane).toEqual(63.094792);
+    expect(response.body.emissions.train).toEqual(20.094792);
+    expect(response.body.emissions.petrolCar).toEqual(10.094792);
+    expect(response.body.emissions.electricCar).toEqual(1.094792);
+  })
 });

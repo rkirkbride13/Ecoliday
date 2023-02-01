@@ -1,15 +1,22 @@
 const EmissionsController = {
-  GetEmissions: (req, res) => {
+  GetEmissions: async (req, res) => {
     if (!CheckQuery(req, res)) {
       return;
     }
 
     const URL = "https://beta3.api.climatiq.io/estimate";
 
-    GetPlaneEmissions(req, res, URL);
-    GetTrainEmissions(req, res, URL);
-    GetPetrolCarEmissions(req, res, URL);
-    GetElectricCarEmissions(req, res, URL);
+    const planeEmissions = await GetPlaneEmissions(req, res, URL);
+    const trainEmissions = await GetTrainEmissions(req, res, URL);
+    const petrolCarEmissions = await GetPetrolCarEmissions(req, res, URL);
+    const electricCarEmissions = await GetElectricCarEmissions(req, res, URL);
+
+    res.status(200).json({message: 'OK', emissions: {
+      plane: planeEmissions,
+      train: trainEmissions,
+      petrolCar: petrolCarEmissions,
+      electricCar: electricCarEmissions,
+    }})
   },
 };
 
@@ -25,7 +32,7 @@ const CheckQuery = (req, res) => {
 };
 
 const GetElectricCarEmissions = (req, res, URL) => {
-  fetch(URL, {
+  return fetch(URL, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
@@ -51,8 +58,7 @@ const GetElectricCarEmissions = (req, res, URL) => {
       return response.json();
     })
     .then((responseData) => {
-      console.log(responseData);
-      res.status(200).json({ message: "ok", co2e: responseData.co2e });
+      return responseData.co2e
     })
     .catch((error) => {
       // res.status(404);
@@ -61,7 +67,7 @@ const GetElectricCarEmissions = (req, res, URL) => {
 };
 
 const GetPetrolCarEmissions = (req, res, URL) => {
-  fetch(URL, {
+  return fetch(URL, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
@@ -87,8 +93,7 @@ const GetPetrolCarEmissions = (req, res, URL) => {
       return response.json();
     })
     .then((responseData) => {
-      console.log(responseData);
-      res.status(200).json({ message: "ok", co2e: responseData.co2e });
+      return responseData.co2e;
     })
     .catch((error) => {
       // res.status(404);
@@ -97,7 +102,7 @@ const GetPetrolCarEmissions = (req, res, URL) => {
 };
 
 const GetTrainEmissions = (req, res, URL) => {
-  fetch(URL, {
+  return fetch(URL, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
@@ -123,8 +128,7 @@ const GetTrainEmissions = (req, res, URL) => {
       return response.json();
     })
     .then((responseData) => {
-      console.log(responseData);
-      res.status(200).json({ message: "ok", co2e: responseData.co2e });
+      return responseData.co2e;
     })
     .catch((error) => {
       // res.status(404);
@@ -133,7 +137,7 @@ const GetTrainEmissions = (req, res, URL) => {
 };
 
 const GetPlaneEmissions = (req, res, URL) => {
-  fetch(URL, {
+  return fetch(URL, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
@@ -159,8 +163,7 @@ const GetPlaneEmissions = (req, res, URL) => {
       return response.json();
     })
     .then((responseData) => {
-      console.log(responseData);
-      res.status(200).json({ message: "ok", co2e: responseData.co2e });
+      return responseData.co2e;
     })
     .catch((error) => {
       // res.status(404);
