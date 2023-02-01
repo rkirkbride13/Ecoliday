@@ -78,7 +78,7 @@ describe("/emissions", () => {
       expect.any(String),
       expect.objectContaining({
         body: expect.stringContaining(
-          "passenger_flight-route_type_international-aircraft_type_na-distance_short_haul_lt_3700km-class_na-rf_included"
+          "passenger_flight-route_type_international-aircraft_type_na-distance_short_haul_lt_3700km-class_economy-rf_included"
         ),
       })
     );

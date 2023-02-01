@@ -2,7 +2,19 @@ import TravelForm from "./TravelForm";
 
 describe("TravelForm", () => {
   beforeEach(() => {
-    cy.mount(<TravelForm />);
+    const setPassengersMock = cy.stub();
+    const setDistanceMock = cy.stub();
+    const setEmissionsMock = cy.stub();
+    const setRenderEmissionsMock = cy.stub();
+
+    cy.mount(<TravelForm 
+      distance={1000}
+      setDistance={setDistanceMock}
+      passengers={2}
+      setPassengers={setPassengersMock}
+      setEmissions={setEmissionsMock}
+      setRenderEmissions={setRenderEmissionsMock}
+    />);
   });
 
   it("has distance and no of people inputs and a submit buttom", () => {
@@ -15,15 +27,19 @@ describe("TravelForm", () => {
       .should("eq", "submit");
   });
 
-  it("user can type in the field", () => {
-    cy.intercept("GET", "/emissions/plane?distance=1000&passengers=2").as(
+  it("request is sent when form is submitted", () => {
+    cy.intercept("GET", "/emissions?distance=1000&passengers=2").as(
       "emissionRequest"
     );
 
-    cy.get('[data-cy="distance"]').type("1000");
-    cy.get('[data-cy="passengers"]').type("2");
     cy.get('[data-cy="travelFormSubmit"]').click();
 
     cy.wait("@emissionRequest");
   });
+
+  it("user can type in input fields", () => {
+    cy.get('[data-cy="distance"]').type("1000");
+    cy.get('[data-cy="passengers"]').type("2");
+  });
+
 });

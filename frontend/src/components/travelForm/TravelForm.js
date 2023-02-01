@@ -1,8 +1,23 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-const TravelForm = (props) => {
-  const [distance, setDistance] = useState("");
-  const [passengers, setPassengers] = useState("");
+const TravelForm = ({
+  distance,
+  setDistance,
+  passengers,
+  setPassengers,
+  setEmissions,
+  setRenderEmissions,
+}) => {
+
+  TravelForm.propTypes = {
+    distance: PropTypes.string,
+    setDistance: PropTypes.func,
+    passengers: PropTypes.string,
+    setPassengers: PropTypes.func,
+    setEmissions: PropTypes.func,
+    setRenderEmissions: PropTypes.func,
+  };
 
   const handleChange = (setFunction) => {
     return (event) => {
@@ -13,9 +28,17 @@ const TravelForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    let response = await fetch(
-      `/emissions/plane?distance=${distance}&passengers=${passengers}`
-    );
+    await fetch(
+      `/emissions?distance=${distance}&passengers=${passengers}`
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseData) => {
+        // console.log(responseData.emissions);
+        setEmissions(responseData.emissions);
+        setRenderEmissions(true);
+      });
   };
 
   return (
