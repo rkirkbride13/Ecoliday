@@ -7,18 +7,33 @@ const EmissionsController = {
     const URL = "https://beta3.api.climatiq.io/estimate";
 
     const emissions = await Promise.all([
-      GetPlaneEmissions(req, res, URL), 
-      GetTrainEmissions(req, res, URL), 
-      GetPetrolCarEmissions(req, res, URL), 
-      GetElectricCarEmissions(req, res, URL)
-    ])
+      GetPlaneEmissions(req),
+      GetTrainEmissions(req),
+      GetPetrolCarEmissions(req),
+      GetElectricCarEmissions(req),
+    ]);
 
-    res.status(200).json({message: 'OK', emissions: {
-      plane: {total: emissions[0], perPassenger: emissions[0]/req.query.passengers},
-      train: {total: emissions[1], perPassenger: emissions[1]/req.query.passengers},
-      petrolCar: {total: emissions[2], perPassenger: emissions[2]/req.query.passengers},
-      electricCar: {total: emissions[3], perPassenger: emissions[3]/req.query.passengers},
-    }})
+    res.status(200).json({
+      message: "OK",
+      emissions: {
+        plane: {
+          total: emissions[0],
+          perPassenger: emissions[0] / req.query.passengers,
+        },
+        train: {
+          total: emissions[1],
+          perPassenger: emissions[1] / req.query.passengers,
+        },
+        petrolCar: {
+          total: emissions[2],
+          perPassenger: emissions[2] / req.query.passengers,
+        },
+        electricCar: {
+          total: emissions[3],
+          perPassenger: emissions[3] / req.query.passengers,
+        },
+      },
+    });
   },
 };
 
@@ -33,78 +48,47 @@ const CheckQuery = (req, res) => {
   return true;
 };
 
-const GetElectricCarEmissions = (req, res, URL) => {
-  return fetch(URL, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
-    },
-    method: "POST",
-    body: JSON.stringify({
-      emission_factor: {
-        activity_id:
-          "passenger_vehicle-vehicle_type_car-fuel_source_bev-engine_size_na-vehicle_age_na-vehicle_weight_na",
-        source: "BEIS",
-        region: "GB",
-        year: "2022",
-        lca_activity: "electricity_generation",
-      },
-      parameters: {
-        distance: parseInt(req.query.distance),
-        distance_unit: "km",
-      },
-    }),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((responseData) => {
-      return responseData.co2e
-    })
-    .catch((error) => {
-      // res.status(404);
-      console.error(error);
-    });
+const GetElectricCarEmissions = (req) => {
+  return fetchEmissions(
+    { distance: parseInt(req.query.distance) },
+    "passenger_vehicle-vehicle_type_car-fuel_source_bev-engine_size_na-vehicle_age_na-vehicle_weight_na",
+    "electricity_generation"
+  );
 };
 
-const GetPetrolCarEmissions = (req, res, URL) => {
-  return fetch(URL, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
-    },
-    method: "POST",
-    body: JSON.stringify({
-      emission_factor: {
-        activity_id:
-          "passenger_vehicle-vehicle_type_car-fuel_source_petrol-engine_size_na-vehicle_age_na-vehicle_weight_na",
-        source: "BEIS",
-        region: "GB",
-        year: "2022",
-        lca_activity: "fuel_combustion",
-      },
-      parameters: {
-        distance: parseInt(req.query.distance),
-        distance_unit: "km",
-      },
-    }),
-  })
-    .then((response) => {
-      console.log("get petrol method" + response)
-      return response.json();
-    })
-    .then((responseData) => {
-      console.log(responseData)
-
-      return responseData.co2e;
-    })
-    .catch((error) => {
-      // res.status(404);
-      console.error(error);
-    });
+const GetPetrolCarEmissions = (req) => {
+  return fetchEmissions(
+    { distance: parseInt(req.query.distance) },
+    "passenger_vehicle-vehicle_type_car-fuel_source_petrol-engine_size_na-vehicle_age_na-vehicle_weight_na",
+    "fuel_combustion"
+  );
 };
 
-const GetTrainEmissions = (req, res, URL) => {
+const GetTrainEmissions = (req) => {
+  return fetchEmissions(
+    {
+      distance: parseInt(req.query.distance),
+      passengers: parseInt(req.query.passengers),
+    },
+    "passenger_train-route_type_international_rail-fuel_source_na",
+    "fuel_combustion"
+  );
+};
+
+const GetPlaneEmissions = (req) => {
+  return fetchEmissions(
+    {
+      distance: parseInt(req.query.distance),
+      passengers: parseInt(req.query.passengers),
+    },
+    "passenger_flight-route_type_international-aircraft_type_na-distance_short_haul_lt_3700km-class_na-rf_included",
+    "fuel_combustion"
+  );
+};
+
+const fetchEmissions = (parameters, activity_id, lca_activity) => {
+  const URL = "https://beta3.api.climatiq.io/estimate";
+
   return fetch(URL, {
     headers: {
       "Content-Type": "application/json",
@@ -113,16 +97,14 @@ const GetTrainEmissions = (req, res, URL) => {
     method: "POST",
     body: JSON.stringify({
       emission_factor: {
-        activity_id:
-          "passenger_train-route_type_international_rail-fuel_source_na",
+        activity_id: activity_id,
         source: "BEIS",
         region: "GB",
         year: "2022",
-        lca_activity: "fuel_combustion",
+        lca_activity: lca_activity,
       },
       parameters: {
-        passengers: parseInt(req.query.passengers),
-        distance: parseInt(req.query.distance),
+        ...parameters,
         distance_unit: "km",
       },
     }),
@@ -134,42 +116,6 @@ const GetTrainEmissions = (req, res, URL) => {
       return responseData.co2e;
     })
     .catch((error) => {
-      // res.status(404);
-      console.error(error);
-    });
-};
-
-const GetPlaneEmissions = (req, res, URL) => {
-  return fetch(URL, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
-    },
-    method: "POST",
-    body: JSON.stringify({
-      emission_factor: {
-        activity_id:
-          "passenger_flight-route_type_international-aircraft_type_na-distance_short_haul_lt_3700km-class_na-rf_included",
-        source: "GHG Protocol",
-        region: "GB",
-        year: "2021",
-        lca_activity: "fuel_combustion",
-      },
-      parameters: {
-        passengers: parseInt(req.query.passengers),
-        distance: parseInt(req.query.distance),
-        distance_unit: "km",
-      },
-    }),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((responseData) => {
-      return responseData.co2e;
-    })
-    .catch((error) => {
-      // res.status(404);
       console.error(error);
     });
 };
