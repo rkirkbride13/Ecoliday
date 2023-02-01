@@ -19,7 +19,7 @@ const TravelForm = (props) => {
   };
 
   return (
-    <div id="travelForm" className="mt-20">
+    <div id="travelForm" className="mt-40">
       <h1 className="text-3xl mb-10">Plan your journey...</h1>
       <form onSubmit={handleSubmit}>
         <div id="distance" className="mb-5 text-xl mx-auto">
