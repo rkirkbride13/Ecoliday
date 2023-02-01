@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 
-const EmissionResults = ({emissions, renderEmissions, passengers}) => {
-
-  if(renderEmissions === true) {
+const EmissionResults = ({ emissions, renderEmissions, passengers }) => {
+  if (renderEmissions === true) {
     return (
       <>
-      <h1>Results</h1>
-      <div data-cy="total-emissions">{`CO2e: ${emissions.toFixed(1)} kg`}</div>
+        <h1>Results</h1>
+        <div data-cy="total-emissions">{`CO2e: ${emissions.toFixed(
+          1
+        )} kg`}</div>
+        <div data-cy="person-emissions">{`CO2e: ${(
+          emissions / passengers
+        ).toFixed(1)} kg`}</div>
       </>
     );
-  };
-}
+  }
+};
 
 export default EmissionResults;
