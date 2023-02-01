@@ -18,7 +18,12 @@ const App = () => {
         setEmissions={setEmissions}
         setRenderEmissions={setRenderEmissions}
       />
-      <EmissionResults emissions={emissions} renderEmissions={renderEmissions} passengers={passengers} />
+      <EmissionResults
+        distance={distance}
+        emissions={emissions}
+        renderEmissions={renderEmissions}
+        passengers={passengers}
+      />
     </div>
   );
 };
