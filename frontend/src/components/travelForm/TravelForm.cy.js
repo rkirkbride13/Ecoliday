@@ -2,7 +2,19 @@ import TravelForm from "./TravelForm";
 
 describe("TravelForm", () => {
   beforeEach(() => {
-    cy.mount(<TravelForm />);
+    const setPassengersMock = cy.stub();
+    const setDistanceMock = cy.stub();
+    const setEmissionsMock = cy.stub();
+    const setRenderEmissionsMock = cy.stub();
+
+    cy.mount(<TravelForm 
+      distance={1000}
+      setDistance={setDistanceMock}
+      passengers={2}
+      setPassengers={setPassengersMock}
+      setEmissions={setEmissionsMock}
+      setRenderEmissions={setRenderEmissionsMock}
+    />);
   });
 
   it("has distance and no of people inputs and a submit buttom", () => {

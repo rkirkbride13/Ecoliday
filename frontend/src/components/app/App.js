@@ -18,7 +18,7 @@ const App = () => {
         setEmissions={setEmissions}
         setRenderEmissions={setRenderEmissions}
       />
-      <EmissionResults emissions={emissions} renderEmissions={renderEmissions}/>
+      <EmissionResults emissions={emissions} renderEmissions={renderEmissions} passengers={passengers} />
     </div>
   );
 };
