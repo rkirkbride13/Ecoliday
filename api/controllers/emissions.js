@@ -6,16 +6,18 @@ const EmissionsController = {
 
     const URL = "https://beta3.api.climatiq.io/estimate";
 
-    const planeEmissions = await GetPlaneEmissions(req, res, URL);
-    const trainEmissions = await GetTrainEmissions(req, res, URL);
-    const petrolCarEmissions = await GetPetrolCarEmissions(req, res, URL);
-    const electricCarEmissions = await GetElectricCarEmissions(req, res, URL);
+    const emissions = await Promise.all([
+      GetPlaneEmissions(req, res, URL), 
+      GetTrainEmissions(req, res, URL), 
+      GetPetrolCarEmissions(req, res, URL), 
+      GetElectricCarEmissions(req, res, URL)
+    ])
 
     res.status(200).json({message: 'OK', emissions: {
-      plane: planeEmissions,
-      train: trainEmissions,
-      petrolCar: petrolCarEmissions,
-      electricCar: electricCarEmissions,
+      plane: {total: emissions[0], perPassenger: emissions[0]/req.query.passengers},
+      train: {total: emissions[1], perPassenger: emissions[1]/req.query.passengers},
+      petrolCar: {total: emissions[2], perPassenger: emissions[2]/req.query.passengers},
+      electricCar: {total: emissions[3], perPassenger: emissions[3]/req.query.passengers},
     }})
   },
 };
@@ -48,7 +50,6 @@ const GetElectricCarEmissions = (req, res, URL) => {
         lca_activity: "electricity_generation",
       },
       parameters: {
-        passengers: parseInt(req.query.passengers),
         distance: parseInt(req.query.distance),
         distance_unit: "km",
       },
@@ -83,16 +84,18 @@ const GetPetrolCarEmissions = (req, res, URL) => {
         lca_activity: "fuel_combustion",
       },
       parameters: {
-        passengers: parseInt(req.query.passengers),
         distance: parseInt(req.query.distance),
         distance_unit: "km",
       },
     }),
   })
     .then((response) => {
+      console.log("get petrol method" + response)
       return response.json();
     })
     .then((responseData) => {
+      console.log(responseData)
+
       return responseData.co2e;
     })
     .catch((error) => {
