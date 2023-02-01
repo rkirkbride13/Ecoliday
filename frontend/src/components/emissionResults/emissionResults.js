@@ -12,12 +12,6 @@ const EmissionResults = ({
           id="emissionResults"
           className="mt-24"
         >
-          {/* <h1
-            data-cy="header-emissions"
-            className="text-1xl mb-10 text-center text-green-600 "
-          >
-            Emissions for {distance} km
-          </h1> */}
           <div>
             <div className="stat shadow">
               <div className="stat">
