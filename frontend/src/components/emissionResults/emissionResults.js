@@ -1,17 +1,10 @@
 import React, { useState } from "react";
 
-const EmissionResults = ({
-  distance,
-  emissions,
-  renderEmissions,
-}) => {
+const EmissionResults = ({ emissions, renderEmissions }) => {
   if (renderEmissions === true) {
     return (
       <>
-        <div
-          id="emissionResults"
-          className="mt-24"
-        >
+        <div id="emissionResults" className="mt-24">
           <div>
             <div className="stat shadow">
               <div className="stat">
@@ -23,7 +16,7 @@ const EmissionResults = ({
                 <div
                   data-cy="person-emissions"
                   className="stat-desc"
-                >{`Per Person: ${(emissions.plane.perPassenger).toFixed(
+                >{`Per Person: ${emissions.plane.perPassenger.toFixed(
                   1
                 )} kg`}</div>
               </div>

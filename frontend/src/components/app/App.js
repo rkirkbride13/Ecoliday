@@ -20,7 +20,6 @@ const App = () => {
       />
       <div className="w-24"></div>
       <EmissionResults
-        distance={distance}
         emissions={emissions}
         renderEmissions={renderEmissions}
       />
