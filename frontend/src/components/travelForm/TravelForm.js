@@ -1,8 +1,16 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-const TravelForm = (props) => {
-  const [distance, setDistance] = useState("");
-  const [passengers, setPassengers] = useState("");
+const TravelForm = ({ distance, setDistance, passengers, setPassengers }) => {
+  // const [distance, setDistance] = useState("");
+  // const [passengers, setPassengers] = useState("");
+
+  TravelForm.propTypes = {
+    distance: PropTypes.string,
+    setDistance: PropTypes.func,
+    passengers: PropTypes.string,
+    setPassengers: PropTypes.func,
+  };
 
   const handleChange = (setFunction) => {
     return (event) => {
