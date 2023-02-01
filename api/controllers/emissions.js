@@ -16,25 +16,20 @@ const EmissionsController = {
     res.status(200).json({
       message: "OK",
       emissions: {
-        plane: {
-          total: emissions[0],
-          perPassenger: emissions[0] / req.query.passengers,
-        },
-        train: {
-          total: emissions[1],
-          perPassenger: emissions[1] / req.query.passengers,
-        },
-        petrolCar: {
-          total: emissions[2],
-          perPassenger: emissions[2] / req.query.passengers,
-        },
-        electricCar: {
-          total: emissions[3],
-          perPassenger: emissions[3] / req.query.passengers,
-        },
+        plane: formatEmissions(emissions[0], req.query.passengers),
+        train: formatEmissions(emissions[1], req.query.passengers),
+        petrolCar: formatEmissions(emissions[2], req.query.passengers),
+        electricCar: formatEmissions(emissions[3], req.query.passengers),
       },
     });
   },
+};
+
+const formatEmissions = (emissions, passengers) => {
+  return {
+    total: emissions,
+    perPassenger: emissions / passengers,
+  };
 };
 
 const CheckQuery = (req, res) => {
