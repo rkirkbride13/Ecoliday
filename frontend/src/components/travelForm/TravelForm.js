@@ -9,7 +9,6 @@ const TravelForm = ({
   setEmissions,
   setRenderEmissions,
 }) => {
-
   TravelForm.propTypes = {
     distance: PropTypes.string,
     setDistance: PropTypes.func,
@@ -28,9 +27,7 @@ const TravelForm = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await fetch(
-      `/emissions?distance=${distance}&passengers=${passengers}`
-    )
+    await fetch(`/emissions?distance=${distance}&passengers=${passengers}`)
       .then((response) => {
         return response.json();
       })
@@ -42,7 +39,7 @@ const TravelForm = ({
   };
 
   return (
-    <div id="travelForm" className="mt-20">
+    <div id="travelForm">
       <h1 className="text-3xl mb-10">Plan your journey...</h1>
       <form onSubmit={handleSubmit}>
         <div id="distance" className="mb-5 text-xl mx-auto">
