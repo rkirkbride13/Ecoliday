@@ -82,7 +82,7 @@ const GetPlaneEmissions = (req) => {
       distance: parseInt(req.query.distance),
       passengers: parseInt(req.query.passengers),
     },
-    "passenger_flight-route_type_international-aircraft_type_na-distance_short_haul_lt_3700km-class_na-rf_included",
+    "passenger_flight-route_type_international-aircraft_type_na-distance_short_haul_lt_3700km-class_economy-rf_included",
     "fuel_combustion"
   );
 };
@@ -101,7 +101,7 @@ const fetchEmissions = (parameters, activity_id, lca_activity) => {
         activity_id: activity_id,
         source: "BEIS",
         region: "GB",
-        year: "2022",
+        year: "2021",
         lca_activity: lca_activity,
       },
       parameters: {
