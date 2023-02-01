@@ -9,7 +9,7 @@ const App = () => {
   const [renderEmissions, setRenderEmissions] = useState(false);
 
   return (
-    <div id="main-container" className="flex justify-center">
+    <div id="main-container" className="flex justify-center align-middle">
       <TravelForm
         distance={distance}
         setDistance={setDistance}
@@ -18,6 +18,7 @@ const App = () => {
         setEmissions={setEmissions}
         setRenderEmissions={setRenderEmissions}
       />
+      <div className="w-24"></div>
       <EmissionResults
         distance={distance}
         emissions={emissions}
