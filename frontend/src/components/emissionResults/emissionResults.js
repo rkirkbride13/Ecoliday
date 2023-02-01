@@ -10,27 +10,29 @@ const EmissionResults = ({
       <>
         <div
           id="emissionResults"
-          className="card w-96 bg-base-100 shadow-xl mt-10 bg-gray-100"
+          className="mt-24"
         >
-          <h1
+          {/* <h1
             data-cy="header-emissions"
-            className="text-3xl mb-10 mt-5 text-center"
+            className="text-1xl mb-10 text-center text-green-600 "
           >
             Emissions for {distance} km
-          </h1>
+          </h1> */}
           <div>
-            <div className="badge badge-outline badge-lg">AIR</div>
-            <div>
-              <div
-                data-cy="total-emissions"
-                className="mb-5 text-xl mx-auto badge badge-lg"
-              >{`CO2e (Total): ${emissions.plane.total.toFixed(1)} kg`}</div>
-              <div
-                data-cy="person-emissions"
-                className="mb-5 text-xl mx-auto badge badge-lg"
-              >{`CO2e (Per Person): ${(emissions.plane.perPassenger).toFixed(
-                1
-              )} kg`}</div>
+            <div className="stat shadow">
+              <div className="stat">
+                <div className="stat-title">CO2e Air</div>
+                <div
+                  data-cy="total-emissions"
+                  className="stat-value"
+                >{`${emissions.plane.total.toFixed(1)} kg`}</div>
+                <div
+                  data-cy="person-emissions"
+                  className="stat-desc"
+                >{`Per Person: ${(emissions.plane.perPassenger).toFixed(
+                  1
+                )} kg`}</div>
+              </div>
             </div>
           </div>
         </div>

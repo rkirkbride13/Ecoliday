@@ -11,7 +11,7 @@ describe("EmissionResults", () => {
 
     cy.get('[data-cy="total-emissions"]').should(
       "contain.text",
-      "CO2e (Total): 31.5 kg"
+      "31.5 kg"
     );
   });
 
@@ -33,11 +33,11 @@ describe("EmissionResults", () => {
 
     cy.get('[data-cy="total-emissions"]').should(
       "contain.text",
-      "CO2e (Total): 31.5 kg"
+      "31.5 kg"
     );
     cy.get('[data-cy="person-emissions"]').should(
       "contain.text",
-      "CO2e (Per Person): 31.5 kg"
+      "Per Person: 31.5 kg"
     );
   });
 
@@ -52,26 +52,11 @@ describe("EmissionResults", () => {
 
     cy.get('[data-cy="total-emissions"]').should(
       "contain.text",
-      "CO2e (Total): 31.5 kg"
+      "31.5 kg"
     );
     cy.get('[data-cy="person-emissions"]').should(
       "contain.text",
-      "CO2e (Per Person): 15.8 kg"
-    );
-  });
-  it("Renders title component with km information", () => {
-    cy.mount(
-      <EmissionResults
-        emissions={{plane: {total: 31.547396, perPassenger: 15.81}}}
-        renderEmissions={true}
-        passengers={2}
-        distance={100}
-      />
-    );
-
-    cy.get('[data-cy="header-emissions"]').should(
-      "contain.text",
-      "Emissions for 100 km"
+      "Per Person: 15.8 kg"
     );
   });
 });
