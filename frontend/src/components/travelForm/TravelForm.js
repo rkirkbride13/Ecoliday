@@ -6,19 +6,17 @@ const TravelForm = ({
   setDistance,
   passengers,
   setPassengers,
-  emissions,
   setEmissions,
+  setRenderEmissions,
 }) => {
-  // const [distance, setDistance] = useState("");
-  // const [passengers, setPassengers] = useState("");
 
   TravelForm.propTypes = {
     distance: PropTypes.string,
     setDistance: PropTypes.func,
     passengers: PropTypes.string,
     setPassengers: PropTypes.func,
-    emissions: PropTypes.number,
     setEmissions: PropTypes.func,
+    setRenderEmissions: PropTypes.func,
   };
 
   const handleChange = (setFunction) => {
@@ -37,8 +35,9 @@ const TravelForm = ({
         return response.json();
       })
       .then((responseData) => {
-        console.log(responseData.co2e);
+        // console.log(responseData.co2e);
         setEmissions(responseData.co2e);
+        setRenderEmissions(true);
       });
   };
 
