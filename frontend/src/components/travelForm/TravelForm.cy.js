@@ -27,15 +27,19 @@ describe("TravelForm", () => {
       .should("eq", "submit");
   });
 
-  it("user can type in the field", () => {
+  it("request is sent when form is submitted", () => {
     cy.intercept("GET", "/emissions/plane?distance=1000&passengers=2").as(
       "emissionRequest"
     );
 
-    cy.get('[data-cy="distance"]').type("1000");
-    cy.get('[data-cy="passengers"]').type("2");
     cy.get('[data-cy="travelFormSubmit"]').click();
 
     cy.wait("@emissionRequest");
   });
+
+  it("user can type in input fields", () => {
+    cy.get('[data-cy="distance"]').type("1000");
+    cy.get('[data-cy="passengers"]').type("2");
+  });
+
 });
