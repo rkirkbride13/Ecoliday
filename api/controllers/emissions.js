@@ -7,6 +7,7 @@ const EmissionsController = {
     const URL = "https://beta3.api.climatiq.io/estimate";
 
     GetPlaneEmissions(req, res, URL);
+    GetTrainEmissions(req, res, URL);
   },
 };
 
@@ -19,6 +20,42 @@ const CheckQuery = (req, res) => {
     return false;
   }
   return true;
+};
+
+const GetTrainEmissions = (req, res, URL) => {
+  fetch(URL, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.CLIMATIQ_KEY}`,
+    },
+    method: "POST",
+    body: JSON.stringify({
+      emission_factor: {
+        activity_id:
+          "passenger_train-route_type_international_rail-fuel_source_na",
+        source: "BEIS",
+        region: "GB",
+        year: "2022",
+        lca_activity: "fuel_combustion",
+      },
+      parameters: {
+        passengers: parseInt(req.query.passengers),
+        distance: parseInt(req.query.distance),
+        distance_unit: "km",
+      },
+    }),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((responseData) => {
+      console.log(responseData);
+      res.status(200).json({ message: "ok", co2e: responseData.co2e });
+    })
+    .catch((error) => {
+      // res.status(404);
+      console.error(error);
+    });
 };
 
 const GetPlaneEmissions = (req, res, URL) => {
