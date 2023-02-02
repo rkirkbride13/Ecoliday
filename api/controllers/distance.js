@@ -10,13 +10,7 @@ const DistanceController = {
       })
     );
 
-    let error = false;
-    locationData.forEach((data) => {
-      if (data.hasOwnProperty("error")) {
-        error = data.error.description;
-        return;
-      }
-    });
+    const error = checkError(locationData);
     if (error) return res.status(400).json({ message: error });
 
     req.query.distance = getDistance(
@@ -28,6 +22,17 @@ const DistanceController = {
 
     next();
   },
+};
+
+const checkError = (locationData) => {
+  let error = false;
+  locationData.forEach((data) => {
+    if (data.hasOwnProperty("error")) {
+      error = data.error.description;
+      return;
+    }
+  });
+  return error;
 };
 
 function getDistance(lat1, lon1, lat2, lon2) {
