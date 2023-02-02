@@ -8,7 +8,7 @@ const EmissionResults = ({ emissions, renderEmissions }) => {
           <div>
             <div className="stat shadow">
               <div className="stat">
-                <div className="stat-title">CO2e Air</div>
+                <div className="stat-title">CO2e by Air</div>
                 <div
                   data-cy="total-emissions"
                   className="stat-value"
@@ -25,7 +25,7 @@ const EmissionResults = ({ emissions, renderEmissions }) => {
           <div>
             <div className="stat shadow">
               <div className="stat">
-                <div className="stat-title">CO2e Air</div>
+                <div className="stat-title">CO2e by Car (Petrol)</div>
                 <div
                   data-cy="total-emissions-petrolCar"
                   className="stat-value"
