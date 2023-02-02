@@ -1,5 +1,10 @@
 const DistanceController = {
   Calculate: async (req, res, next) => {
+    if (req.query.from === undefined || req.query.to === undefined) {
+      res.status(400).send();
+      return;
+    }
+
     const locationData = await Promise.all(
       [req.query.from, req.query.to].map((location) => {
         return fetch(
