@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const TravelForm = ({
@@ -23,7 +22,7 @@ const TravelForm = ({
       setFunction(event.target.value);
     };
   };
-
+  console.log("In travel form")
   const handleSubmit = async (event) => {
     event.preventDefault();
 
