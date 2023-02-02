@@ -6,10 +6,18 @@ describe("DistanceController", () => {
   beforeEach(() => {
     fetch.resetMocks();
     fetch.mockResponseOnce(
-      JSON.stringify({ longt: "-0.11534", latt: "51.51413" })
+      JSON.stringify({
+        longt: "-0.11534",
+        latt: "51.51413",
+        standard: { prov: "UK", city: "London" },
+      })
     );
     fetch.mockResponseOnce(
-      JSON.stringify({ longt: "13.40488", latt: "52.50176" })
+      JSON.stringify({
+        longt: "13.40488",
+        latt: "52.50176",
+        standard: { prov: "DE", city: "Berlin" },
+      })
     );
     req = {
       query: {
@@ -17,6 +25,7 @@ describe("DistanceController", () => {
         from: "London",
         passengers: "2",
       },
+      locals: {},
     };
   });
 
@@ -93,5 +102,17 @@ describe("DistanceController", () => {
     await DistanceController.Calculate(req, res, next);
 
     expect(next).not.toHaveBeenCalled();
+  });
+
+  it("adds from city and country to req.locals", async () => {
+    await DistanceController.Calculate(req, {}, () => {});
+
+    expect(req.locals.from).toEqual({ prov: "UK", city: "London" });
+  });
+
+  it("adds to city and country to req.locals", async () => {
+    await DistanceController.Calculate(req, {}, () => {});
+
+    expect(req.locals.to).toEqual({ prov: "DE", city: "Berlin" });
   });
 });

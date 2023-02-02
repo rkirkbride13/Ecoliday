@@ -13,15 +13,29 @@ const DistanceController = {
     const error = checkError(locationData);
     if (error) return res.status(400).json({ message: error });
 
-    req.query.distance = getDistance(
-      locationData[0].latt,
-      locationData[0].longt,
-      locationData[1].latt,
-      locationData[1].longt
-    );
+    updateRequest(req, locationData);
 
     next();
   },
+};
+
+const updateRequest = (req, locationData) => {
+  req.query.distance = getDistance(
+    locationData[0].latt,
+    locationData[0].longt,
+    locationData[1].latt,
+    locationData[1].longt
+  );
+
+  req.locals.from = {
+    prov: locationData[0].standard.prov,
+    city: locationData[0].standard.city,
+  };
+
+  req.locals.to = {
+    prov: locationData[1].standard.prov,
+    city: locationData[1].standard.city,
+  };
 };
 
 const checkError = (locationData) => {
