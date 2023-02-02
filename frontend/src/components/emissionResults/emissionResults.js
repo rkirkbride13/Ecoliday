@@ -2,9 +2,9 @@ const EmissionResults = ({ emissions, renderEmissions }) => {
   if (renderEmissions === true) {
     return (
       <>
-        <div id="emissionResults" className="mt-24">
+        <div id="emissionResults" className="mt-2">
           <div>
-            <div className="stat shadow">
+            <div className="stats stats-vertical shadow">
               <div className="stat">
                 <div className="stat-title">CO2e by Air</div>
                 <div
@@ -18,10 +18,7 @@ const EmissionResults = ({ emissions, renderEmissions }) => {
                   1
                 )} kg`}</div>
               </div>
-            </div>
-          </div>
-          <div>
-            <div className="stat shadow">
+
               <div className="stat">
                 <div className="stat-title">CO2e by Car (Petrol)</div>
                 <div
@@ -35,10 +32,7 @@ const EmissionResults = ({ emissions, renderEmissions }) => {
                   1
                 )} kg`}</div>
               </div>
-            </div>
-          </div>
-          <div>
-            <div className="stat shadow">
+
               <div className="stat">
                 <div className="stat-title">CO2e by Car (Electric)</div>
                 <div
@@ -52,10 +46,7 @@ const EmissionResults = ({ emissions, renderEmissions }) => {
                   1
                 )} kg`}</div>
               </div>
-            </div>
-          </div>
-          <div>
-            <div className="stat shadow">
+
               <div className="stat">
                 <div className="stat-title">CO2e by Train</div>
                 <div
