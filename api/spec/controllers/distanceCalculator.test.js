@@ -41,4 +41,12 @@ describe("DistanceController", () => {
 
     expect(req.query.distance).toEqual(930.5084324079236);
   });
+
+  it("check next has been called after distance calculated", async () => {
+    const next = jest.fn(() => {});
+
+    await DistanceController.Calculate(req, {}, next);
+
+    expect(next).toHaveBeenCalled();
+  });
 });

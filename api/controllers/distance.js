@@ -16,6 +16,8 @@ const DistanceController = {
       locationData[1].latt,
       locationData[1].longt
     );
+
+    next();
   },
 };
 
