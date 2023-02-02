@@ -49,4 +49,28 @@ describe("DistanceController", () => {
 
     expect(next).toHaveBeenCalled();
   });
+
+  it("catches error from api and sends it to the client", async () => {
+    fetch.resetMocks();
+    fetch.mockResponse(
+      JSON.stringify({
+        longt: "-0.11534",
+        latt: "51.51413",
+        error: { description: "Fail" },
+      })
+    );
+
+    const json = jest.fn((object) => {});
+    const res = {
+      status: jest.fn((status) => {
+        return { json: json };
+      }),
+    };
+
+    await DistanceController.Calculate(req, res, () => {});
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(json).toHaveBeenCalledWith({ message: "Fail" });
+    // res.status(400).json({message: "Fail"})
+  });
 });

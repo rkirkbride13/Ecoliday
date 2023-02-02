@@ -10,6 +10,13 @@ const DistanceController = {
       })
     );
 
+    locationData.forEach((data) => {
+      if (data.hasOwnProperty("error")) {
+        res.status(400).json({ message: data.error.description });
+        return;
+      }
+    });
+
     req.query.distance = getDistance(
       locationData[0].latt,
       locationData[0].longt,
