@@ -88,7 +88,7 @@ describe("EmissionResults", () => {
     );
   });
 
-  xit("Renders component with total emission plane, petrol car, electric car and train", () => {
+  it("Renders component with total emission plane, petrol car, electric car and train", () => {
     cy.get('[data-cy="total-emissions-plane"]').should(
       "contain.text",
       "31.5 kg"

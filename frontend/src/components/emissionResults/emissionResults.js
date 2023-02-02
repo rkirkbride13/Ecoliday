@@ -54,6 +54,23 @@ const EmissionResults = ({ emissions, renderEmissions }) => {
               </div>
             </div>
           </div>
+          <div>
+            <div className="stat shadow">
+              <div className="stat">
+                <div className="stat-title">CO2e by Train</div>
+                <div
+                  data-cy="total-emissions-train"
+                  className="stat-value"
+                >{`${emissions.train.total.toFixed(1)} kg`}</div>
+                <div
+                  data-cy="person-emissions-train"
+                  className="stat-desc"
+                >{`Per Person: ${emissions.train.perPassenger.toFixed(
+                  1
+                )} kg`}</div>
+              </div>
+            </div>
+          </div>
         </div>
       </>
     );
