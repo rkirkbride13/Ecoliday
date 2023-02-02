@@ -10,12 +10,14 @@ const DistanceController = {
       })
     );
 
+    let error = false;
     locationData.forEach((data) => {
       if (data.hasOwnProperty("error")) {
-        res.status(400).json({ message: data.error.description });
+        error = data.error.description;
         return;
       }
     });
+    if (error) return res.status(400).json({ message: error });
 
     req.query.distance = getDistance(
       locationData[0].latt,
