@@ -40,7 +40,7 @@ const EmissionResults = ({ emissions, renderEmissions }) => {
           <div>
             <div className="stat shadow">
               <div className="stat">
-                <div className="stat-title">CO2e by Car (Petrol)</div>
+                <div className="stat-title">CO2e by Car (Electric)</div>
                 <div
                   data-cy="total-emissions-electricCar"
                   className="stat-value"
