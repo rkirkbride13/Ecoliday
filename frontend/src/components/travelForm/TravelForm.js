@@ -22,7 +22,7 @@ const TravelForm = ({
       setFunction(event.target.value);
     };
   };
-
+  console.log("In travel form")
   const handleSubmit = async (event) => {
     event.preventDefault();
 

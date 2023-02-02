@@ -23,7 +23,12 @@ describe("EmissionResults", () => {
   });
 
   it("It doesn't render component when renderEmissions is false", () => {
-    cy.mount(<EmissionResults emissions={""} renderEmissions={false} />);
+    cy.mount(<EmissionResults emissions={{
+      plane: { total: 31.547396, perPassenger: 15.773698 },
+      petrolCar: { total: 30.547396, perPassenger: 14.773698 },
+      electricCar: { total: 29.547396, perPassenger: 13.773698 },
+      train: { total: 28.547396, perPassenger: 12.773698 },
+    }} renderEmissions={false} />);
 
     cy.get('[data-cy="total-emissions-plane"]').should("not.exist");
   });
@@ -49,17 +54,17 @@ describe("EmissionResults", () => {
       "Per Person: 15.8 kg"
     );
 
-    cy.get('[data-cy="total-emissions-petrolCar"]').should(
+    cy.get('[data-cy="total-emissions-petrol car"]').should(
       "contain.text",
       "30.5 kg"
     );
-    cy.get('[data-cy="person-emissions-petrolCar"]').should(
+    cy.get('[data-cy="person-emissions-petrol car"]').should(
       "contain.text",
       "Per Person: 14.8 kg"
     );
   });
 
-  xit("Renders component with total emission plane, petrol car and electric car", () => {
+  it("Renders component with total emission plane, petrol car and electric car", () => {
     cy.get('[data-cy="total-emissions-plane"]').should(
       "contain.text",
       "31.5 kg"
@@ -69,20 +74,20 @@ describe("EmissionResults", () => {
       "Per Person: 15.8 kg"
     );
 
-    cy.get('[data-cy="total-emissions-petrolCar"]').should(
+    cy.get('[data-cy="total-emissions-petrol car"]').should(
       "contain.text",
       "30.5 kg"
     );
-    cy.get('[data-cy="person-emissions-petrolCar"]').should(
+    cy.get('[data-cy="person-emissions-petrol car"]').should(
       "contain.text",
       "Per Person: 14.8 kg"
     );
 
-    cy.get('[data-cy="total-emissions-electricCar"]').should(
+    cy.get('[data-cy="total-emissions-electric car"]').should(
       "contain.text",
       "29.5 kg"
     );
-    cy.get('[data-cy="person-emissions-electricCar"]').should(
+    cy.get('[data-cy="person-emissions-electric car"]').should(
       "contain.text",
       "Per Person: 13.8 kg"
     );
@@ -98,20 +103,20 @@ describe("EmissionResults", () => {
       "Per Person: 15.8 kg"
     );
 
-    cy.get('[data-cy="total-emissions-petrolCar"]').should(
+    cy.get('[data-cy="total-emissions-petrol car"]').should(
       "contain.text",
       "30.5 kg"
     );
-    cy.get('[data-cy="person-emissions-petrolCar"]').should(
+    cy.get('[data-cy="person-emissions-petrol car"]').should(
       "contain.text",
       "Per Person: 14.8 kg"
     );
 
-    cy.get('[data-cy="total-emissions-electricCar"]').should(
+    cy.get('[data-cy="total-emissions-electric car"]').should(
       "contain.text",
       "29.5 kg"
     );
-    cy.get('[data-cy="person-emissions-electricCar"]').should(
+    cy.get('[data-cy="person-emissions-electric car"]').should(
       "contain.text",
       "Per Person: 13.8 kg"
     );
