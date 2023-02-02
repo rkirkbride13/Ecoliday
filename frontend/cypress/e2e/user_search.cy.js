@@ -33,7 +33,7 @@ describe("User emission search", () => {
     });
   });
 
-  xit("user sucessfully completes a search and renders plane and petrol car results on the page", () => {
+  it("user sucessfully completes a search and renders plane and petrol car results on the page", () => {
     cy.visit("/");
     cy.get('[data-cy="distance"]').type("1000");
     cy.get('[data-cy="passengers"]').type("2");
@@ -59,7 +59,7 @@ describe("User emission search", () => {
     });
   });
 
-  xit("user sucessfully completes a search and renders plane, petrol car and electric car results on the page", () => {
+  it("user sucessfully completes a search and renders plane, petrol car and electric car results on the page", () => {
     cy.visit("/");
     cy.get('[data-cy="distance"]').type("1000");
     cy.get('[data-cy="passengers"]').type("2");
