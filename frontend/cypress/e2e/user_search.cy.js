@@ -4,7 +4,10 @@ describe("User emission search", () => {
       req.reply({
         statusCode: 200,
         body: {
-          emissions: { plane: { total: 31.547396, perPassenger: 31.547396 } },
+          emissions: {
+            plane: { total: 31.547396, perPassenger: 31.547396 },
+            petrolCar: { total: 31.547396, perPassenger: 15.81 },
+          },
         },
       });
     }).as("getEmissions");
