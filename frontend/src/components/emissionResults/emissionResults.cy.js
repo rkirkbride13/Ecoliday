@@ -12,13 +12,16 @@ describe("EmissionResults", () => {
       />
     );
 
-    cy.get('[data-cy="total-emissions"]').should("contain.text", "31.5 kg");
+    cy.get('[data-cy="total-emissions-plane"]').should(
+      "contain.text",
+      "31.5 kg"
+    );
   });
 
   it("It doesn't render component when renderEmissions is false", () => {
     cy.mount(<EmissionResults emissions={""} renderEmissions={false} />);
 
-    cy.get('[data-cy="total-emissions"]').should("not.exist");
+    cy.get('[data-cy="total-emissions-plane"]').should("not.exist");
   });
 
   it("Renders component with total emission and per person result based on one person", () => {
@@ -32,8 +35,11 @@ describe("EmissionResults", () => {
       />
     );
 
-    cy.get('[data-cy="total-emissions"]').should("contain.text", "31.5 kg");
-    cy.get('[data-cy="person-emissions"]').should(
+    cy.get('[data-cy="total-emissions-plane"]').should(
+      "contain.text",
+      "31.5 kg"
+    );
+    cy.get('[data-cy="person-emissions-plane"]').should(
       "contain.text",
       "Per Person: 31.5 kg"
     );
@@ -51,8 +57,11 @@ describe("EmissionResults", () => {
       />
     );
 
-    cy.get('[data-cy="total-emissions"]').should("contain.text", "31.5 kg");
-    cy.get('[data-cy="person-emissions"]').should(
+    cy.get('[data-cy="total-emissions-plane"]').should(
+      "contain.text",
+      "31.5 kg"
+    );
+    cy.get('[data-cy="person-emissions-plane"]').should(
       "contain.text",
       "Per Person: 15.8 kg"
     );
@@ -70,8 +79,11 @@ describe("EmissionResults", () => {
       />
     );
 
-    cy.get('[data-cy="total-emissions"]').should("contain.text", "31.5 kg");
-    cy.get('[data-cy="person-emissions"]').should(
+    cy.get('[data-cy="total-emissions-plane"]').should(
+      "contain.text",
+      "31.5 kg"
+    );
+    cy.get('[data-cy="person-emissions-plane"]').should(
       "contain.text",
       "Per Person: 15.8 kg"
     );

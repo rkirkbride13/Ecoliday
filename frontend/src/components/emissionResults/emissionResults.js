@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 const EmissionResults = ({ emissions, renderEmissions }) => {
   if (renderEmissions === true) {
     return (
@@ -10,11 +8,11 @@ const EmissionResults = ({ emissions, renderEmissions }) => {
               <div className="stat">
                 <div className="stat-title">CO2e by Air</div>
                 <div
-                  data-cy="total-emissions"
+                  data-cy="total-emissions-plane"
                   className="stat-value"
                 >{`${emissions.plane.total.toFixed(1)} kg`}</div>
                 <div
-                  data-cy="person-emissions"
+                  data-cy="person-emissions-plane"
                   className="stat-desc"
                 >{`Per Person: ${emissions.plane.perPassenger.toFixed(
                   1

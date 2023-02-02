@@ -18,8 +18,11 @@ describe("User emission search", () => {
     cy.get('[data-cy="travelFormSubmit"]').click();
 
     cy.wait("@getEmissions").then(() => {
-      cy.get('[data-cy="total-emissions"]').should("contain.text", "31.5 kg");
-      cy.get('[data-cy="person-emissions"]').should(
+      cy.get('[data-cy="total-emissions-plane"]').should(
+        "contain.text",
+        "31.5 kg"
+      );
+      cy.get('[data-cy="person-emissions-plane"]').should(
         "contain.text",
         "Per Person: 31.5 kg"
       );
@@ -45,8 +48,11 @@ describe("User emission search", () => {
     cy.get('[data-cy="travelFormSubmit"]').click();
 
     cy.wait("@getEmissions").then(() => {
-      cy.get('[data-cy="total-emissions"]').should("contain.text", "31.5 kg");
-      cy.get('[data-cy="person-emissions"]').should(
+      cy.get('[data-cy="total-emissions-plane"]').should(
+        "contain.text",
+        "31.5 kg"
+      );
+      cy.get('[data-cy="person-emissions-plane"]').should(
         "contain.text",
         "Per Person: 31.5 kg"
       );
