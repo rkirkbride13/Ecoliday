@@ -5,24 +5,8 @@ describe("DistanceController", () => {
   let req, res;
   beforeEach(() => {
     fetch.resetMocks();
-    fetch.mockResponseOnce(
-      JSON.stringify({
-        results: [
-          {
-            lon: -0.11534,
-            lat: 51.51413,
-            formatted: "London, ENG, United Kingdom",
-          },
-        ],
-      })
-    );
-    fetch.mockResponseOnce(
-      JSON.stringify({
-        results: [
-          { lon: 13.40488, lat: 52.50176, formatted: "Berlin, Germany" },
-        ],
-      })
-    );
+    mockEmissionsAPIResponses();
+
     req = {
       query: {
         to: "Berlin",
@@ -145,3 +129,22 @@ describe("DistanceController", () => {
     expect(res.locals.to).toEqual("Berlin, Germany");
   });
 });
+
+const mockEmissionsAPIResponses = () => {
+  fetch.mockResponseOnce(
+    JSON.stringify({
+      results: [
+        {
+          lon: -0.11534,
+          lat: 51.51413,
+          formatted: "London, ENG, United Kingdom",
+        },
+      ],
+    })
+  );
+  fetch.mockResponseOnce(
+    JSON.stringify({
+      results: [{ lon: 13.40488, lat: 52.50176, formatted: "Berlin, Germany" }],
+    })
+  );
+};

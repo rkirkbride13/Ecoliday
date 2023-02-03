@@ -53,46 +53,8 @@ describe("/emissions", () => {
   describe("if request is successful", () => {
     let response;
     beforeEach(async () => {
-      fetch.mockResponseOnce(
-        JSON.stringify({
-          results: [
-            {
-              lon: -0.11534,
-              lat: 51.51413,
-              formatted: "London, ENG, United Kingdom",
-            },
-          ],
-        })
-      );
-
-      fetch.mockResponseOnce(
-        JSON.stringify({
-          results: [
-            { lon: 13.40488, lat: 52.50176, formatted: "Berlin, Germany" },
-          ],
-        })
-      );
-
-      fetch.mockResponseOnce(
-        JSON.stringify({
-          co2e: 63.094792,
-        })
-      );
-      fetch.mockResponseOnce(
-        JSON.stringify({
-          co2e: 20.094792,
-        })
-      );
-      fetch.mockResponseOnce(
-        JSON.stringify({
-          co2e: 10.094792,
-        })
-      );
-      fetch.mockResponseOnce(
-        JSON.stringify({
-          co2e: 1.094792,
-        })
-      );
+      mockLocationAPIResponses();
+      mockEmissionsAPIResponses();
 
       response = await request(app).get(
         "/emissions?to=Berlin&from=London&passengers=4"
@@ -177,3 +139,35 @@ describe("/emissions", () => {
     });
   });
 });
+
+const mockLocationAPIResponses = () => {
+  fetch.mockResponseOnce(
+    JSON.stringify({
+      results: [
+        {
+          lon: -0.11534,
+          lat: 51.51413,
+          formatted: "London, ENG, United Kingdom",
+        },
+      ],
+    })
+  );
+
+  fetch.mockResponseOnce(
+    JSON.stringify({
+      results: [{ lon: 13.40488, lat: 52.50176, formatted: "Berlin, Germany" }],
+    })
+  );
+};
+
+const mockEmissionsAPIResponses = () => {
+  const emissions = [63.094792, 20.094792, 10.094792, 1.094792];
+
+  emissions.forEach((emission) =>
+    fetch.mockResponseOnce(
+      JSON.stringify({
+        co2e: emission,
+      })
+    )
+  );
+};
