@@ -184,5 +184,14 @@ describe("/emissions", () => {
         1.094792 / 4
       );
     });
+
+    test("response includes formatted location", async () => {
+      let response = await request(app).get(
+        "/emissions?to=Berlin&from=London&passengers=1"
+      );
+
+      expect(response.body.to).toEqual("Berlin, Germany");
+      expect(response.body.from).toEqual("London, ENG, United Kingdom");
+    });
   });
 });
