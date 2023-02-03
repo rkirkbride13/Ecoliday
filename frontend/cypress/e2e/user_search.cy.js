@@ -134,4 +134,33 @@ describe("User emission search", () => {
       );
     });
   });
+
+  it("user sucessfully completes a search and renders plane, petrol car, electric car and train results on the page", () => {
+    cy.visit("/");
+    cy.get('[data-cy="distance"]').type("1000");
+    cy.get('[data-cy="passengers"]').type("2");
+    cy.get('[data-cy="travelFormSubmit"]').click();
+
+    cy.wait("@getEmissions").then(() => {
+      cy.get('[data-cy="emissions-dropdown-plane"]').should(
+        "contain.text",
+        "Eating 3 steaks"
+      );
+
+      cy.get('[data-cy="emissions-dropdown-petrol car"]').should(
+        "contain.text",
+        "Eating 3 steaks"
+      );
+
+      cy.get('[data-cy="emissions-dropdown-electric car"]').should(
+        "contain.text",
+        "Eating 3 steaks"
+      );
+
+      cy.get('[data-cy="emissions-dropdown-train"]').should(
+        "contain.text",
+        "Eating 3 steaks"
+      );
+    });
+  });
 });
