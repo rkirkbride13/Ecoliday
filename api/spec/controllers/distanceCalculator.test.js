@@ -2,7 +2,7 @@ const DistanceController = require("../../controllers/distance");
 require("jest-fetch-mock").enableMocks();
 
 describe("DistanceController", () => {
-  let req;
+  let req, res;
   beforeEach(() => {
     fetch.resetMocks();
     fetch.mockResponseOnce(
@@ -31,10 +31,11 @@ describe("DistanceController", () => {
       },
       locals: {},
     };
+    res = { locals: {} };
   });
 
   it("sends a request when given a 'from' location", async () => {
-    await DistanceController.Calculate(req, {}, () => {});
+    await DistanceController.Calculate(req, res, () => {});
 
     expect(fetch).toHaveBeenCalledWith(
       expect.stringContaining(
@@ -44,7 +45,7 @@ describe("DistanceController", () => {
   });
 
   it("sends a request when given a 'to' location", async () => {
-    await DistanceController.Calculate(req, {}, () => {});
+    await DistanceController.Calculate(req, res, () => {});
 
     expect(fetch).toHaveBeenCalledWith(
       expect.stringContaining(
@@ -54,7 +55,7 @@ describe("DistanceController", () => {
   });
 
   it("add distance to req.query", async () => {
-    await DistanceController.Calculate(req, {}, () => {});
+    await DistanceController.Calculate(req, res, () => {});
 
     expect(req.query.distance).toEqual(930.5084324079236);
   });
@@ -62,7 +63,7 @@ describe("DistanceController", () => {
   it("check next has been called after distance calculated", async () => {
     const next = jest.fn(() => {});
 
-    await DistanceController.Calculate(req, {}, next);
+    await DistanceController.Calculate(req, res, next);
 
     expect(next).toHaveBeenCalled();
   });
@@ -133,14 +134,14 @@ describe("DistanceController", () => {
   });
 
   it("adds formatted 'from' result to req.locals", async () => {
-    await DistanceController.Calculate(req, {}, () => {});
+    await DistanceController.Calculate(req, res, () => {});
 
-    expect(req.locals.from).toEqual("London, ENG, United Kingdom");
+    expect(res.locals.from).toEqual("London, ENG, United Kingdom");
   });
 
   it("adds formatted 'to' result to req.locals", async () => {
-    await DistanceController.Calculate(req, {}, () => {});
+    await DistanceController.Calculate(req, res, () => {});
 
-    expect(req.locals.to).toEqual("Berlin, Germany");
+    expect(res.locals.to).toEqual("Berlin, Germany");
   });
 });

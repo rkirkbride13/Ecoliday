@@ -18,13 +18,13 @@ const DistanceController = {
     const error = checkError(locationData);
     if (error) return res.status(404).json({ message: error });
 
-    updateRequest(req, locationData);
+    updateRequest(req, res, locationData);
 
     next();
   },
 };
 
-const updateRequest = (req, locationData) => {
+const updateRequest = (req, res, locationData) => {
   req.query.distance = getDistance(
     locationData[0].results[0].lat,
     locationData[0].results[0].lon,
@@ -32,9 +32,9 @@ const updateRequest = (req, locationData) => {
     locationData[1].results[0].lon
   );
 
-  req.locals.from = locationData[0].results[0].formatted;
+  res.locals.from = locationData[0].results[0].formatted;
 
-  req.locals.to = locationData[1].results[0].formatted;
+  res.locals.to = locationData[1].results[0].formatted;
 };
 
 const checkError = (locationData) => {
