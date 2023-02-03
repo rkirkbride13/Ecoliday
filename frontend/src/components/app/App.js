@@ -4,10 +4,10 @@ import NavBar from "../navBar/navBar";
 import EmissionResults from "../emissionResults/emissionResults";
 
 const App = () => {
-  const [distance, setDistance] = useState("");
-  const [passengers, setPassengers] = useState("");
   const [emissions, setEmissions] = useState("");
   const [renderEmissions, setRenderEmissions] = useState(false);
+  const [toDisplay, setToDisplay] = useState("");
+  const [fromDisplay, setFromDisplay] = useState("");
 
   return (
     <>
@@ -16,12 +16,10 @@ const App = () => {
       </nav>
       <div id="main-container" className="flex justify-center mt-32">
         <TravelForm
-          distance={distance}
-          setDistance={setDistance}
-          passengers={passengers}
-          setPassengers={setPassengers}
           setEmissions={setEmissions}
           setRenderEmissions={setRenderEmissions}
+          setToDisplay={setToDisplay}
+          setFromDisplay={setFromDisplay}
         />
         <div className="w-40"></div>
         <EmissionResults
