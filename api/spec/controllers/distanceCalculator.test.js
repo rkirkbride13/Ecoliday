@@ -99,7 +99,7 @@ describe("DistanceController", () => {
     expect(next).not.toHaveBeenCalled();
   });
 
-  it("responds with 400 if results is empty", async () => {
+  it("responds with 404 if results is empty", async () => {
     fetch.resetMocks();
     fetch.mockResponse(
       JSON.stringify({
@@ -107,15 +107,20 @@ describe("DistanceController", () => {
       })
     );
 
+    const json = jest.fn((object) => {});
     const res = {
-      status: (status) => {
-        return { json: (object) => {} };
-      },
+      status: jest.fn((status) => {
+        return { json: json };
+      }),
     };
     const next = jest.fn(() => {});
 
     await DistanceController.Calculate(req, res, next);
 
+    expect(res.status).toHaveBeenLastCalledWith(404);
+    expect(json).toHaveBeenCalledWith({
+      message: "Request returned no queries",
+    });
     expect(next).not.toHaveBeenCalled();
   });
 

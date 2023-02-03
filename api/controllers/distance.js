@@ -15,8 +15,8 @@ const DistanceController = {
       })
     );
 
-    // const error = checkError(locationData);
-    // if (error) return res.status(400).json({ message: error });
+    const error = checkError(locationData);
+    if (error) return res.status(404).json({ message: error });
 
     updateRequest(req, locationData);
 
@@ -44,14 +44,14 @@ const updateRequest = (req, locationData) => {
 };
 
 const checkError = (locationData) => {
-  let error = false;
+  let errorMessage = "";
   locationData.forEach((data) => {
-    if (data.hasOwnProperty("error")) {
-      error = data.error.description;
+    if (data.results.length === 0) {
+      errorMessage = "Request returned no queries";
       return;
     }
   });
-  return error;
+  return errorMessage;
 };
 
 function getDistance(lat1, lon1, lat2, lon2) {
