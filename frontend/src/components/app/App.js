@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import TravelForm from "../travelForm/TravelForm";
 import NavBar from "../navBar/navBar";
 import EmissionResults from "../emissionResults/emissionResults";
+import { Routes, Route } from "react-router-dom";
+import SignUpForm from "../signUp/signUpForm";
 
 const App = () => {
   const [distance, setDistance] = useState("");
@@ -29,6 +31,9 @@ const App = () => {
           renderEmissions={renderEmissions}
         />
       </div>
+      <Routes>
+        <Route path="/signup" element={<SignUpForm />} />
+      </Routes>
     </>
   );
 };
