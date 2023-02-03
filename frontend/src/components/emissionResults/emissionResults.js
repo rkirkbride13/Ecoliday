@@ -13,28 +13,34 @@ const EmissionResults = ({ emissions, renderEmissions }) => {
 
     let resultDivs = resultsArray.map((result) => (
       <div>
-        <div className="dropdown dropdown-hover dropdown-right mb-2">
+        <div
+          data-cy={`emissions-dropdown-${result.type}`}
+          className="dropdown dropdown-hover dropdown-right mb-2"
+        >
           <ul
             tabIndex={0}
             className="dropdown-content menu p-2 shadow-2xl shadow-green-700 bg-green-500 rounded-box w-60 text-base font-bold text-white text-left ml-2"
           >
             Equivalent to...
             <li>
-            &#x1F42E;{`  Eating ${Math.ceil(result.emissions.total / CO2eSteak)} ${
+              &#x1F42E;
+              {`  Eating ${Math.ceil(result.emissions.total / CO2eSteak)} ${
                 Math.ceil(result.emissions.total / CO2eSteak) === 1
                   ? "steak"
                   : "steaks"
               }`}
             </li>
             <li>
-            &#x1F455;{`  Buying ${Math.ceil(result.emissions.total / CO2eTshirt)} ${
+              &#x1F455;
+              {`  Buying ${Math.ceil(result.emissions.total / CO2eTshirt)} ${
                 Math.ceil(result.emissions.total / CO2eTshirt) === 1
                   ? "T-shirt"
                   : "T-shirts"
               }`}
             </li>
             <li>
-            &#x1F333;{`  Saving ${Math.ceil(result.emissions.total / CO2eTree)} ${
+              &#x1F333;
+              {`  Saving ${Math.ceil(result.emissions.total / CO2eTree)} ${
                 Math.ceil(result.emissions.total / CO2eTree) === 1
                   ? "tree"
                   : "trees"
