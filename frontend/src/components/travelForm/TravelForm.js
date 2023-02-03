@@ -37,6 +37,8 @@ const TravelForm = ({
         // console.log(responseData.emissions);
         setEmissions(responseData.emissions);
         setRenderEmissions(true);
+        setToDisplay(responseData.to);
+        setFromDisplay(responseData.from);
       });
   };
 
