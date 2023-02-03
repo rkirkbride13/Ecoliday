@@ -23,7 +23,7 @@ const TravelForm = ({
       setFunction(event.target.value);
     };
   };
-  console.log("In travel form");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -44,25 +44,8 @@ const TravelForm = ({
 
   return (
     <div id="travelForm" className="mt-16">
-      <h1 className="text-3xl mb-10">Plan your journey...</h1>
+      <h1 className="text-3xl mb-10 font-medium">Plan your journey...</h1>
       <form onSubmit={handleSubmit}>
-        {/* <div id="distance" className="mb-5 text-xl mx-auto">
-          <label for="distance-input">Distance (km):</label>
-          <br />
-          <input
-            id="distance-input"
-            data-cy="distance"
-            type="number"
-            min="0.0"
-            value={distance}
-            onChange={handleChange(setDistance)}
-            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 invalid:border-red-600 border-2 rounded peer"
-          />
-          <p className="invisible peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
-            Must be a positive whole number
-          </p>
-        </div> */}
-
         <div id="from" className="mb-5 text-xl">
           <label for="from-input">From: </label>
           <br />
