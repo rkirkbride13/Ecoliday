@@ -14,7 +14,7 @@ const App = () => {
       <nav>
         <NavBar />
       </nav>
-      <div id="main-container" className="flex justify-center mt-40">
+      <div id="main-container" className="flex justify-center mt-32">
         <TravelForm
           distance={distance}
           setDistance={setDistance}
@@ -23,7 +23,7 @@ const App = () => {
           setEmissions={setEmissions}
           setRenderEmissions={setRenderEmissions}
         />
-        <div className="w-24"></div>
+        <div className="w-40"></div>
         <EmissionResults
           emissions={emissions}
           renderEmissions={renderEmissions}
