@@ -32,15 +32,9 @@ const updateRequest = (req, locationData) => {
     locationData[1].results[0].lon
   );
 
-  // req.locals.from = {
-  //   prov: locationData[0].standard.prov,
-  //   city: locationData[0].standard.city,
-  // };
+  req.locals.from = locationData[0].results[0].formatted;
 
-  // req.locals.to = {
-  //   prov: locationData[1].standard.prov,
-  //   city: locationData[1].standard.city,
-  // };
+  req.locals.to = locationData[1].results[0].formatted;
 };
 
 const checkError = (locationData) => {
