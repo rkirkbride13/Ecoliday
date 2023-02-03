@@ -59,36 +59,51 @@ describe("DistanceController", () => {
     expect(next).toHaveBeenCalled();
   });
 
-  it("catches error from api and sends it to the client", async () => {
-    fetch.resetMocks();
-    fetch.mockResponse(
-      JSON.stringify({
-        longt: "-0.11534",
-        latt: "51.51413",
-        error: { description: "Fail" },
-      })
-    );
-
-    const json = jest.fn((object) => {});
+  it("responds with 400 if from is empty", async () => {
+    const send = jest.fn((object) => {});
     const res = {
       status: jest.fn((status) => {
-        return { json: json };
+        return { send: send };
       }),
     };
+    const next = jest.fn(() => {});
 
-    await DistanceController.Calculate(req, res, () => {});
+    req.query.from = undefined;
+    await DistanceController.Calculate(req, res, next);
+    expect(res.status).toHaveBeenLastCalledWith(400);
 
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(json).toHaveBeenCalledWith({ message: "Fail" });
+    req.query.from = "";
+    await DistanceController.Calculate(req, res, next);
+    expect(res.status).toHaveBeenLastCalledWith(400);
+    expect(send).toHaveBeenCalledTimes(2);
+    expect(next).not.toHaveBeenCalled();
   });
 
-  it("catches error from api and sends it to the client", async () => {
+  it("responds with 400 if to is empty", async () => {
+    const send = jest.fn((object) => {});
+    const res = {
+      status: jest.fn((status) => {
+        return { send: send };
+      }),
+    };
+    const next = jest.fn(() => {});
+
+    req.query.to = undefined;
+    await DistanceController.Calculate(req, res, next);
+    expect(res.status).toHaveBeenLastCalledWith(400);
+
+    req.query.to = "";
+    await DistanceController.Calculate(req, res, next);
+    expect(res.status).toHaveBeenLastCalledWith(400);
+    expect(send).toHaveBeenCalledTimes(2);
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it("responds with 400 if results is empty", async () => {
     fetch.resetMocks();
     fetch.mockResponse(
       JSON.stringify({
-        longt: "-0.11534",
-        latt: "51.51413",
-        error: { description: "Fail" },
+        results: [],
       })
     );
 

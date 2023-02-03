@@ -1,6 +1,6 @@
 const DistanceController = {
   Calculate: async (req, res, next) => {
-    if (req.query.from === undefined || req.query.to === undefined) {
+    if (!req.query.from || !req.query.to) {
       res.status(400).send();
       return;
     }
@@ -15,8 +15,8 @@ const DistanceController = {
       })
     );
 
-    const error = checkError(locationData);
-    if (error) return res.status(400).json({ message: error });
+    // const error = checkError(locationData);
+    // if (error) return res.status(400).json({ message: error });
 
     updateRequest(req, locationData);
 
