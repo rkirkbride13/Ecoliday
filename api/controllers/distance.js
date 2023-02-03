@@ -8,7 +8,7 @@ const DistanceController = {
     const locationData = await Promise.all(
       [req.query.from, req.query.to].map((location) => {
         return fetch(
-          `https://geocode.xyz?locate=${location}&json=1auth=${process.env.GEOCODE_KEY}`
+          `https://api.geoapify.com/v1/geocode/search?text=${location}&format=json&apiKey=${process.env.GEOAPIFY_KEY}`
         )
           .then((response) => response.json())
           .catch((err) => console.error(err));
@@ -26,21 +26,21 @@ const DistanceController = {
 
 const updateRequest = (req, locationData) => {
   req.query.distance = getDistance(
-    locationData[0].latt,
-    locationData[0].longt,
-    locationData[1].latt,
-    locationData[1].longt
+    locationData[0].results[0].lat,
+    locationData[0].results[0].lon,
+    locationData[1].results[0].lat,
+    locationData[1].results[0].lon
   );
 
-  req.locals.from = {
-    prov: locationData[0].standard.prov,
-    city: locationData[0].standard.city,
-  };
+  // req.locals.from = {
+  //   prov: locationData[0].standard.prov,
+  //   city: locationData[0].standard.city,
+  // };
 
-  req.locals.to = {
-    prov: locationData[1].standard.prov,
-    city: locationData[1].standard.city,
-  };
+  // req.locals.to = {
+  //   prov: locationData[1].standard.prov,
+  //   city: locationData[1].standard.city,
+  // };
 };
 
 const checkError = (locationData) => {

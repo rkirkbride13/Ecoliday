@@ -7,16 +7,12 @@ describe("DistanceController", () => {
     fetch.resetMocks();
     fetch.mockResponseOnce(
       JSON.stringify({
-        longt: "-0.11534",
-        latt: "51.51413",
-        standard: { prov: "UK", city: "London" },
+        results: [{ lon: -0.11534, lat: 51.51413 }],
       })
     );
     fetch.mockResponseOnce(
       JSON.stringify({
-        longt: "13.40488",
-        latt: "52.50176",
-        standard: { prov: "DE", city: "Berlin" },
+        results: [{ lon: 13.40488, lat: 52.50176 }],
       })
     );
     req = {
@@ -33,7 +29,9 @@ describe("DistanceController", () => {
     await DistanceController.Calculate(req, {}, () => {});
 
     expect(fetch).toHaveBeenCalledWith(
-      expect.stringContaining("https://geocode.xyz?locate=London&json=1")
+      expect.stringContaining(
+        "https://api.geoapify.com/v1/geocode/search?text=London&format=json"
+      )
     );
   });
 
@@ -41,7 +39,9 @@ describe("DistanceController", () => {
     await DistanceController.Calculate(req, {}, () => {});
 
     expect(fetch).toHaveBeenCalledWith(
-      expect.stringContaining("https://geocode.xyz?locate=Berlin&json=1")
+      expect.stringContaining(
+        "https://api.geoapify.com/v1/geocode/search?text=Berlin&format=json"
+      )
     );
   });
 
