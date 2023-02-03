@@ -51,7 +51,8 @@ describe("/emissions", () => {
   });
 
   describe("if request is successful", () => {
-    beforeEach(() => {
+    let response;
+    beforeEach(async () => {
       fetch.mockResponseOnce(
         JSON.stringify({
           results: [
@@ -92,18 +93,17 @@ describe("/emissions", () => {
           co2e: 1.094792,
         })
       );
+
+      response = await request(app).get(
+        "/emissions?to=Berlin&from=London&passengers=4"
+      );
     });
 
     test("response code is 200 when given to, from and passengers params", async () => {
-      let response = await request(app).get(
-        "/emissions?to=Berlin&from=London&passengers=1"
-      );
       expect(response.status).toEqual(200);
     });
 
     test("calls fetch for plane co2e value", async () => {
-      await request(app).get("/emissions?to=Berlin&from=London&passengers=1");
-
       expect(fetch).toHaveBeenCalledWith(
         expect.any(String),
         expect.objectContaining({
@@ -115,8 +115,6 @@ describe("/emissions", () => {
     });
 
     test("calls fetch for train co2e value", async () => {
-      await request(app).get("/emissions?to=Berlin&from=London&passengers=1");
-
       expect(fetch).toHaveBeenCalledWith(
         expect.any(String),
         expect.objectContaining({
@@ -130,8 +128,6 @@ describe("/emissions", () => {
     });
 
     test("calls fetch for Petrol car co2e value", async () => {
-      await request(app).get("/emissions?to=Berlin&from=London&passengers=1");
-
       expect(fetch).toHaveBeenCalledWith(
         expect.any(String),
         expect.objectContaining({
@@ -145,8 +141,6 @@ describe("/emissions", () => {
     });
 
     test("calls fetch for EV car co2e value", async () => {
-      await request(app).get("/emissions?to=Berlin&from=London&passengers=1");
-
       expect(fetch).toHaveBeenCalledWith(
         expect.any(String),
         expect.objectContaining({
@@ -160,10 +154,6 @@ describe("/emissions", () => {
     });
 
     test("fetch results are grouped into single response, with total emissions", async () => {
-      let response = await request(app).get(
-        "/emissions?to=Berlin&from=London&passengers=1"
-      );
-
       expect(response.body.emissions.plane.total).toEqual(63.094792);
       expect(response.body.emissions.train.total).toEqual(20.094792);
       expect(response.body.emissions.petrolCar.total).toEqual(10.094792);
@@ -171,10 +161,6 @@ describe("/emissions", () => {
     });
 
     test("fetch results are grouped into single response, with per passenger emissions", async () => {
-      let response = await request(app).get(
-        "/emissions?to=Berlin&from=London&passengers=4"
-      );
-
       expect(response.body.emissions.plane.perPassenger).toEqual(63.094792 / 4);
       expect(response.body.emissions.train.perPassenger).toEqual(20.094792 / 4);
       expect(response.body.emissions.petrolCar.perPassenger).toEqual(
@@ -186,10 +172,6 @@ describe("/emissions", () => {
     });
 
     test("response includes formatted location", async () => {
-      let response = await request(app).get(
-        "/emissions?to=Berlin&from=London&passengers=1"
-      );
-
       expect(response.body.to).toEqual("Berlin, Germany");
       expect(response.body.from).toEqual("London, ENG, United Kingdom");
     });
