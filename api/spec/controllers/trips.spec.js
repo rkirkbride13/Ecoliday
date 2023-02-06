@@ -38,5 +38,13 @@ describe("/trips", () => {
 
       expect(response.status).toEqual(201);
     });
+
+    test("a new trip is created", async () => {
+      await request(app).post("/trips").send(trip);
+      let trips = await Trip.find();
+      expect(trips.length).toEqual(1);
+      expect(trips[0].to).toEqual("Berlin, Germany");
+      expect(trips[0].from).toEqual("London, ENG, United Kingdom");
+    });
   });
 });
