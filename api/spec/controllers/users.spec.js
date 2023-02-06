@@ -84,4 +84,24 @@ describe("/users", () => {
       expect(users.length).toEqual(0);
     });
   });
+
+  describe("email has already been used", () => {
+    beforeEach(async () => {
+      await User.create({ email: "test@email.com", password: "password1" });
+    });
+    it("gives response code 400", async () => {
+      let response = await request(app)
+        .post("/users")
+        .send({ email: "test@email.com", password: "password2" });
+      expect(response.statusCode).toBe(400);
+    });
+
+    it("does not NOT create a user", async () => {
+      await request(app)
+        .post("/users")
+        .send({ email: "test@email.com", password: "password2" });
+      let users = await User.find();
+      expect(users.length).toEqual(1);
+    });
+  });
 });
