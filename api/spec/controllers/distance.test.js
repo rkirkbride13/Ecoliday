@@ -45,11 +45,36 @@ describe("DistanceController", () => {
     it("add distance to req.query", async () => {
       await DistanceController.Calculate(req, res, () => {});
 
-      expect(req.query.distance).toEqual(930.5084324079236);
+      expect(res.locals.distance.plane).toEqual(930.5084324079236);
+    });
+
+    it("responds with 404 if results is empty", async () => {
+      fetch.resetMocks();
+      fetch.mockResponse(
+        JSON.stringify({
+          results: [],
+        })
+      );
+
+      const json = jest.fn((object) => {});
+      const res = {
+        status: jest.fn((status) => {
+          return { json: json };
+        }),
+      };
+      const next = jest.fn(() => {});
+
+      await DistanceController.Calculate(req, res, next);
+
+      expect(res.status).toHaveBeenLastCalledWith(404);
+      expect(json).toHaveBeenCalledWith({
+        message: "Request returned no queries",
+      });
+      expect(next).not.toHaveBeenCalled();
     });
   });
 
-  it("check next has been called after distance calculated", async () => {
+  it("check next has been called after a valid request", async () => {
     const next = jest.fn(() => {});
 
     await DistanceController.Calculate(req, res, next);
@@ -94,31 +119,6 @@ describe("DistanceController", () => {
     await DistanceController.Calculate(req, res, next);
     expect(res.status).toHaveBeenLastCalledWith(400);
     expect(send).toHaveBeenCalledTimes(2);
-    expect(next).not.toHaveBeenCalled();
-  });
-
-  it("responds with 404 if results is empty", async () => {
-    fetch.resetMocks();
-    fetch.mockResponse(
-      JSON.stringify({
-        results: [],
-      })
-    );
-
-    const json = jest.fn((object) => {});
-    const res = {
-      status: jest.fn((status) => {
-        return { json: json };
-      }),
-    };
-    const next = jest.fn(() => {});
-
-    await DistanceController.Calculate(req, res, next);
-
-    expect(res.status).toHaveBeenLastCalledWith(404);
-    expect(json).toHaveBeenCalledWith({
-      message: "Request returned no queries",
-    });
     expect(next).not.toHaveBeenCalled();
   });
 

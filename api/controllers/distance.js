@@ -9,20 +9,16 @@ const DistanceController = {
       return;
     }
 
-    const locationData = await sendGeoapifyRequest(req);
-    const drivingData = await sendDrivingDistanceRequest(req);
-    const railData = await sendRailDistanceRequest(req);
+    const [locationData, drivingData, railData] = await Promise.all([
+      sendGeoapifyRequest(req),
+      sendDrivingDistanceRequest(req),
+      sendRailDistanceRequest(req),
+    ]);
 
     const error = checkError(locationData);
     if (error) return res.status(404).json({ message: error });
 
-    updateRequest(req, res, locationData);
-    res.locals.from = locationData[0].results[0].formatted;
-    res.locals.to = locationData[1].results[0].formatted;
-
-    res.locals.distance.petrolCar = drivingData.distance.value / 1000;
-    res.locals.distance.electricCar = drivingData.distance.value / 1000;
-    res.locals.distance.train = railData.distance.value / 1000;
+    updateRes(res, locationData, drivingData, railData);
 
     next();
   },
@@ -68,8 +64,13 @@ const sendRailDistanceRequest = (req) => {
     .catch((err) => console.error(err));
 };
 
-const updateRequest = (req, res, locationData) => {
-  req.query.distance = getDistance(
+const updateRes = (res, locationData, drivingData, railData) => {
+  res.locals.from = locationData[0].results[0].formatted;
+  res.locals.to = locationData[1].results[0].formatted;
+  res.locals.distance.petrolCar = drivingData.distance.value / 1000;
+  res.locals.distance.electricCar = drivingData.distance.value / 1000;
+  res.locals.distance.train = railData.distance.value / 1000;
+  res.locals.distance.plane = getDistance(
     locationData[0].results[0].lat,
     locationData[0].results[0].lon,
     locationData[1].results[0].lat,
