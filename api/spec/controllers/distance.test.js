@@ -180,12 +180,34 @@ describe("DistanceController", () => {
       );
       fetch.mockResponseOnce(
         JSON.stringify({
-          rows: [{ elements: [{ distance: { value: 1156978 } }] }],
+          rows: [
+            { elements: [{ distance: { value: 1156978 }, status: "OK" }] },
+          ],
         })
       );
       await DistanceController.Calculate(req, res, () => {});
       expect(res.locals.distance.petrolCar).toBe(null);
       expect(res.locals.distance.electricCar).toBe(null);
+    });
+
+    it("sets res.locals to null if train route not found", async () => {
+      fetch.resetMocks();
+      mockGeoapifyResponses();
+
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          rows: [
+            { elements: [{ distance: { value: 1108327 }, status: "OK" }] },
+          ],
+        })
+      );
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          rows: [{ elements: [{ status: "ZERO_RESULTS" }] }],
+        })
+      );
+      await DistanceController.Calculate(req, res, () => {});
+      expect(res.locals.distance.train).toBe(null);
     });
   });
 });

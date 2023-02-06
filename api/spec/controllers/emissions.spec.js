@@ -139,6 +139,58 @@ describe("/emissions", () => {
       expect(response.body.from).toEqual("London, ENG, United Kingdom");
     });
   });
+
+  describe("when land routes haven't been found", () => {
+    it("returns null petrolCar and electricCar emissions", async () => {
+      mockGeoapifyResponses();
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          rows: [{ elements: [{ status: "ZERO_RESULTS" }] }],
+        })
+      );
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          rows: [
+            { elements: [{ distance: { value: 1156978 }, status: "OK" }] },
+          ],
+        })
+      );
+      mockEmissionsAPIResponses();
+
+      let response = await request(app).get(
+        "/emissions?to=Berlin&from=London&passengers=4"
+      );
+
+      expect(response.body.emissions.petrolCar.total).toBe(null);
+      expect(response.body.emissions.petrolCar.perPassenger).toBe(null);
+      expect(response.body.emissions.electricCar.total).toBe(null);
+      expect(response.body.emissions.electricCar.perPassenger).toBe(null);
+    });
+
+    it("returns null train emissions", async () => {
+      mockGeoapifyResponses();
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          rows: [
+            { elements: [{ distance: { value: 1108327 }, status: "OK" }] },
+          ],
+        })
+      );
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          rows: [{ elements: [{ status: "ZERO_RESULTS" }] }],
+        })
+      );
+      mockEmissionsAPIResponses();
+
+      let response = await request(app).get(
+        "/emissions?to=Berlin&from=London&passengers=4"
+      );
+
+      expect(response.body.emissions.train.total).toBe(null);
+      expect(response.body.emissions.train.perPassenger).toBe(null);
+    });
+  });
 });
 
 const mockGeoapifyResponses = () => {

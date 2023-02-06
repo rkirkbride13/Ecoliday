@@ -28,7 +28,7 @@ const EmissionsController = {
 const formatEmissions = (emissions, passengers) => {
   return {
     total: emissions,
-    perPassenger: emissions / passengers,
+    perPassenger: emissions === null ? null : emissions / passengers,
   };
 };
 
@@ -50,6 +50,9 @@ const CheckQuery = (req, res) => {
 };
 
 const GetElectricCarEmissions = (req, res) => {
+  if (res.locals.distance.electricCar === null) {
+    return null;
+  }
   return fetchEmissions(
     { distance: parseInt(res.locals.distance.electricCar) },
     "passenger_vehicle-vehicle_type_car-fuel_source_bev-engine_size_na-vehicle_age_na-vehicle_weight_na",
@@ -58,6 +61,9 @@ const GetElectricCarEmissions = (req, res) => {
 };
 
 const GetPetrolCarEmissions = (req, res) => {
+  if (res.locals.distance.petrolCar === null) {
+    return null;
+  }
   return fetchEmissions(
     { distance: parseInt(res.locals.distance.petrolCar) },
     "passenger_vehicle-vehicle_type_car-fuel_source_petrol-engine_size_na-vehicle_age_na-vehicle_weight_na",
@@ -66,6 +72,9 @@ const GetPetrolCarEmissions = (req, res) => {
 };
 
 const GetTrainEmissions = (req, res) => {
+  if (res.locals.distance.train === null) {
+    return null;
+  }
   return fetchEmissions(
     {
       distance: parseInt(res.locals.distance.train),
@@ -77,6 +86,9 @@ const GetTrainEmissions = (req, res) => {
 };
 
 const GetPlaneEmissions = (req, res) => {
+  if (res.locals.distance.plane === null) {
+    return null;
+  }
   return fetchEmissions(
     {
       distance: parseInt(res.locals.distance.plane),
