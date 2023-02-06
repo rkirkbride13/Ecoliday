@@ -23,6 +23,15 @@ const TripsController = {
       res.status(200).json({ trips });
     });
   },
+
+  DeleteTrip: async (req, res) => {
+    try {
+      await Trip.findOneAndDelete({ _id: req.get("trip_id") });
+      res.status(200).json({ message: "DELETED" });
+    } catch (err) {
+      res.status(400).json({ error: error.message });
+    }
+  },
 };
 
 module.exports = TripsController;

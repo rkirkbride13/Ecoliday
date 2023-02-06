@@ -74,4 +74,23 @@ describe("/trips", () => {
       expect(trips).toEqual(["Berlin, Germany", "London, ENG, United Kingdom"]);
     });
   });
+
+  describe("DELETE", () => {
+    test("delete selected trip and update trips accordingly", async () => {
+      await request(app).post("/trips").send(trip);
+      let trips = await Trip.find();
+      const trip_id = trips[0]._id;
+
+      await request(app).post("/trips").send(tripTwo);
+
+      let response = await request(app)
+        .delete("/trips")
+        .set({ trip_id: trip_id })
+        .send();
+
+      let updatedTrips = await Trip.find();
+      expect(response.statusCode).toBe(200);
+      expect(updatedTrips.length).toEqual(1);
+    });
+  });
 });
