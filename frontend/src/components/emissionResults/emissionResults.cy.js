@@ -11,6 +11,9 @@ describe("EmissionResults", () => {
           train: { total: 28.547396, perPassenger: 12.773698 },
         }}
         renderEmissions={true}
+        fromDisplay={"London, ENG, United Kingdom"}
+        toDisplay={"Berlin, Germany"}
+        passengers={"2"}
       />
     );
   });
@@ -106,6 +109,9 @@ describe("Emission Context", () => {
           train: { total: 8.9, perPassenger: 4.5 },
         }}
         renderEmissions={true}
+        fromDisplay={"London, ENG, United Kingdom"}
+        toDisplay={"Berlin, Germany"}
+        passengers={"2"}
       />
     );
   });
@@ -120,6 +126,9 @@ describe("Emission Context", () => {
           train: { total: 8.9, perPassenger: 4.5 },
         }}
         renderEmissions={false}
+        fromDisplay={"London, ENG, United Kingdom"}
+        toDisplay={"Berlin, Germany"}
+        passengers={"2"}
       />
     );
     cy.get('[data-cy="emissions-dropdown-plane"]').should("not.exist");
