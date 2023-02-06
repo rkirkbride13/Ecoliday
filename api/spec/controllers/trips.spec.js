@@ -18,6 +18,19 @@ describe("/trips", () => {
     },
   };
 
+  let tripTwo = {
+    to: "London, ENG, United Kingdom",
+    from: "Berlin, Germany",
+    user_id: "63e0ddcb06e90257776466a2",
+    passengers: "2",
+    emissions: {
+      plane: { total: 31.547396, perPassenger: 15.773698 },
+      petrolCar: { total: 30.547396, perPassenger: 14.773698 },
+      electricCar: { total: 29.547396, perPassenger: 13.773698 },
+      train: { total: 28.547396, perPassenger: 12.773698 },
+    },
+  };
+
   beforeAll(async () => {
     await User.deleteMany({});
     await Trip.deleteMany({});
@@ -45,6 +58,20 @@ describe("/trips", () => {
       expect(trips.length).toEqual(1);
       expect(trips[0].to).toEqual("Berlin, Germany");
       expect(trips[0].from).toEqual("London, ENG, United Kingdom");
+    });
+  });
+
+  describe("GET", () => {
+    test("returns every trip for the user", async () => {
+      await request(app).post("/trips").send(trip);
+      await request(app).post("/trips").send(tripTwo);
+
+      let response = await request(app)
+        .get("/trips")
+        .set({ user_id: "63e0ddcb06e90257776466a2" })
+        .send();
+      let trips = response.body.trips.map((trip) => trip.to);
+      expect(trips).toEqual(["Berlin, Germany", "London, ENG, United Kingdom"]);
     });
   });
 });

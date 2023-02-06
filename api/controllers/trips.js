@@ -13,6 +13,16 @@ const TripsController = {
       res.status(201).json({ message: "OK" });
     });
   },
+
+  FindByUser: (req, res) => {
+    Trip.find({ user_id: req.get("user_id") }, async (err, trips) => {
+      if (err) {
+        throw err;
+      }
+
+      res.status(200).json({ trips });
+    });
+  },
 };
 
 module.exports = TripsController;
