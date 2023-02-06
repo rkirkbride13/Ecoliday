@@ -23,12 +23,17 @@ describe("EmissionResults", () => {
   });
 
   it("It doesn't render component when renderEmissions is false", () => {
-    cy.mount(<EmissionResults emissions={{
-      plane: { total: 31.547396, perPassenger: 15.773698 },
-      petrolCar: { total: 30.547396, perPassenger: 14.773698 },
-      electricCar: { total: 29.547396, perPassenger: 13.773698 },
-      train: { total: 28.547396, perPassenger: 12.773698 },
-    }} renderEmissions={false} />);
+    cy.mount(
+      <EmissionResults
+        emissions={{
+          plane: { total: 31.547396, perPassenger: 15.773698 },
+          petrolCar: { total: 30.547396, perPassenger: 14.773698 },
+          electricCar: { total: 29.547396, perPassenger: 13.773698 },
+          train: { total: 28.547396, perPassenger: 12.773698 },
+        }}
+        renderEmissions={false}
+      />
+    );
 
     cy.get('[data-cy="total-emissions-plane"]').should("not.exist");
   });
@@ -128,6 +133,59 @@ describe("EmissionResults", () => {
     cy.get('[data-cy="person-emissions-train"]').should(
       "contain.text",
       "Per Person: 12.8 kg"
+    );
+  });
+});
+
+describe("Emission Context", () => {
+  beforeEach(() => {
+    cy.mount(
+      <EmissionResults
+        emissions={{
+          plane: { total: 302.0, perPassenger: 150.0 },
+          petrolCar: { total: 174.3, perPassenger: 87.2 },
+          electricCar: { total: 50.3, perPassenger: 25.2 },
+          train: { total: 8.9, perPassenger: 4.5 },
+        }}
+        renderEmissions={true}
+      />
+    );
+  });
+
+  it("doesnt render the emissions context drop-down results", () => {
+    cy.mount(
+      <EmissionResults
+        emissions={{
+          plane: { total: 302.0, perPassenger: 150.0 },
+          petrolCar: { total: 174.3, perPassenger: 87.2 },
+          electricCar: { total: 50.3, perPassenger: 25.2 },
+          train: { total: 8.9, perPassenger: 4.5 },
+        }}
+        renderEmissions={false}
+      />
+    );
+    cy.get('[data-cy="emissions-dropdown-plane"]').should("not.exist");
+    cy.get('[data-cy="emissions-dropdown-petrol car"]').should("not.exist");
+    cy.get('[data-cy="emissions-dropdown-electric car"]').should("not.exist");
+    cy.get('[data-cy="emissions-dropdown-train"]').should("not.exist");
+  });
+
+  it("renders the emissions context for all methods of transport in a drop-down", () => {
+    cy.get('[data-cy="emissions-dropdown-plane"]').should(
+      "contain.text",
+      "Eating 22 steaks"
+    );
+    cy.get('[data-cy="emissions-dropdown-petrol car"]').should(
+      "contain.text",
+      "Eating 13 steaks"
+    );
+    cy.get('[data-cy="emissions-dropdown-electric car"]').should(
+      "contain.text",
+      "Eating 4 steaks"
+    );
+    cy.get('[data-cy="emissions-dropdown-train"]').should(
+      "contain.text",
+      "Eating 1 steak"
     );
   });
 });

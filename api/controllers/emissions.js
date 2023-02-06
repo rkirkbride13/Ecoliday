@@ -21,6 +21,8 @@ const EmissionsController = {
         petrolCar: formatEmissions(emissions[2], req.query.passengers),
         electricCar: formatEmissions(emissions[3], req.query.passengers),
       },
+      to: res.locals.to,
+      from: res.locals.from,
     });
   },
 };

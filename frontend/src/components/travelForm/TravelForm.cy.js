@@ -1,24 +1,30 @@
 import TravelForm from "./TravelForm";
 
 describe("TravelForm", () => {
-  beforeEach(() => {
-    const setPassengersMock = cy.stub();
-    const setDistanceMock = cy.stub();
-    const setEmissionsMock = cy.stub();
-    const setRenderEmissionsMock = cy.stub();
+  let setEmissionsMock;
+  let setRenderEmissionsMock;
+  let setToDisplayMock;
+  let setFromDisplayMock;
 
-    cy.mount(<TravelForm 
-      distance={1000}
-      setDistance={setDistanceMock}
-      passengers={2}
-      setPassengers={setPassengersMock}
-      setEmissions={setEmissionsMock}
-      setRenderEmissions={setRenderEmissionsMock}
-    />);
+  beforeEach(() => {
+    setEmissionsMock = cy.stub();
+    setRenderEmissionsMock = cy.stub();
+    setToDisplayMock = cy.stub();
+    setFromDisplayMock = cy.stub();
+
+    cy.mount(
+      <TravelForm
+        setEmissions={setEmissionsMock}
+        setRenderEmissions={setRenderEmissionsMock}
+        setToDisplay={setToDisplayMock}
+        setFromDisplay={setFromDisplayMock}
+      />
+    );
   });
 
   it("has distance and no of people inputs and a submit buttom", () => {
-    cy.get('[data-cy="distance"]');
+    cy.get('[data-cy="from"]');
+    cy.get('[data-cy="to"]');
 
     cy.get('[data-cy="passengers"]');
 
@@ -27,19 +33,36 @@ describe("TravelForm", () => {
       .should("eq", "submit");
   });
 
-  it("request is sent when form is submitted", () => {
-    cy.intercept("GET", "/emissions?distance=1000&passengers=2").as(
+  it("request is sent when form is submitted with valid input values", () => {
+    cy.intercept("GET", "/emissions?from=London&to=Berlin&passengers=2").as(
       "emissionRequest"
     );
 
+    cy.get('[data-cy="from"]').type("London");
+    cy.get('[data-cy="to"]').type("Berlin");
+    cy.get('[data-cy="passengers"]').type("2");
     cy.get('[data-cy="travelFormSubmit"]').click();
 
     cy.wait("@emissionRequest");
   });
 
-  it("user can type in input fields", () => {
-    cy.get('[data-cy="distance"]').type("1000");
-    cy.get('[data-cy="passengers"]').type("2");
-  });
+  it("set functions are called when form is submitted with valid input values", () => {
+    cy.intercept("GET", "/emissions?from=London&to=Berlin&passengers=2").as(
+      "emissionRequest"
+    );
 
+    cy.get('[data-cy="from"]').type("London");
+    cy.get('[data-cy="to"]').type("Berlin");
+    cy.get('[data-cy="passengers"]').type("2");
+    cy.get('[data-cy="travelFormSubmit"]').click();
+
+    cy.wait("@emissionRequest").then(() => {
+      setTimeout(() => {
+        expect(setEmissionsMock).to.be.called;
+        expect(setRenderEmissionsMock).to.be.called;
+        expect(setToDisplayMock).to.be.called;
+        expect(setFromDisplayMock).to.be.called;
+      }, 1000);
+    });
+  });
 });

@@ -1,60 +1,83 @@
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const TravelForm = ({
-  distance,
-  setDistance,
-  passengers,
-  setPassengers,
   setEmissions,
   setRenderEmissions,
+  setToDisplay,
+  setFromDisplay,
 }) => {
   TravelForm.propTypes = {
-    distance: PropTypes.string,
-    setDistance: PropTypes.func,
-    passengers: PropTypes.string,
-    setPassengers: PropTypes.func,
     setEmissions: PropTypes.func,
     setRenderEmissions: PropTypes.func,
+    setToDisplay: PropTypes.func,
+    setFromDisplay: PropTypes.func,
   };
+
+  const [toForm, setToForm] = useState("");
+  const [fromForm, setFromForm] = useState("");
+  const [passengers, setPassengers] = useState("");
 
   const handleChange = (setFunction) => {
     return (event) => {
       setFunction(event.target.value);
     };
   };
-  console.log("In travel form")
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await fetch(`/emissions?distance=${distance}&passengers=${passengers}`)
+    await fetch(
+      `/emissions?from=${fromForm}&to=${toForm}&passengers=${passengers}`
+    )
       .then((response) => {
         return response.json();
       })
       .then((responseData) => {
-        // console.log(responseData.emissions);
         setEmissions(responseData.emissions);
         setRenderEmissions(true);
+        setToDisplay(responseData.to);
+        setFromDisplay(responseData.from);
       });
   };
 
   return (
-    <div id="travelForm">
-      <h1 className="text-3xl mb-10">Plan your journey...</h1>
+    <div id="travelForm" className="mt-8">
+      <h1 className="text-3xl mb-10 font-medium">Plan your journey...</h1>
       <form onSubmit={handleSubmit}>
-        <div id="distance" className="mb-5 text-xl mx-auto">
-          <label for="distance-input">Distance (km):</label>
+        <div id="from" className="mb-5 text-xl">
+          <label for="from-input">From: </label>
           <br />
           <input
-            id="distance-input"
-            data-cy="distance"
-            type="number"
-            min="0.0"
-            value={distance}
-            onChange={handleChange(setDistance)}
-            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 invalid:border-red-600 border-2 rounded peer"
+            id="from-input"
+            data-cy="from"
+            type="text"
+            required
+            value={fromForm}
+            onChange={handleChange(setFromForm)}
+            // pattern="\d*"
+            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
           />
-          <p className="invisible peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
-            Must be a positive whole number
+          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+            Enter details
+          </p>
+        </div>
+
+        <div id="to" className="mb-5 text-xl">
+          <label for="to-input">To: </label>
+          <br />
+          <input
+            id="to-input"
+            data-cy="to"
+            type="text"
+            required
+            value={toForm}
+            onChange={handleChange(setToForm)}
+            // pattern="\d*"
+            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
+          />
+          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+            Enter details
           </p>
         </div>
 
@@ -80,7 +103,7 @@ const TravelForm = ({
           data-cy="travelFormSubmit"
           type="submit"
           value="Submit"
-          className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"
+          className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
         />
       </form>
     </div>
