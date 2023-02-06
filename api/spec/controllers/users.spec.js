@@ -2,6 +2,7 @@ const app = require("../../app");
 const request = require("supertest");
 require("../mongodb_helper");
 const User = require("../../models/user");
+const bcrypt = require("bcryptjs");
 
 describe("/users", () => {
   beforeEach(async () => {
@@ -20,11 +21,21 @@ describe("/users", () => {
       let response = await request(app)
         .post("/users")
         .send({ email: "test@email.com", password: "password" });
-      let users = await User.find()
-      let newUser = users[users.length - 1]
-      expect(newUser.email).toEqual("test@email.com")
-      expect(newUser.password).toEqual("password")
-    })
+      let users = await User.find();
+      let newUser = users[users.length - 1];
+      expect(newUser.email).toEqual("test@email.com");
+    });
+
+    it("encrypts the password", async () => {
+      let response = await request(app)
+        .post("/users")
+        .send({ email: "test@email.com", password: "password" });
+      let users = await User.find();
+      let newUser = users[users.length - 1];
+      bcrypt
+        .compare("password", newUser.password)
+        .then((res) => expect(res).toBe(true));
+    });
   });
 
   describe("post when password NOT provided", () => {
@@ -36,12 +47,10 @@ describe("/users", () => {
     });
 
     it("does not NOT create a user", async () => {
-      await request(app)
-        .post("/users")
-        .send({ email: "test@email.com" });
-      let users = await User.find()
-      expect(users.length).toEqual(0)
-    })
+      await request(app).post("/users").send({ email: "test@email.com" });
+      let users = await User.find();
+      expect(users.length).toEqual(0);
+    });
   });
 
   describe("post when email NOT provided", () => {
@@ -53,12 +62,10 @@ describe("/users", () => {
     });
 
     it("does not NOT create a user", async () => {
-      await request(app)
-        .post("/users")
-        .send({ password: "password" });
-      let users = await User.find()
-      expect(users.length).toEqual(0)
-    })
+      await request(app).post("/users").send({ password: "password" });
+      let users = await User.find();
+      expect(users.length).toEqual(0);
+    });
   });
 
   describe("post when email is invalid", () => {
@@ -73,8 +80,8 @@ describe("/users", () => {
       await request(app)
         .post("/users")
         .send({ email: "testemail.com", password: "password" });
-      let users = await User.find()
-      expect(users.length).toEqual(0)
-    })
+      let users = await User.find();
+      expect(users.length).toEqual(0);
+    });
   });
 });
