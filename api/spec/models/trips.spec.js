@@ -37,9 +37,8 @@ describe("Trips Model", () => {
     });
   });
 
-  it("can save a trip to the database", () => {
+  it("can save a trip to the database", (done) => {
     trip.save((err) => {
-      console.log(trip);
       expect(err).toBeNull();
 
       Trip.find((err, trips) => {
