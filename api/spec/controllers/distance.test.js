@@ -18,33 +18,35 @@ describe("DistanceController", () => {
         passengers: "2",
       },
     };
-    res = { locals: {} };
+    res = { locals: { distance: {} } };
   });
 
-  it("sends a request when given a 'from' location", async () => {
-    await DistanceController.Calculate(req, res, () => {});
+  describe("plane distance", () => {
+    it("sends a request when given a 'from' location", async () => {
+      await DistanceController.Calculate(req, res, () => {});
 
-    expect(fetch).toHaveBeenCalledWith(
-      expect.stringContaining(
-        "https://api.geoapify.com/v1/geocode/search?text=London&format=json"
-      )
-    );
-  });
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "https://api.geoapify.com/v1/geocode/search?text=London&format=json"
+        )
+      );
+    });
 
-  it("sends a request when given a 'to' location", async () => {
-    await DistanceController.Calculate(req, res, () => {});
+    it("sends a request when given a 'to' location", async () => {
+      await DistanceController.Calculate(req, res, () => {});
 
-    expect(fetch).toHaveBeenCalledWith(
-      expect.stringContaining(
-        "https://api.geoapify.com/v1/geocode/search?text=Berlin&format=json"
-      )
-    );
-  });
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "https://api.geoapify.com/v1/geocode/search?text=Berlin&format=json"
+        )
+      );
+    });
 
-  it("add distance to req.query", async () => {
-    await DistanceController.Calculate(req, res, () => {});
+    it("add distance to req.query", async () => {
+      await DistanceController.Calculate(req, res, () => {});
 
-    expect(req.query.distance).toEqual(930.5084324079236);
+      expect(req.query.distance).toEqual(930.5084324079236);
+    });
   });
 
   it("check next has been called after distance calculated", async () => {
@@ -152,6 +154,19 @@ describe("DistanceController", () => {
             "origins=London&destinations=Berlin&mode=transit&transit_mode=rail&key="
         )
       );
+    });
+
+    it("add driving distance to res.locals", async () => {
+      await DistanceController.Calculate(req, res, () => {});
+
+      expect(res.locals.distance.petrolCar).toEqual(1108.327);
+      expect(res.locals.distance.electricCar).toEqual(1108.327);
+    });
+
+    it("add train distance to res.locals", async () => {
+      await DistanceController.Calculate(req, res, () => {});
+
+      expect(res.locals.distance.train).toEqual(1156.978);
     });
   });
 });

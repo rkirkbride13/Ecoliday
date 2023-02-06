@@ -20,6 +20,10 @@ const DistanceController = {
     res.locals.from = locationData[0].results[0].formatted;
     res.locals.to = locationData[1].results[0].formatted;
 
+    res.locals.distance.petrolCar = drivingData.distance.value / 1000;
+    res.locals.distance.electricCar = drivingData.distance.value / 1000;
+    res.locals.distance.train = railData.distance.value / 1000;
+
     next();
   },
 };
@@ -46,6 +50,7 @@ const sendDrivingDistanceRequest = (req) => {
 
   return fetch(MAPS_API_URL + searchParams.toString())
     .then((response) => response.json())
+    .then((data) => data.rows[0].elements[0])
     .catch((err) => console.error(err));
 };
 
@@ -59,6 +64,7 @@ const sendRailDistanceRequest = (req) => {
 
   return fetch(MAPS_API_URL + searchParams.toString())
     .then((response) => response.json())
+    .then((data) => data.rows[0].elements[0])
     .catch((err) => console.error(err));
 };
 
