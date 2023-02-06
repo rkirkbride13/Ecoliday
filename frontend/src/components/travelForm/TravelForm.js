@@ -6,17 +6,21 @@ const TravelForm = ({
   setRenderEmissions,
   setToDisplay,
   setFromDisplay,
+  passengers,
+  setPassengers,
 }) => {
   TravelForm.propTypes = {
     setEmissions: PropTypes.func,
     setRenderEmissions: PropTypes.func,
     setToDisplay: PropTypes.func,
     setFromDisplay: PropTypes.func,
+    passengers: PropTypes.string,
+    setPassengers: PropTypes.func,
   };
 
   const [toForm, setToForm] = useState("");
   const [fromForm, setFromForm] = useState("");
-  const [passengers, setPassengers] = useState("");
+  // const [passengers, setPassengers] = useState("");
 
   const handleChange = (setFunction) => {
     return (event) => {

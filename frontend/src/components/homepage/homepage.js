@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import TravelForm from '../travelForm/TravelForm';
-import EmissionResults from '../emissionResults/emissionResults';
-import NavBar from '../navBar/navBar';
+import React, { useState } from "react";
+import TravelForm from "../travelForm/TravelForm";
+import EmissionResults from "../emissionResults/emissionResults";
+import NavBar from "../navBar/navBar";
 
-const HomePage = ({navigate}) => {
-
+const HomePage = ({ navigate }) => {
   const [emissions, setEmissions] = useState("");
   const [renderEmissions, setRenderEmissions] = useState(false);
   const [toDisplay, setToDisplay] = useState("");
   const [fromDisplay, setFromDisplay] = useState("");
+  const [passengers, setPassengers] = useState("");
 
   const renderFoundLocation = () => {
     if (renderEmissions)
@@ -41,6 +41,8 @@ const HomePage = ({navigate}) => {
             setRenderEmissions={setRenderEmissions}
             setToDisplay={setToDisplay}
             setFromDisplay={setFromDisplay}
+            passengers={passengers}
+            setPassengers={setPassengers}
           />
           <div className="w-40"></div>
           <EmissionResults
@@ -48,11 +50,12 @@ const HomePage = ({navigate}) => {
             renderEmissions={renderEmissions}
             fromDisplay={fromDisplay}
             toDisplay={toDisplay}
+            passengers={passengers}
           />
         </div>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

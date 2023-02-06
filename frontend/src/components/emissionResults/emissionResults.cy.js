@@ -38,66 +38,6 @@ describe("EmissionResults", () => {
     cy.get('[data-cy="total-emissions-plane"]').should("not.exist");
   });
 
-  it("Renders component with total emission and per person result based on two people", () => {
-    cy.get('[data-cy="total-emissions-plane"]').should(
-      "contain.text",
-      "31.5 kg"
-    );
-    cy.get('[data-cy="person-emissions-plane"]').should(
-      "contain.text",
-      "Per Person: 15.8 kg"
-    );
-  });
-
-  it("Renders component with total emission plane and petrol car", () => {
-    cy.get('[data-cy="total-emissions-plane"]').should(
-      "contain.text",
-      "31.5 kg"
-    );
-    cy.get('[data-cy="person-emissions-plane"]').should(
-      "contain.text",
-      "Per Person: 15.8 kg"
-    );
-
-    cy.get('[data-cy="total-emissions-petrol car"]').should(
-      "contain.text",
-      "30.5 kg"
-    );
-    cy.get('[data-cy="person-emissions-petrol car"]').should(
-      "contain.text",
-      "Per Person: 14.8 kg"
-    );
-  });
-
-  it("Renders component with total emission plane, petrol car and electric car", () => {
-    cy.get('[data-cy="total-emissions-plane"]').should(
-      "contain.text",
-      "31.5 kg"
-    );
-    cy.get('[data-cy="person-emissions-plane"]').should(
-      "contain.text",
-      "Per Person: 15.8 kg"
-    );
-
-    cy.get('[data-cy="total-emissions-petrol car"]').should(
-      "contain.text",
-      "30.5 kg"
-    );
-    cy.get('[data-cy="person-emissions-petrol car"]').should(
-      "contain.text",
-      "Per Person: 14.8 kg"
-    );
-
-    cy.get('[data-cy="total-emissions-electric car"]').should(
-      "contain.text",
-      "29.5 kg"
-    );
-    cy.get('[data-cy="person-emissions-electric car"]').should(
-      "contain.text",
-      "Per Person: 13.8 kg"
-    );
-  });
-
   it("Renders component with total emission plane, petrol car, electric car and train", () => {
     cy.get('[data-cy="total-emissions-plane"]').should(
       "contain.text",
@@ -134,6 +74,24 @@ describe("EmissionResults", () => {
       "contain.text",
       "Per Person: 12.8 kg"
     );
+  });
+
+  describe("Save trip button", () => {
+    it("renders save button on form when search true", () => {
+      cy.get('[data-cy="saveButton"]')
+        .invoke("attr", "type")
+        .should("eq", "submit");
+    });
+
+    // it("can create a POST request to '/trips'", () => {
+    //   cy.intercept("POST", "/trips", { message: "OK" }).as("saveTrip");
+
+    //   cy.get('[data-cy="saveButton"]').click();
+
+    //   cy.wait("@saveTrip").then((interception) => {
+    //     expect(interception.response.body.message).to.eq("OK");
+    //   });
+    // });
   });
 });
 
