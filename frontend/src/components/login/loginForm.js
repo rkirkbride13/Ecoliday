@@ -34,6 +34,7 @@ const LoginForm = ({ navigate }) => {
 
   return (
     <>
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <div id="login-email" className="mb-5 text-xl mx-auto">
           <label for="login-email"></label>

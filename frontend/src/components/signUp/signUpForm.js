@@ -20,7 +20,7 @@ const SignUpForm = ({ navigate }) => {
     }).then((response) => {
       if (response.status === 201) {
         console.log("success");
-        navigate("/");
+        navigate("/login");
       } else {
         console.log("error");
         navigate("/signup");
@@ -30,6 +30,7 @@ const SignUpForm = ({ navigate }) => {
 
   return (
     <>
+      <h1>Sign up</h1>
       <form onSubmit={handleSubmit}>
         <div id="email" className="mb-5 text-xl mx-auto">
           <label for="email"></label>
