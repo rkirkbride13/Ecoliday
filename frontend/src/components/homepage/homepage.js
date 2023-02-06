@@ -8,7 +8,6 @@ const HomePage = ({ navigate }) => {
   const [renderEmissions, setRenderEmissions] = useState(false);
   const [toDisplay, setToDisplay] = useState("");
   const [fromDisplay, setFromDisplay] = useState("");
-  // const [logoutButton, setLogoutButton] = useState(false);
 
   const renderFoundLocation = () => {
     if (renderEmissions)
@@ -26,11 +25,15 @@ const HomePage = ({ navigate }) => {
       );
   };
 
+  const logout = () => {
+    window.localStorage.removeItem("token");
+  };
+
   return (
     <>
       <main id="main-container">
         <nav>
-          <NavBar />
+          <NavBar logout={logout} />
         </nav>
         <div className="h-28"></div>
 
