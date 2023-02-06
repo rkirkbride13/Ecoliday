@@ -5,6 +5,7 @@ import EmissionResults from "../emissionResults/emissionResults";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import SignUpForm from "../signUp/signUpForm";
 import HomePage from "../homepage/homepage";
+import UserTrips from "../userTrips/userTrips";
 
 const App = () => {
 
@@ -12,6 +13,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage navigate={ useNavigate()}/>} />
         <Route path="/signup" element={<SignUpForm navigate={ useNavigate()}/>} />
+        <Route path="/trips" element={<UserTrips navigate={ useNavigate()} />} />
       </Routes>
   );
 };
