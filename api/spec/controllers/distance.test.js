@@ -18,7 +18,7 @@ describe("DistanceController", () => {
         passengers: "2",
       },
     };
-    res = { locals: { distance: {} } };
+    res = { locals: {} };
   });
 
   describe("plane distance", () => {

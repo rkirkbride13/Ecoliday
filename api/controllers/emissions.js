@@ -4,13 +4,11 @@ const EmissionsController = {
       return;
     }
 
-    const URL = "https://beta3.api.climatiq.io/estimate";
-
     const emissions = await Promise.all([
-      GetPlaneEmissions(req),
-      GetTrainEmissions(req),
-      GetPetrolCarEmissions(req),
-      GetElectricCarEmissions(req),
+      GetPlaneEmissions(req, res),
+      GetTrainEmissions(req, res),
+      GetPetrolCarEmissions(req, res),
+      GetElectricCarEmissions(req, res),
     ]);
 
     res.status(200).json({
@@ -35,13 +33,13 @@ const formatEmissions = (emissions, passengers) => {
 };
 
 const CheckQuery = (req, res) => {
-  if (req.query.passengers === undefined || req.query.distance === undefined) {
+  if (req.query.passengers === undefined) {
     res.status(400).send();
     return false;
-  } else if (isNaN(req.query.passengers) || isNaN(req.query.distance)) {
+  } else if (isNaN(req.query.passengers)) {
     res.status(400).send();
     return false;
-  } else if (req.query.distance < 0 || req.query.passengers < 1) {
+  } else if (req.query.passengers < 1) {
     res.status(400).send();
     return false;
   } else if (!Number.isInteger(parseFloat(req.query.passengers))) {
@@ -51,26 +49,26 @@ const CheckQuery = (req, res) => {
   return true;
 };
 
-const GetElectricCarEmissions = (req) => {
+const GetElectricCarEmissions = (req, res) => {
   return fetchEmissions(
-    { distance: parseInt(req.query.distance) },
+    { distance: parseInt(res.locals.distance.electricCar) },
     "passenger_vehicle-vehicle_type_car-fuel_source_bev-engine_size_na-vehicle_age_na-vehicle_weight_na",
     "electricity_generation"
   );
 };
 
-const GetPetrolCarEmissions = (req) => {
+const GetPetrolCarEmissions = (req, res) => {
   return fetchEmissions(
-    { distance: parseInt(req.query.distance) },
+    { distance: parseInt(res.locals.distance.petrolCar) },
     "passenger_vehicle-vehicle_type_car-fuel_source_petrol-engine_size_na-vehicle_age_na-vehicle_weight_na",
     "fuel_combustion"
   );
 };
 
-const GetTrainEmissions = (req) => {
+const GetTrainEmissions = (req, res) => {
   return fetchEmissions(
     {
-      distance: parseInt(req.query.distance),
+      distance: parseInt(res.locals.distance.train),
       passengers: parseInt(req.query.passengers),
     },
     "passenger_train-route_type_international_rail-fuel_source_na",
@@ -78,10 +76,10 @@ const GetTrainEmissions = (req) => {
   );
 };
 
-const GetPlaneEmissions = (req) => {
+const GetPlaneEmissions = (req, res) => {
   return fetchEmissions(
     {
-      distance: parseInt(req.query.distance),
+      distance: parseInt(res.locals.distance.plane),
       passengers: parseInt(req.query.passengers),
     },
     "passenger_flight-route_type_international-aircraft_type_na-distance_short_haul_lt_3700km-class_economy-rf_included",

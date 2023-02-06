@@ -68,6 +68,8 @@ const updateRes = (res, locationData, drivingData, railData) => {
   res.locals.from = locationData[0].results[0].formatted;
   res.locals.to = locationData[1].results[0].formatted;
 
+  res.locals.distance = {};
+
   res.locals.distance.petrolCar =
     drivingData.status === "OK" ? drivingData.distance.value / 1000 : null;
   res.locals.distance.electricCar =

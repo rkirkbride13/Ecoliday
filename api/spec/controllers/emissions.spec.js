@@ -53,7 +53,8 @@ describe("/emissions", () => {
   describe("if request is successful", () => {
     let response;
     beforeEach(async () => {
-      mockLocationAPIResponses();
+      mockGeoapifyResponses();
+      mockMapsAPIResponses();
       mockEmissionsAPIResponses();
 
       response = await request(app).get(
@@ -140,7 +141,7 @@ describe("/emissions", () => {
   });
 });
 
-const mockLocationAPIResponses = () => {
+const mockGeoapifyResponses = () => {
   fetch.mockResponseOnce(
     JSON.stringify({
       results: [
@@ -156,6 +157,20 @@ const mockLocationAPIResponses = () => {
   fetch.mockResponseOnce(
     JSON.stringify({
       results: [{ lon: 13.40488, lat: 52.50176, formatted: "Berlin, Germany" }],
+    })
+  );
+};
+
+const mockMapsAPIResponses = () => {
+  fetch.mockResponseOnce(
+    JSON.stringify({
+      rows: [{ elements: [{ distance: { value: 1108327 }, status: "OK" }] }],
+    })
+  );
+
+  fetch.mockResponseOnce(
+    JSON.stringify({
+      rows: [{ elements: [{ distance: { value: 1156978 }, status: "OK" }] }],
     })
   );
 };
