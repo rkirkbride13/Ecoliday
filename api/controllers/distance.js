@@ -1,3 +1,7 @@
+const GEOAPIFY_URL = "https://api.geoapify.com/v1/geocode/search?";
+const MAPS_API_URL =
+  "https://maps.googleapis.com/maps/api/distancematrix/json?";
+
 const DistanceController = {
   Calculate: async (req, res, next) => {
     if (!req.query.from || !req.query.to) {
@@ -5,23 +9,57 @@ const DistanceController = {
       return;
     }
 
-    const locationData = await Promise.all(
-      [req.query.from, req.query.to].map((location) => {
-        return fetch(
-          `https://api.geoapify.com/v1/geocode/search?text=${location}&format=json&apiKey=${process.env.GEOAPIFY_KEY}`
-        )
-          .then((response) => response.json())
-          .catch((err) => console.error(err));
-      })
-    );
+    const locationData = await sendGeoapifyRequest(req);
+    const drivingData = await sendDrivingDistanceRequest(req);
+    const railData = await sendRailDistanceRequest(req);
 
     const error = checkError(locationData);
     if (error) return res.status(404).json({ message: error });
 
     updateRequest(req, res, locationData);
+    res.locals.from = locationData[0].results[0].formatted;
+    res.locals.to = locationData[1].results[0].formatted;
 
     next();
   },
+};
+
+const sendGeoapifyRequest = (req) => {
+  return Promise.all(
+    [req.query.from, req.query.to].map((location) => {
+      return fetch(
+        GEOAPIFY_URL +
+          `text=${location}&format=json&apiKey=${process.env.GEOAPIFY_KEY}`
+      )
+        .then((response) => response.json())
+        .catch((err) => console.error(err));
+    })
+  );
+};
+
+const sendDrivingDistanceRequest = (req) => {
+  const searchParams = new URLSearchParams();
+  searchParams.append("origins", "London");
+  searchParams.append("destinations", "Berlin");
+  searchParams.append("mode", "driving");
+  searchParams.append("key", process.env.GOOGLE_MAPS_KEY);
+
+  return fetch(MAPS_API_URL + searchParams.toString())
+    .then((response) => response.json())
+    .catch((err) => console.error(err));
+};
+
+const sendRailDistanceRequest = (req) => {
+  const searchParams = new URLSearchParams();
+  searchParams.append("origins", "London");
+  searchParams.append("destinations", "Berlin");
+  searchParams.append("mode", "transit");
+  searchParams.append("transit_mode", "rail");
+  searchParams.append("key", process.env.GOOGLE_MAPS_KEY);
+
+  return fetch(MAPS_API_URL + searchParams.toString())
+    .then((response) => response.json())
+    .catch((err) => console.error(err));
 };
 
 const updateRequest = (req, res, locationData) => {
@@ -31,10 +69,6 @@ const updateRequest = (req, res, locationData) => {
     locationData[1].results[0].lat,
     locationData[1].results[0].lon
   );
-
-  res.locals.from = locationData[0].results[0].formatted;
-
-  res.locals.to = locationData[1].results[0].formatted;
 };
 
 const checkError = (locationData) => {

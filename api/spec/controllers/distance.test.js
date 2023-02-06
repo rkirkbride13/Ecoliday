@@ -1,11 +1,15 @@
 const DistanceController = require("../../controllers/distance");
 require("jest-fetch-mock").enableMocks();
 
+const MAPS_API_URL =
+  "https://maps.googleapis.com/maps/api/distancematrix/json?";
+
 describe("DistanceController", () => {
   let req, res;
   beforeEach(() => {
     fetch.resetMocks();
-    mockEmissionsAPIResponses();
+    mockGeoapifyResponses();
+    mockMapsAPIResponses();
 
     req = {
       query: {
@@ -13,7 +17,6 @@ describe("DistanceController", () => {
         from: "London",
         passengers: "2",
       },
-      locals: {},
     };
     res = { locals: {} };
   });
@@ -117,20 +120,43 @@ describe("DistanceController", () => {
     expect(next).not.toHaveBeenCalled();
   });
 
-  it("adds formatted 'from' result to req.locals", async () => {
+  it("adds formatted 'from' result to res.locals", async () => {
     await DistanceController.Calculate(req, res, () => {});
 
     expect(res.locals.from).toEqual("London, ENG, United Kingdom");
   });
 
-  it("adds formatted 'to' result to req.locals", async () => {
+  it("adds formatted 'to' result to res.locals", async () => {
     await DistanceController.Calculate(req, res, () => {});
 
     expect(res.locals.to).toEqual("Berlin, Germany");
   });
+
+  describe("Maps API", () => {
+    it("sends request for driving distance", async () => {
+      await DistanceController.Calculate(req, res, () => {});
+
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringContaining(
+          MAPS_API_URL + "origins=London&destinations=Berlin&mode=driving&key="
+        )
+      );
+    });
+
+    it("sends request for rail distance", async () => {
+      await DistanceController.Calculate(req, res, () => {});
+
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringContaining(
+          MAPS_API_URL +
+            "origins=London&destinations=Berlin&mode=transit&transit_mode=rail&key="
+        )
+      );
+    });
+  });
 });
 
-const mockEmissionsAPIResponses = () => {
+const mockGeoapifyResponses = () => {
   fetch.mockResponseOnce(
     JSON.stringify({
       results: [
@@ -142,9 +168,24 @@ const mockEmissionsAPIResponses = () => {
       ],
     })
   );
+
   fetch.mockResponseOnce(
     JSON.stringify({
       results: [{ lon: 13.40488, lat: 52.50176, formatted: "Berlin, Germany" }],
+    })
+  );
+};
+
+const mockMapsAPIResponses = () => {
+  fetch.mockResponseOnce(
+    JSON.stringify({
+      rows: [{ elements: [{ distance: { value: 1108327 } }] }],
+    })
+  );
+
+  fetch.mockResponseOnce(
+    JSON.stringify({
+      rows: [{ elements: [{ distance: { value: 1156978 } }] }],
     })
   );
 };
