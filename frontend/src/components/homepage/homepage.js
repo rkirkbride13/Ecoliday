@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import TravelForm from '../travelForm/TravelForm';
-import EmissionResults from '../emissionResults/emissionResults';
-import NavBar from '../navBar/navBar';
+import React, { useState } from "react";
+import TravelForm from "../travelForm/TravelForm";
+import EmissionResults from "../emissionResults/emissionResults";
+import NavBar from "../navBar/navBar";
 
-const HomePage = ({navigate}) => {
-
+const HomePage = ({ navigate }) => {
   const [emissions, setEmissions] = useState("");
   const [renderEmissions, setRenderEmissions] = useState(false);
   const [toDisplay, setToDisplay] = useState("");
   const [fromDisplay, setFromDisplay] = useState("");
+  // const [logoutButton, setLogoutButton] = useState(false);
 
   const renderFoundLocation = () => {
     if (renderEmissions)
@@ -52,7 +52,7 @@ const HomePage = ({navigate}) => {
         </div>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
