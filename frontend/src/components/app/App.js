@@ -21,8 +21,6 @@ const App = () => {
             <span className="text-green-500 font-bold text-xl mr-2">To:</span>
             <span className="text-gray-600">{toDisplay}</span>
           </div>
-          {/* <h1 className="">From: {fromDisplay}</h1>
-          <h1 className="">To: {toDisplay}</h1> */}
         </div>
       );
   };
@@ -35,16 +33,6 @@ const App = () => {
         </nav>
         <div className="h-28"></div>
 
-        {/* <div className="flex flex-col w-fit mb-10 justify-center mx-auto">
-          <div className="">
-            <span>From:</span>
-            <span>{fromDisplay}</span>
-          </div>
-          <div className="">
-            <span>To:</span>
-            <span>{toDisplay}</span>
-          </div>
-        </div> */}
         {renderFoundLocation()}
         <div className="flex justify-center">
           <TravelForm

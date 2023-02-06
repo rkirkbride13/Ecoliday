@@ -34,7 +34,6 @@ const TravelForm = ({
         return response.json();
       })
       .then((responseData) => {
-        // console.log(responseData.emissions);
         setEmissions(responseData.emissions);
         setRenderEmissions(true);
         setToDisplay(responseData.to);
