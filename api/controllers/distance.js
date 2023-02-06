@@ -67,9 +67,14 @@ const sendRailDistanceRequest = (req) => {
 const updateRes = (res, locationData, drivingData, railData) => {
   res.locals.from = locationData[0].results[0].formatted;
   res.locals.to = locationData[1].results[0].formatted;
-  res.locals.distance.petrolCar = drivingData.distance.value / 1000;
-  res.locals.distance.electricCar = drivingData.distance.value / 1000;
-  res.locals.distance.train = railData.distance.value / 1000;
+
+  res.locals.distance.petrolCar =
+    drivingData.status === "OK" ? drivingData.distance.value / 1000 : null;
+  res.locals.distance.electricCar =
+    drivingData.status === "OK" ? drivingData.distance.value / 1000 : null;
+  res.locals.distance.train =
+    railData.status === "OK" ? railData.distance.value / 1000 : null;
+
   res.locals.distance.plane = getDistance(
     locationData[0].results[0].lat,
     locationData[0].results[0].lon,

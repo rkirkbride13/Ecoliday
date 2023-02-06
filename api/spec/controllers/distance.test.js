@@ -168,6 +168,25 @@ describe("DistanceController", () => {
 
       expect(res.locals.distance.train).toEqual(1156.978);
     });
+
+    it("sets res.locals to null if driving route not found", async () => {
+      fetch.resetMocks();
+      mockGeoapifyResponses();
+
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          rows: [{ elements: [{ status: "ZERO_RESULTS" }] }],
+        })
+      );
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          rows: [{ elements: [{ distance: { value: 1156978 } }] }],
+        })
+      );
+      await DistanceController.Calculate(req, res, () => {});
+      expect(res.locals.distance.petrolCar).toBe(null);
+      expect(res.locals.distance.electricCar).toBe(null);
+    });
   });
 });
 
@@ -194,13 +213,13 @@ const mockGeoapifyResponses = () => {
 const mockMapsAPIResponses = () => {
   fetch.mockResponseOnce(
     JSON.stringify({
-      rows: [{ elements: [{ distance: { value: 1108327 } }] }],
+      rows: [{ elements: [{ distance: { value: 1108327 }, status: "OK" }] }],
     })
   );
 
   fetch.mockResponseOnce(
     JSON.stringify({
-      rows: [{ elements: [{ distance: { value: 1156978 } }] }],
+      rows: [{ elements: [{ distance: { value: 1156978 }, status: "OK" }] }],
     })
   );
 };
