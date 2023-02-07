@@ -4,6 +4,8 @@ const EmissionResults = ({
   fromDisplay,
   toDisplay,
   passengers,
+  setSaveToggle,
+  saveToggle,
 }) => {
   if (renderEmissions === false) return <></>;
   const CO2eSteak = 14;
@@ -73,7 +75,9 @@ const EmissionResults = ({
     </div>
   ));
 
-  const handleSave = async () => {
+  const handleSave = async (e) => {
+    e.preventDefault();
+
     let response = await fetch("/trips", {
       method: "post",
       headers: {
@@ -89,11 +93,10 @@ const EmissionResults = ({
       }),
     });
 
-    await response.json();
-
     if (response.status !== 201) {
       console.log("trip NOT added");
     } else {
+      setSaveToggle(true);
       console.log("trip added");
     }
   };
@@ -106,6 +109,7 @@ const EmissionResults = ({
           <input
             data-cy="saveButton"
             type="submit"
+            disabled={saveToggle}
             value="Save"
             className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
           />

@@ -8,6 +8,7 @@ const TravelForm = ({
   setFromDisplay,
   passengers,
   setPassengers,
+  setSaveToggle,
 }) => {
   TravelForm.propTypes = {
     setEmissions: PropTypes.func,
@@ -16,6 +17,7 @@ const TravelForm = ({
     setFromDisplay: PropTypes.func,
     passengers: PropTypes.string,
     setPassengers: PropTypes.func,
+    setSaveToggle: PropTypes.func,
   };
 
   const [toForm, setToForm] = useState("");
@@ -42,6 +44,7 @@ const TravelForm = ({
         setRenderEmissions(true);
         setToDisplay(responseData.to);
         setFromDisplay(responseData.from);
+        setSaveToggle(false)
       });
   };
 

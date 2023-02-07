@@ -9,6 +9,7 @@ const HomePage = ({ navigate }) => {
   const [toDisplay, setToDisplay] = useState("");
   const [fromDisplay, setFromDisplay] = useState("");
   const [passengers, setPassengers] = useState("");
+  const [saveToggle, setSaveToggle] = useState(false); 
 
   const renderFoundLocation = () => {
     if (renderEmissions)
@@ -43,6 +44,7 @@ const HomePage = ({ navigate }) => {
             setFromDisplay={setFromDisplay}
             passengers={passengers}
             setPassengers={setPassengers}
+            setSaveToggle={setSaveToggle}
           />
           <div className="w-40"></div>
           <EmissionResults
@@ -51,6 +53,8 @@ const HomePage = ({ navigate }) => {
             fromDisplay={fromDisplay}
             toDisplay={toDisplay}
             passengers={passengers}
+            setSaveToggle={setSaveToggle}
+            saveToggle={saveToggle}
           />
         </div>
       </main>
