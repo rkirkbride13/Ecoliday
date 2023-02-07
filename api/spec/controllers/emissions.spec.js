@@ -143,7 +143,7 @@ describe("/emissions", () => {
 
     test("response includes formatted location", async () => {
       expect(response.body.to).toEqual("Berlin, Germany");
-      expect(response.body.from).toEqual("London, ENG, United Kingdom");
+      expect(response.body.from).toEqual("London, UK");
     });
   });
 
@@ -152,11 +152,15 @@ describe("/emissions", () => {
       mockGeoapifyResponses();
       fetch.mockResponseOnce(
         JSON.stringify({
+          destination_addresses: ["Berlin, Germany"],
+          origin_addresses: ["London, UK"],
           rows: [{ elements: [{ status: "ZERO_RESULTS" }] }],
         })
       );
       fetch.mockResponseOnce(
         JSON.stringify({
+          destination_addresses: ["Berlin, Germany"],
+          origin_addresses: ["London, UK"],
           rows: [
             { elements: [{ distance: { value: 1156978 }, status: "OK" }] },
           ],
@@ -178,6 +182,8 @@ describe("/emissions", () => {
       mockGeoapifyResponses();
       fetch.mockResponseOnce(
         JSON.stringify({
+          destination_addresses: ["Berlin, Germany"],
+          origin_addresses: ["London, UK"],
           rows: [
             { elements: [{ distance: { value: 1108327 }, status: "OK" }] },
           ],
@@ -185,6 +191,8 @@ describe("/emissions", () => {
       );
       fetch.mockResponseOnce(
         JSON.stringify({
+          destination_addresses: ["Berlin, Germany"],
+          origin_addresses: ["London, UK"],
           rows: [{ elements: [{ status: "ZERO_RESULTS" }] }],
         })
       );
@@ -203,19 +211,13 @@ describe("/emissions", () => {
 const mockGeoapifyResponses = () => {
   fetch.mockResponseOnce(
     JSON.stringify({
-      results: [
-        {
-          lon: -0.11534,
-          lat: 51.51413,
-          formatted: "London, ENG, United Kingdom",
-        },
-      ],
+      results: [{ lon: -0.11534, lat: 51.51413 }],
     })
   );
 
   fetch.mockResponseOnce(
     JSON.stringify({
-      results: [{ lon: 13.40488, lat: 52.50176, formatted: "Berlin, Germany" }],
+      results: [{ lon: 13.40488, lat: 52.50176 }],
     })
   );
 };
@@ -223,12 +225,16 @@ const mockGeoapifyResponses = () => {
 const mockMapsAPIResponses = () => {
   fetch.mockResponseOnce(
     JSON.stringify({
+      destination_addresses: ["Berlin, Germany"],
+      origin_addresses: ["London, UK"],
       rows: [{ elements: [{ distance: { value: 1108327 }, status: "OK" }] }],
     })
   );
 
   fetch.mockResponseOnce(
     JSON.stringify({
+      destination_addresses: ["Berlin, Germany"],
+      origin_addresses: ["London, UK"],
       rows: [{ elements: [{ distance: { value: 1156978 }, status: "OK" }] }],
     })
   );

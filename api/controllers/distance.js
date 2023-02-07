@@ -39,43 +39,61 @@ const sendGeoapifyRequest = (req) => {
 
 const sendDrivingDistanceRequest = (req) => {
   const searchParams = new URLSearchParams();
-  searchParams.append("origins", "London");
-  searchParams.append("destinations", "Berlin");
+  searchParams.append("origins", req.query.from);
+  searchParams.append("destinations", req.query.to);
   searchParams.append("mode", "driving");
   searchParams.append("key", process.env.GOOGLE_MAPS_KEY);
 
   return fetch(MAPS_API_URL + searchParams.toString())
     .then((response) => response.json())
-    .then((data) => data.rows[0].elements[0])
+    .then((data) => {
+      return {
+        to: data.destination_addresses[0],
+        from: data.origin_addresses[0],
+        data: data.rows[0].elements[0],
+      };
+    })
     .catch((err) => console.error(err));
 };
 
 const sendRailDistanceRequest = (req) => {
   const searchParams = new URLSearchParams();
-  searchParams.append("origins", "London");
-  searchParams.append("destinations", "Berlin");
+  searchParams.append("origins", req.query.from);
+  searchParams.append("destinations", req.query.to);
   searchParams.append("mode", "transit");
   searchParams.append("transit_mode", "rail");
   searchParams.append("key", process.env.GOOGLE_MAPS_KEY);
 
   return fetch(MAPS_API_URL + searchParams.toString())
     .then((response) => response.json())
-    .then((data) => data.rows[0].elements[0])
+    .then((data) => {
+      return {
+        to: data.destination_addresses[0],
+        from: data.origin_addresses[0],
+        data: data.rows[0].elements[0],
+      };
+    })
     .catch((err) => console.error(err));
 };
 
 const updateRes = (res, locationData, drivingData, railData) => {
-  res.locals.from = locationData[0].results[0].formatted;
-  res.locals.to = locationData[1].results[0].formatted;
+  res.locals.from = drivingData.from;
+  res.locals.to = drivingData.to;
 
   res.locals.distance = {};
 
   res.locals.distance.petrolCar =
-    drivingData.status === "OK" ? drivingData.distance.value / 1000 : null;
+    drivingData.data.status === "OK"
+      ? drivingData.data.distance.value / 1000
+      : null;
+
   res.locals.distance.electricCar =
-    drivingData.status === "OK" ? drivingData.distance.value / 1000 : null;
+    drivingData.data.status === "OK"
+      ? drivingData.data.distance.value / 1000
+      : null;
+
   res.locals.distance.train =
-    railData.status === "OK" ? railData.distance.value / 1000 : null;
+    railData.data.status === "OK" ? railData.data.distance.value / 1000 : null;
 
   res.locals.distance.plane = getDistance(
     locationData[0].results[0].lat,
