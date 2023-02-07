@@ -117,6 +117,84 @@ describe("EmissionResults", () => {
     });
   });
 
+  describe("with null results", () => {
+    it("Renders 'route not found' if plane results are null", () => {
+      cy.mount(
+        <EmissionResults
+          emissions={{
+            plane: { total: null, perPassenger: null },
+            petrolCar: { total: 30.547396, perPassenger: 14.773698 },
+            electricCar: { total: 29.547396, perPassenger: 13.773698 },
+            train: { total: 28.547396, perPassenger: 12.773698 },
+          }}
+          renderEmissions={true}
+        />
+      );
+
+      cy.get('[data-cy="total-emissions-plane"]').should(
+        "contain.text",
+        "Route not found"
+      );
+    });
+
+    it("Renders 'route not found' if petrolCar results are null", () => {
+      cy.mount(
+        <EmissionResults
+          emissions={{
+            plane: { total: 31.547396, perPassenger: 15.773698 },
+            petrolCar: { total: null, perPassenger: null },
+            electricCar: { total: 29.547396, perPassenger: 13.773698 },
+            train: { total: 28.547396, perPassenger: 12.773698 },
+          }}
+          renderEmissions={true}
+        />
+      );
+
+      cy.get('[data-cy="total-emissions-petrol car"]').should(
+        "contain.text",
+        "Route not found"
+      );
+    });
+
+    it("Renders 'route not found' if electricCar results are null", () => {
+      cy.mount(
+        <EmissionResults
+          emissions={{
+            plane: { total: 31.547396, perPassenger: 15.773698 },
+            petrolCar: { total: 30.547396, perPassenger: 14.773698 },
+            electricCar: { total: null, perPassenger: null },
+            train: { total: 28.547396, perPassenger: 12.773698 },
+          }}
+          renderEmissions={true}
+        />
+      );
+
+      cy.get('[data-cy="total-emissions-electric car"]').should(
+        "contain.text",
+        "Route not found"
+      );
+    });
+
+    it("Renders 'route not found' if train results are null", () => {
+      cy.mount(
+        <EmissionResults
+          emissions={{
+            plane: { total: 31.547396, perPassenger: 15.773698 },
+            petrolCar: { total: 30.547396, perPassenger: 14.773698 },
+            electricCar: { total: 29.547396, perPassenger: 13.773698 },
+            train: { total: null, perPassenger: null },
+          }}
+          renderEmissions={true}
+        />
+      );
+
+      cy.get('[data-cy="total-emissions-train"]').should(
+        "contain.text",
+        "Route not found"
+      );
+    });
+  });
+
   describe("Emission Context", () => {
     it("doesnt render the emissions context drop-down results", () => {
       cy.mount(<EmissionResults renderEmissions={false} />);
@@ -143,6 +221,84 @@ describe("EmissionResults", () => {
         "contain.text",
         "Eating 1 steak"
       );
+    });
+
+    describe("with null results", () => {
+      it("Doesn't render plane emissions context if results are null", () => {
+        cy.mount(
+          <EmissionResults
+            emissions={{
+              plane: { total: null, perPassenger: null },
+              petrolCar: { total: 30.547396, perPassenger: 14.773698 },
+              electricCar: { total: 29.547396, perPassenger: 13.773698 },
+              train: { total: 28.547396, perPassenger: 12.773698 },
+            }}
+            renderEmissions={true}
+          />
+        );
+
+        cy.get('[data-cy="emissions-dropdown-plane"]').should(
+          "not.contain.text",
+          "Equivalent to"
+        );
+      });
+
+      it("Doesn't render petrolCar emissions context if results are null", () => {
+        cy.mount(
+          <EmissionResults
+            emissions={{
+              plane: { total: 31.547396, perPassenger: 15.773698 },
+              petrolCar: { total: null, perPassenger: null },
+              electricCar: { total: 29.547396, perPassenger: 13.773698 },
+              train: { total: 28.547396, perPassenger: 12.773698 },
+            }}
+            renderEmissions={true}
+          />
+        );
+
+        cy.get('[data-cy="emissions-dropdown-petrol car"]').should(
+          "not.contain.text",
+          "Equivalent to"
+        );
+      });
+
+      it("Doesn't render electricCar emissions context if results are null", () => {
+        cy.mount(
+          <EmissionResults
+            emissions={{
+              plane: { total: 31.547396, perPassenger: 15.773698 },
+              petrolCar: { total: 30.547396, perPassenger: 14.773698 },
+              electricCar: { total: null, perPassenger: null },
+              train: { total: 28.547396, perPassenger: 12.773698 },
+            }}
+            renderEmissions={true}
+          />
+        );
+
+        cy.get('[data-cy="emissions-dropdown-electric car"]').should(
+          "not.contain.text",
+          "Equivalent to"
+        );
+      });
+
+      it("Doesn't render train emissions context if results are null", () => {
+        cy.mount(
+          <EmissionResults
+            emissions={{
+              plane: { total: 31.547396, perPassenger: 15.773698 },
+              petrolCar: { total: 30.547396, perPassenger: 14.773698 },
+              electricCar: { total: 29.547396, perPassenger: 13.773698 },
+              train: { total: null, perPassenger: null },
+            }}
+            renderEmissions={true}
+          />
+        );
+
+        cy.get('[data-cy="emissions-dropdown-train"]').should(
+          "not.contain.text",
+          "Equivalent to"
+        );
+      });
     });
   });
 });

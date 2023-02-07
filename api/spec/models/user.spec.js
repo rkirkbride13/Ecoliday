@@ -4,10 +4,8 @@ require("../mongodb_helper");
 const User = require("../../models/user");
 
 describe("User model", () => {
-  beforeEach((done) => {
-    mongoose.connection.collections.users.drop(() => {
-      done();
-    });
+  beforeEach(async () => {
+    await User.deleteMany();
   });
 
   it("has an email address", () => {
@@ -50,5 +48,25 @@ describe("User model", () => {
         done();
       });
     });
+  });
+
+  it("cannot have the same email as someone else", async () => {
+    const user1 = new User({
+      email: "test@email.com",
+      password: "password1",
+    });
+    await user1.save();
+
+    const user2 = new User({
+      email: "test@email.com",
+      password: "password2",
+    });
+    user2
+      .save()
+      .then(() => fail("No error raised when saving the file"))
+      .catch((error) => {});
+
+    const users = await User.find();
+    expect(users.length).toEqual(1);
   });
 });
