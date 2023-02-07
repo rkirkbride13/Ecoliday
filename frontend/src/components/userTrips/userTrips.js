@@ -50,8 +50,24 @@ const UserTrips = () => {
         >
           {trips
             .map((trip) => (
-              <div data-cy="trip" className="">
-                {`${trip.from} to ${trip.to} with ${trip.passengers} passengers`}
+              <div data-cy="trip">
+                <span className="text-green-500 font-bold mr-2">From:</span>
+
+                <span className="text-gray-600 font-medium">{trip.from}</span>
+                <span className="text-green-500 font-bold mr-2">
+                  <br></br>
+                  To:
+                </span>
+                <span className="text-gray-600 font-medium">{trip.to}</span>
+                <span className="text-green-500 font-bold mr-2">
+                  <br></br>
+                  Passengers:
+                </span>
+                <span className="text-gray-600 font-medium mb-2">
+                  {trip.passengers}
+                </span>
+                <div className="mb-2"></div>
+
                 <div className="mb-4">
                   <div className="overflow-x-auto">
                     <table className="table table-zebra w-full">
