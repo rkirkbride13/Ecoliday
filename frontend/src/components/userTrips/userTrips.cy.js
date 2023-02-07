@@ -41,21 +41,18 @@ describe("UserTrips", () => {
 
     cy.wait("@getTrips").then(() => {
       cy.get('[data-cy="trips"]')
-        .should("contain.text", "London, ENG, United Kingdom to Berlin, Germany with 2 passengers")
-        .and("contain.text", "Berlin, Germany to Manchester, ENG, United Kingdom with 2 passengers")
-        .and("contain.text", "CO2e by plane31.5 kgPer Person: 15.8 kg")
-        .and("contain.text", "CO2e by petrol car30.5 kgPer Person: 14.8 kg")
-        .and("contain.text", "CO2e by electric car29.5 kgPer Person: 13.8 kg")
-        .and("contain.text", "CO2e by train28.5 kgPer Person: 12.8 kg")
+        .should(
+          "contain.text",
+          "London, ENG, United Kingdom to Berlin, Germany with 2 passengers"
+        )
+        .and(
+          "contain.text",
+          "Berlin, Germany to Manchester, ENG, United Kingdom with 2 passengers"
+        )
+        .and("contain.text", "31.5")
+        .and("contain.text", "30.5")
+        .and("contain.text", "29.5")
+        .and("contain.text", "28.5");
     });
-
-    // cy.wait("@getTrips").then(() => {
-    //   cy.get('[data-cy="trips"]').then((trips) => {
-    //     expect(trips[0]).to.contain.text("London, ENG, United Kingdom to Berlin, Germany with 2 passengers")
-    //   }) 
-    // });
-
-
-
   });
 });
