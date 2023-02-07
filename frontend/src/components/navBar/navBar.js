@@ -31,7 +31,7 @@ const NavBar = ({ logout }) => {
             data-cy="navbar-saved"
             id="logo-link"
           >
-            Saved
+            Trips
           </a>
         </>
       );
