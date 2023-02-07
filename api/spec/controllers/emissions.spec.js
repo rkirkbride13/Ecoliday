@@ -134,6 +134,13 @@ describe("/emissions", () => {
       );
     });
 
+    test("distance results are added to the response", () => {
+      expect(response.body.emissions.plane.distance).toEqual(930.5084324079236);
+      expect(response.body.emissions.petrolCar.distance).toEqual(1108.327);
+      expect(response.body.emissions.electricCar.distance).toEqual(1108.327);
+      expect(response.body.emissions.train.distance).toEqual(1156.978);
+    });
+
     test("response includes formatted location", async () => {
       expect(response.body.to).toEqual("Berlin, Germany");
       expect(response.body.from).toEqual("London, ENG, United Kingdom");
@@ -141,7 +148,7 @@ describe("/emissions", () => {
   });
 
   describe("when land routes haven't been found", () => {
-    it("returns null petrolCar and electricCar emissions", async () => {
+    test("returns null petrolCar and electricCar emissions", async () => {
       mockGeoapifyResponses();
       fetch.mockResponseOnce(
         JSON.stringify({
@@ -167,7 +174,7 @@ describe("/emissions", () => {
       expect(response.body.emissions.electricCar.perPassenger).toBe(null);
     });
 
-    it("returns null train emissions", async () => {
+    test("returns null train emissions", async () => {
       mockGeoapifyResponses();
       fetch.mockResponseOnce(
         JSON.stringify({

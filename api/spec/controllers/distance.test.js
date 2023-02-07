@@ -42,7 +42,7 @@ describe("DistanceController", () => {
       );
     });
 
-    it("add distance to req.query", async () => {
+    it("add distance to res.locals", async () => {
       await DistanceController.Calculate(req, res, () => {});
 
       expect(res.locals.distance.plane).toEqual(930.5084324079236);

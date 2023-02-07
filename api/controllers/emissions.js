@@ -4,7 +4,13 @@ const EmissionsController = {
       return;
     }
 
-    const emissions = await Promise.all([
+    const emissions = {};
+    [
+      emissions.plane,
+      emissions.train,
+      emissions.petrolCar,
+      emissions.electricCar,
+    ] = await Promise.all([
       GetPlaneEmissions(req, res),
       GetTrainEmissions(req, res),
       GetPetrolCarEmissions(req, res),
@@ -13,23 +19,28 @@ const EmissionsController = {
 
     res.status(200).json({
       message: "OK",
-      emissions: {
-        plane: formatEmissions(emissions[0], req.query.passengers),
-        train: formatEmissions(emissions[1], req.query.passengers),
-        petrolCar: formatEmissions(emissions[2], req.query.passengers),
-        electricCar: formatEmissions(emissions[3], req.query.passengers),
-      },
+      emissions: formatEmissions(
+        res.locals.distance,
+        emissions,
+        req.query.passengers
+      ),
       to: res.locals.to,
       from: res.locals.from,
     });
   },
 };
 
-const formatEmissions = (emissions, passengers) => {
-  return {
-    total: emissions,
-    perPassenger: emissions === null ? null : emissions / passengers,
-  };
+const formatEmissions = (distance, emissions, passengers) => {
+  result = {};
+  Object.keys(emissions).forEach((key) => {
+    result[key] = {
+      distance: distance[key],
+      total: emissions[key],
+      perPassenger:
+        emissions[key] === null ? null : emissions[key] / passengers,
+    };
+  });
+  return result;
 };
 
 const CheckQuery = (req, res) => {
