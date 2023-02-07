@@ -172,8 +172,10 @@ describe("/emissions", () => {
         "/emissions?to=Berlin&from=London&passengers=4"
       );
 
+      expect(response.body.emissions.petrolCar.distance).toBe(null);
       expect(response.body.emissions.petrolCar.total).toBe(null);
       expect(response.body.emissions.petrolCar.perPassenger).toBe(null);
+      expect(response.body.emissions.electricCar.distance).toBe(null);
       expect(response.body.emissions.electricCar.total).toBe(null);
       expect(response.body.emissions.electricCar.perPassenger).toBe(null);
     });
@@ -202,6 +204,7 @@ describe("/emissions", () => {
         "/emissions?to=Berlin&from=London&passengers=4"
       );
 
+      expect(response.body.emissions.train.distance).toBe(null);
       expect(response.body.emissions.train.total).toBe(null);
       expect(response.body.emissions.train.perPassenger).toBe(null);
     });
