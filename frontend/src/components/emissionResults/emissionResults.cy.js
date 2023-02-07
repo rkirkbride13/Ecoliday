@@ -14,6 +14,8 @@ describe("EmissionResults", () => {
         fromDisplay={"London, ENG, United Kingdom"}
         toDisplay={"Berlin, Germany"}
         passengers={"2"}
+        saveToggle={false}
+        saveText={"SAVE"}
       />
     );
   });
@@ -74,6 +76,33 @@ describe("EmissionResults", () => {
       cy.get('[data-cy="saveButton"]')
         .invoke("attr", "type")
         .should("eq", "submit");
+
+      cy.get('[data-cy="saveButton"]')
+        .invoke("attr", "value")
+        .should("eq", "SAVE");
+    });
+
+    it("sets the SAVE button to SAVED if it has been clicked", () => {
+      cy.mount(
+        <EmissionResults
+          emissions={{
+            plane: { total: 302.0, perPassenger: 150.0 },
+            petrolCar: { total: 174.3, perPassenger: 87.2 },
+            electricCar: { total: 50.3, perPassenger: 25.2 },
+            train: { total: 8.9, perPassenger: 4.5 },
+          }}
+          renderEmissions={true}
+          fromDisplay={"London, ENG, United Kingdom"}
+          toDisplay={"Berlin, Germany"}
+          passengers={"2"}
+          saveToggle={true}
+          saveText={"SAVED"}
+        />
+      );
+
+      cy.get('[data-cy="saveButton"]')
+        .invoke("attr", "value")
+        .should("eq", "SAVED");
     });
 
     it("can create a POST request to '/trips'", (done) => {

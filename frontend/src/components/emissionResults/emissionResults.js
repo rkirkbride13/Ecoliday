@@ -6,8 +6,11 @@ const EmissionResults = ({
   passengers,
   setSaveToggle,
   saveToggle,
+  setSaveText,
+  saveText,
 }) => {
   if (renderEmissions === false) return <></>;
+
   const CO2eSteak = 14;
   const CO2eTshirt = 7;
   const CO2eTree = 25;
@@ -97,6 +100,7 @@ const EmissionResults = ({
       console.log("trip NOT added");
     } else {
       setSaveToggle(true);
+      setSaveText("SAVED");
       console.log("trip added");
     }
   };
@@ -110,7 +114,7 @@ const EmissionResults = ({
             data-cy="saveButton"
             type="submit"
             disabled={saveToggle}
-            value="Save"
+            value={saveText}
             className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
           />
         </form>
