@@ -9,7 +9,6 @@ const TravelForm = ({
   passengers,
   setPassengers,
   setSaveToggle,
-  setSaveText,
 }) => {
   TravelForm.propTypes = {
     setEmissions: PropTypes.func,
@@ -19,7 +18,6 @@ const TravelForm = ({
     passengers: PropTypes.string,
     setPassengers: PropTypes.func,
     setSaveToggle: PropTypes.func,
-    setSaveText: PropTypes.func,
   };
 
   const [toForm, setToForm] = useState("");
@@ -47,7 +45,6 @@ const TravelForm = ({
         setToDisplay(responseData.to);
         setFromDisplay(responseData.from);
         setSaveToggle(false);
-        setSaveText("SAVE");
       });
   };
 
