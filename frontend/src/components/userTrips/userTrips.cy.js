@@ -43,11 +43,11 @@ describe("UserTrips", () => {
       cy.get('[data-cy="trips"]')
         .should(
           "contain.text",
-          "London, ENG, United Kingdom to Berlin, Germany with 2 passengers"
+          "From:Berlin, GermanyTo:Manchester, ENG, United KingdomPassengers:2"
         )
         .and(
           "contain.text",
-          "Berlin, Germany to Manchester, ENG, United Kingdom with 2 passengers"
+          "From:London, ENG, United KingdomTo:Berlin, GermanyPassengers:2"
         )
         .and("contain.text", "31.5")
         .and("contain.text", "30.5")
