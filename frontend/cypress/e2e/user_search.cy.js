@@ -175,4 +175,91 @@ describe("User emission search", () => {
       );
     });
   });
+
+  describe("from London to New York", () => {
+    beforeEach(() => {
+      cy.intercept(
+        "GET",
+        "/emissions?from=London&to=New%20York&passengers=2",
+        (req) => {
+          req.reply({
+            statusCode: 200,
+            body: {
+              message: "OK",
+              emissions: {
+                plane: { total: 31.547396, perPassenger: 15.773698 },
+                petrolCar: { total: null, perPassenger: null },
+                electricCar: { total: null, perPassenger: null },
+                train: { total: null, perPassenger: null },
+              },
+              from: "London, UK",
+              to: "New York, NY, USA",
+            },
+          });
+        }
+      ).as("getEmissions");
+
+      cy.visit("/");
+      cy.get('[data-cy="from"]').type("London");
+      cy.get('[data-cy="to"]').type("New York");
+      cy.get('[data-cy="passengers"]').type("2");
+      cy.get('[data-cy="travelFormSubmit"]').click();
+    });
+
+    it("shows plane results", () => {
+      cy.wait("@getEmissions").then(() => {
+        cy.get('[data-cy="emissions-dropdown-plane"]').should(
+          "contain.text",
+          "31.5 kg"
+        );
+
+        cy.get('[data-cy="emissions-dropdown-plane"]').should(
+          "contain.text",
+          "Equivalent to"
+        );
+      });
+    });
+
+    it("doesn't show petrol car results", () => {
+      cy.wait("@getEmissions").then(() => {
+        cy.get('[data-cy="emissions-dropdown-petrol car"]').should(
+          "contain.text",
+          "Route not found"
+        );
+
+        cy.get('[data-cy="emissions-dropdown-petrol car"]').should(
+          "not.contain.text",
+          "Equivalent to"
+        );
+      });
+    });
+
+    it("doesn't show electric car results", () => {
+      cy.wait("@getEmissions").then(() => {
+        cy.get('[data-cy="emissions-dropdown-electric car"]').should(
+          "contain.text",
+          "Route not found"
+        );
+
+        cy.get('[data-cy="emissions-dropdown-electric car"]').should(
+          "not.contain.text",
+          "Equivalent to"
+        );
+      });
+    });
+
+    it("doesn't show train results", () => {
+      cy.wait("@getEmissions").then(() => {
+        cy.get('[data-cy="emissions-dropdown-train"]').should(
+          "contain.text",
+          "Route not found"
+        );
+
+        cy.get('[data-cy="emissions-dropdown-train"]').should(
+          "not.contain.text",
+          "Equivalent to"
+        );
+      });
+    });
+  });
 });
