@@ -35,12 +35,10 @@ describe("Siging in", () => {
   describe("Navbar login and logout feature", () => {
     it("redirects to login page from the navbar of the user doesnt have a token", () => {
       cy.visit("/");
-      cy.get('[data-cy="navbar-login-logout"]').click();
+      cy.get('[data-cy="navbar-login"]').click();
 
       cy.url().should("include", "/login");
     });
-
-    // cy.login("newuser100@email.com", "12345678");
 
     it("redirects to the homepage when the user has a token", () => {
       cy.session(["newuser100@email.com", "12345678"], () => {
@@ -53,7 +51,7 @@ describe("Siging in", () => {
         });
       });
       cy.visit("/");
-      cy.get('[data-cy="navbar-login-logout"]').click();
+      cy.get('[data-cy="navbar-logout"]').click();
 
       cy.url().should("equal", "http://localhost:3000/");
     });
