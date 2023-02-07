@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TravelForm from "../travelForm/TravelForm";
 import EmissionResults from "../emissionResults/emissionResults";
 import NavBar from "../navBar/navBar";
@@ -8,6 +8,15 @@ const HomePage = ({ navigate }) => {
   const [renderEmissions, setRenderEmissions] = useState(false);
   const [toDisplay, setToDisplay] = useState("");
   const [fromDisplay, setFromDisplay] = useState("");
+
+  // const [token, setToken] = useState(window.localStorage.getItem("token"));
+
+  // useEffect(() => {
+  //   if (token) {
+  //     window.localStorage.removeItem("token");
+
+  //   }
+  // }, []);
 
   const renderFoundLocation = () => {
     if (renderEmissions)
