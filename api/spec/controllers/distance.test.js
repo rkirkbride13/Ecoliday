@@ -50,11 +50,14 @@ describe("DistanceController", () => {
 
     it("responds with 404 if results is empty", async () => {
       fetch.resetMocks();
-      fetch.mockResponse(
-        JSON.stringify({
-          results: [],
-        })
-      );
+      for (let i = 0; i < 2; i++) {
+        fetch.mockResponseOnce(
+          JSON.stringify({
+            results: [],
+          })
+        );
+      }
+      mockMapsAPIResponses();
 
       const json = jest.fn((object) => {});
       const res = {
