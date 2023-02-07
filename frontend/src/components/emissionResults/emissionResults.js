@@ -16,7 +16,7 @@ const EmissionResults = ({
     { type: "train", emissions: emissions.train },
   ];
 
-  const stat = (result) => {
+  const emissionStats = (result) => {
     if (Object.values(result.emissions).some((value) => value === null)) {
       return (
         <div className="stats border">
@@ -34,7 +34,7 @@ const EmissionResults = ({
     } else {
       return (
         <>
-          {dropdownContent(result)}
+          {emissionsContext(result)}
           <div className="stats border">
             <div className="stat w-60">
               <div className="stat-title">CO2e by {result.type}</div>
@@ -55,7 +55,7 @@ const EmissionResults = ({
     }
   };
 
-  const dropdownContent = (result) => {
+  const emissionsContext = (result) => {
     return (
       <ul
         tabIndex={0}
@@ -96,7 +96,7 @@ const EmissionResults = ({
         data-cy={`emissions-dropdown-${result.type}`}
         className="dropdown dropdown-hover dropdown-right mb-2"
       >
-        {stat(result)}
+        {emissionStats(result)}
       </div>
     </div>
   ));
