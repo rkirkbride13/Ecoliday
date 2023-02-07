@@ -5,12 +5,16 @@ describe("TravelForm", () => {
   let setRenderEmissionsMock;
   let setToDisplayMock;
   let setFromDisplayMock;
+  let setPassengersMock;
+  let passengersMock;
 
   beforeEach(() => {
     setEmissionsMock = cy.stub();
     setRenderEmissionsMock = cy.stub();
     setToDisplayMock = cy.stub();
     setFromDisplayMock = cy.stub();
+    setPassengersMock = cy.stub();
+    passengersMock = 2;
 
     cy.mount(
       <TravelForm
@@ -18,6 +22,8 @@ describe("TravelForm", () => {
         setRenderEmissions={setRenderEmissionsMock}
         setToDisplay={setToDisplayMock}
         setFromDisplay={setFromDisplayMock}
+        setPassengers={setPassengersMock}
+        passengers={passengersMock}
       />
     );
   });
@@ -62,6 +68,7 @@ describe("TravelForm", () => {
         expect(setRenderEmissionsMock).to.be.called;
         expect(setToDisplayMock).to.be.called;
         expect(setFromDisplayMock).to.be.called;
+        expect(setPassengersMock).to.be.called;
       }, 1000);
     });
   });

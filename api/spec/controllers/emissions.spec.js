@@ -53,7 +53,8 @@ describe("/emissions", () => {
   describe("if request is successful", () => {
     let response;
     beforeEach(async () => {
-      mockLocationAPIResponses();
+      mockGeoapifyResponses();
+      mockMapsAPIResponses();
       mockEmissionsAPIResponses();
 
       response = await request(app).get(
@@ -133,29 +134,111 @@ describe("/emissions", () => {
       );
     });
 
+    test("distance results are added to the response", () => {
+      expect(response.body.emissions.plane.distance).toEqual(930.5084324079236);
+      expect(response.body.emissions.petrolCar.distance).toEqual(1108.327);
+      expect(response.body.emissions.electricCar.distance).toEqual(1108.327);
+      expect(response.body.emissions.train.distance).toEqual(1156.978);
+    });
+
     test("response includes formatted location", async () => {
       expect(response.body.to).toEqual("Berlin, Germany");
-      expect(response.body.from).toEqual("London, ENG, United Kingdom");
+      expect(response.body.from).toEqual("London, UK");
+    });
+  });
+
+  describe("when land routes haven't been found", () => {
+    test("returns null petrolCar and electricCar emissions", async () => {
+      mockGeoapifyResponses();
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          destination_addresses: ["Berlin, Germany"],
+          origin_addresses: ["London, UK"],
+          rows: [{ elements: [{ status: "ZERO_RESULTS" }] }],
+        })
+      );
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          destination_addresses: ["Berlin, Germany"],
+          origin_addresses: ["London, UK"],
+          rows: [
+            { elements: [{ distance: { value: 1156978 }, status: "OK" }] },
+          ],
+        })
+      );
+      mockEmissionsAPIResponses();
+
+      let response = await request(app).get(
+        "/emissions?to=Berlin&from=London&passengers=4"
+      );
+
+      expect(response.body.emissions.petrolCar.distance).toBe(null);
+      expect(response.body.emissions.petrolCar.total).toBe(null);
+      expect(response.body.emissions.petrolCar.perPassenger).toBe(null);
+      expect(response.body.emissions.electricCar.distance).toBe(null);
+      expect(response.body.emissions.electricCar.total).toBe(null);
+      expect(response.body.emissions.electricCar.perPassenger).toBe(null);
+    });
+
+    test("returns null train emissions", async () => {
+      mockGeoapifyResponses();
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          destination_addresses: ["Berlin, Germany"],
+          origin_addresses: ["London, UK"],
+          rows: [
+            { elements: [{ distance: { value: 1108327 }, status: "OK" }] },
+          ],
+        })
+      );
+      fetch.mockResponseOnce(
+        JSON.stringify({
+          destination_addresses: ["Berlin, Germany"],
+          origin_addresses: ["London, UK"],
+          rows: [{ elements: [{ status: "ZERO_RESULTS" }] }],
+        })
+      );
+      mockEmissionsAPIResponses();
+
+      let response = await request(app).get(
+        "/emissions?to=Berlin&from=London&passengers=4"
+      );
+
+      expect(response.body.emissions.train.distance).toBe(null);
+      expect(response.body.emissions.train.total).toBe(null);
+      expect(response.body.emissions.train.perPassenger).toBe(null);
     });
   });
 });
 
-const mockLocationAPIResponses = () => {
+const mockGeoapifyResponses = () => {
   fetch.mockResponseOnce(
     JSON.stringify({
-      results: [
-        {
-          lon: -0.11534,
-          lat: 51.51413,
-          formatted: "London, ENG, United Kingdom",
-        },
-      ],
+      results: [{ lon: -0.11534, lat: 51.51413 }],
     })
   );
 
   fetch.mockResponseOnce(
     JSON.stringify({
-      results: [{ lon: 13.40488, lat: 52.50176, formatted: "Berlin, Germany" }],
+      results: [{ lon: 13.40488, lat: 52.50176 }],
+    })
+  );
+};
+
+const mockMapsAPIResponses = () => {
+  fetch.mockResponseOnce(
+    JSON.stringify({
+      destination_addresses: ["Berlin, Germany"],
+      origin_addresses: ["London, UK"],
+      rows: [{ elements: [{ distance: { value: 1108327 }, status: "OK" }] }],
+    })
+  );
+
+  fetch.mockResponseOnce(
+    JSON.stringify({
+      destination_addresses: ["Berlin, Germany"],
+      origin_addresses: ["London, UK"],
+      rows: [{ elements: [{ distance: { value: 1156978 }, status: "OK" }] }],
     })
   );
 };

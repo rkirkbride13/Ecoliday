@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TravelForm from "../travelForm/TravelForm";
 import EmissionResults from "../emissionResults/emissionResults";
 import NavBar from "../navBar/navBar";
@@ -8,15 +8,8 @@ const HomePage = ({ navigate }) => {
   const [renderEmissions, setRenderEmissions] = useState(false);
   const [toDisplay, setToDisplay] = useState("");
   const [fromDisplay, setFromDisplay] = useState("");
-
-  // const [token, setToken] = useState(window.localStorage.getItem("token"));
-
-  // useEffect(() => {
-  //   if (token) {
-  //     window.localStorage.removeItem("token");
-
-  //   }
-  // }, []);
+  const [passengers, setPassengers] = useState("");
+  const [saveToggle, setSaveToggle] = useState(false);
 
   const renderFoundLocation = () => {
     if (renderEmissions)
@@ -53,6 +46,9 @@ const HomePage = ({ navigate }) => {
             setRenderEmissions={setRenderEmissions}
             setToDisplay={setToDisplay}
             setFromDisplay={setFromDisplay}
+            passengers={passengers}
+            setPassengers={setPassengers}
+            setSaveToggle={setSaveToggle}
           />
           <div className="w-40"></div>
           <EmissionResults
@@ -60,6 +56,9 @@ const HomePage = ({ navigate }) => {
             renderEmissions={renderEmissions}
             fromDisplay={fromDisplay}
             toDisplay={toDisplay}
+            passengers={passengers}
+            setSaveToggle={setSaveToggle}
+            saveToggle={saveToggle}
           />
         </div>
       </main>
