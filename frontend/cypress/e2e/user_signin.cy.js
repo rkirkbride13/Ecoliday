@@ -31,4 +31,31 @@ describe("Siging in", () => {
       cy.url().should("include", "/login");
     });
   });
+
+  describe("Navbar login and logout feature", () => {
+    it("redirects to login page from the navbar of the user doesnt have a token", () => {
+      cy.visit("/");
+      cy.get('[data-cy="navbar-login-logout"]').click();
+
+      cy.url().should("include", "/login");
+    });
+
+    // cy.login("newuser100@email.com", "12345678");
+
+    it("redirects to the homepage when the user has a token", () => {
+      cy.session(["newuser100@email.com", "12345678"], () => {
+        cy.request({
+          method: "POST",
+          url: "/tokens",
+          body: { email: "newuser100@email.com", password: "12345678" },
+        }).then(({ body }) => {
+          window.localStorage.setItem("token", body.token);
+        });
+      });
+      cy.visit("/");
+      cy.get('[data-cy="navbar-login-logout"]').click();
+
+      cy.url().should("equal", "http://localhost:3000/");
+    });
+  });
 });

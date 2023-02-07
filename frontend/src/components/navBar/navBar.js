@@ -48,6 +48,7 @@ const NavBar = ({ logout }) => {
         className="absolute top-2 right-2 btn font-lobster text-green-500 bg-white hover:bg-slate-200 text-right hover:text-green-700 text-1xl border-none"
         onClick={hasToken ? logout : null}
         href={hasToken ? "/" : "/login"}
+        data-cy="navbar-login-logout"
         id="logo-link"
       >
         {hasToken ? "Logout" : "Login"}

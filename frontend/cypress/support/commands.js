@@ -18,6 +18,23 @@ Cypress.Commands.add("signup", (email, password) => {
   cy.get('[data-cy="signup-submit"]').click();
 });
 
+// Cypress.Commands.add("login", (email, password) => {
+//   cy.request({
+//     method: 'POST',
+//     url: "http://localhost:8080/tokens",
+//     body: {
+//         email: email,
+//         password: password,
+//     }
+//   // })
+//   // .then((response) => {
+//   //   return response.json();
+//   })
+//   .then((data) => {
+//     window.localStorage.setItem("token", data.token)
+//   })
+// }
+
 //
 //
 // -- This is a child command --
