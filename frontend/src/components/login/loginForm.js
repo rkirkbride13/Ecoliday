@@ -1,56 +1,60 @@
 import React, { useState } from "react";
 
-const SignUpForm = ({ navigate }) => {
+const LoginForm = ({ navigate }) => {
   const handleChange = (setFunction) => {
     return (event) => {
       setFunction(event.target.value);
     };
   };
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    fetch("/users", {
+    let response = await fetch("/tokens", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email: email, password: password }),
-    }).then((response) => {
-      if (response.status === 201) {
-        console.log("success");
-        navigate("/login");
-      } else {
-        console.log("error");
-        navigate("/signup");
-      }
     });
+
+    if (response.status !== 201) {
+      console.log("failed login");
+      navigate("/login");
+    } else {
+      console.log("successful login");
+      let data = await response.json();
+      window.localStorage.setItem("token", data.token);
+      navigate("/");
+    }
   };
 
   return (
     <>
-      <h1>Sign up</h1>
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <div id="email" className="mb-5 text-xl mx-auto">
-          <label for="email"></label>
+        <div id="login-email" className="mb-5 text-xl mx-auto">
+          <label for="login-email"></label>
           <br />
           <input
-            id="email-input"
+            id="login-email-input"
             className="pl-1 border-2 rounded peer"
-            data-cy="email"
+            data-cy="login-email"
             type="text"
             value={email}
             onChange={handleChange(setEmail)}
           />
         </div>
-        <div id="password" className="mb-5 text-xl mx-auto">
-          <label for="password"></label>
+        <div id="login-password" className="mb-5 text-xl mx-auto">
+          <label for="login-password"></label>
           <br />
           <input
-            id="password-input"
+            id="login-password-input"
             className="pl-1 border-2 rounded peer"
-            data-cy="password"
+            data-cy="login-password"
             type="password"
             value={password}
             onChange={handleChange(setPassword)}
@@ -58,9 +62,9 @@ const SignUpForm = ({ navigate }) => {
         </div>
         <div>
           <input
-            id="signup-submit"
+            id="login-submit"
             className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"
-            data-cy="signup-submit"
+            data-cy="login-submit"
             type="submit"
             value="submit"
           />
@@ -70,4 +74,4 @@ const SignUpForm = ({ navigate }) => {
   );
 };
 
-export default SignUpForm;
+export default LoginForm;

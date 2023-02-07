@@ -27,11 +27,15 @@ const HomePage = ({ navigate }) => {
       );
   };
 
+  const logout = () => {
+    window.localStorage.removeItem("token");
+  };
+
   return (
     <>
       <main id="main-container">
         <nav>
-          <NavBar />
+          <NavBar logout={logout} />
         </nav>
         <div className="h-28"></div>
 

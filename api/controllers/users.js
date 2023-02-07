@@ -23,6 +23,7 @@ const UsersController = {
         res.status(201).json({ message: "OK" });
       }
     });
+    console.log(await User.find());
   },
 };
 
