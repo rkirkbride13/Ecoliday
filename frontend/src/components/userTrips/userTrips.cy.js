@@ -1,4 +1,5 @@
 import UserTrips from "./userTrips";
+const navigate = () => {};
 
 describe("UserTrips", () => {
   let trip = {
@@ -37,7 +38,7 @@ describe("UserTrips", () => {
       });
     }).as("getTrips");
 
-    cy.mount(<UserTrips />);
+    cy.mount(<UserTrips navigate={navigate} />);
 
     cy.wait("@getTrips").then(() => {
       cy.get('[data-cy="trips"]')

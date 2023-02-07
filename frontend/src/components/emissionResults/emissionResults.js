@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 const EmissionResults = ({
   emissions,
   renderEmissions,
@@ -7,6 +9,7 @@ const EmissionResults = ({
   setSaveToggle,
   saveToggle,
 }) => {
+  const [token] = useState(window.localStorage.getItem("token"));
   if (renderEmissions === false) return <></>;
 
   const CO2eSteak = 14;
@@ -112,12 +115,12 @@ const EmissionResults = ({
       method: "post",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
 
       body: JSON.stringify({
         to: toDisplay,
         from: fromDisplay,
-        user_id: `63e0ddcb06e90257776466a2`,
         passengers: passengers,
         emissions: emissions,
       }),

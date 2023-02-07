@@ -15,7 +15,7 @@ const TripsController = {
   },
 
   FindByUser: (req, res) => {
-    Trip.find({ user_id: req.get("user_id") }, async (err, trips) => {
+    Trip.find({ user_id: req.body.user_id }, async (err, trips) => {
       if (err) {
         throw err;
       }
