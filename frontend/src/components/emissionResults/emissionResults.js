@@ -3,8 +3,12 @@ const EmissionResults = ({
   renderEmissions,
   fromDisplay,
   toDisplay,
+  passengers,
+  setSaveToggle,
+  saveToggle,
 }) => {
   if (renderEmissions === false) return <></>;
+
   const CO2eSteak = 14;
   const CO2eTshirt = 7;
   const CO2eTree = 25;
@@ -101,10 +105,45 @@ const EmissionResults = ({
     </div>
   ));
 
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    let response = await fetch("/trips", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+        to: toDisplay,
+        from: fromDisplay,
+        user_id: `63e0ddcb06e90257776466a2`,
+        passengers: passengers,
+        emissions: emissions,
+      }),
+    });
+
+    if (response.status !== 201) {
+      console.log("trip NOT added");
+    } else {
+      setSaveToggle(true);
+      console.log("trip added");
+    }
+  };
+
   return (
     <>
       <div id="emissionResults">
         <div>{resultDivs}</div>
+        <form onSubmit={handleSave}>
+          <input
+            data-cy="saveButton"
+            type="submit"
+            disabled={saveToggle}
+            value={saveToggle ? "SAVED" : "SAVE"}
+            className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
+          />
+        </form>
       </div>
     </>
   );
