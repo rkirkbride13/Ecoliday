@@ -6,7 +6,7 @@ const UserTrips = ({ navigate }) => {
   const [token] = useState(window.localStorage.getItem("token"));
   // uncomment when tokens added const user_id = window.localStorage.getItem("user_id");
 
-  const unpackEmissionsTwo = (trip) => {
+  const unpackEmissions = (trip) => {
     return [
       {
         type: "Total",
@@ -89,13 +89,13 @@ const UserTrips = ({ navigate }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {unpackEmissionsTwo(trip).map((emissions) => (
+                        {unpackEmissions(trip).map((emissions) => (
                           <tr>
                             <td>{emissions.type}</td>
-                            <td>{`${emissions.plane.toFixed(1)}`}</td>
-                            <td>{`${emissions.petrolCar.toFixed(1)}`}</td>
-                            <td>{`${emissions.electricCar.toFixed(1)}`}</td>
-                            <td>{`${emissions.train.toFixed(1)}`}</td>
+                            <td>{emissions.plane ? `${emissions.plane.toFixed(1)}` : "N/A"}</td>
+                            <td>{emissions.petrolCar ? `${emissions.petrolCar.toFixed(1)}` : "N/A"}</td>
+                            <td>{emissions.electricCar ? `${emissions.electricCar.toFixed(1)}` : "N/A"}</td>
+                            <td>{emissions.train ? `${emissions.train.toFixed(1)}` : "N/A"}</td>
                           </tr>
                         ))}
                       </tbody>
