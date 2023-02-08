@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../navBar/navBar";
 
-const UserTrips = () => {
+const UserTrips = ({ navigate }) => {
   const [trips, setTrips] = useState([]);
+  const [token] = useState(window.localStorage.getItem("token"));
   // uncomment when tokens added const user_id = window.localStorage.getItem("user_id");
 
   const unpackEmissionsTwo = (trip) => {
@@ -25,23 +26,30 @@ const UserTrips = () => {
   };
 
   useEffect(() => {
-    fetch("/trips", {
-      headers: {
-        // update user_id below to take the user id from local storage when tokens implemented
-        user_id: `63e0ddcb06e90257776466a2`,
-      },
-    })
-      .then((response) => response.json())
-      .then(async (data) => {
-        setTrips(data.trips);
-      });
+    if (token) {
+      fetch("/trips", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then(async (data) => {
+          setTrips(data.trips);
+        });
+    } else {
+      navigate("/");
+    }
   }, []);
+
+  const logout = () => {
+    window.localStorage.removeItem("token");
+  };
 
   return (
     <>
       <main id="main-container">
         <nav className="sticky z-50">
-          <NavBar />
+          <NavBar logout={logout} />
         </nav>
         <div className="h-28"></div>
         <div

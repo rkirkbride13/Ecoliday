@@ -1,4 +1,5 @@
 import UserTrips from "./userTrips";
+const navigate = () => {};
 
 describe("UserTrips", () => {
   let trip = {
@@ -27,17 +28,28 @@ describe("UserTrips", () => {
     },
   };
 
-  it("lists trips for the user on the page", () => {
-    cy.intercept("GET", "/trips", (req) => {
-      req.reply({
-        statusCode: 200,
-        body: {
-          trips: [trip, tripTwo],
-        },
-      });
+  it("sends POST request on user save submition", () => {
+    window.localStorage.setItem("token", "fakeToken");
+    cy.intercept("GET", "/trips", {
+      trips: [trip, tripTwo],
     }).as("getTrips");
 
-    cy.mount(<UserTrips />);
+    cy.mount(<UserTrips navigate={navigate} />);
+
+    cy.wait("@getTrips").then((interception) => {
+      expect(interception.request.headers.authorization).to.eq(
+        "Bearer fakeToken"
+      );
+    });
+  });
+
+  it("lists trips for the user on the page", () => {
+    window.localStorage.setItem("token", "fakeToken");
+    cy.intercept("GET", "/trips", {
+      trips: [trip, tripTwo],
+    }).as("getTrips");
+
+    cy.mount(<UserTrips navigate={navigate} />);
 
     cy.wait("@getTrips").then(() => {
       cy.get('[data-cy="trips"]')
