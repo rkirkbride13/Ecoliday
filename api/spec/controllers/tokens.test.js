@@ -5,9 +5,13 @@ const User = require("../../models/user");
 
 describe("/tokens", () => {
   beforeAll(async () => {
-    await request(app)
-      .post("/users")
-      .send({ email: "test@test.com", password: "12345678" });
+    await User.deleteMany({});
+    const user = new User({
+      email: "test@test.com",
+      // password: "12345678"
+      password: "$2a$10$N/6whL0ERCoXPEeYbYVXPOj//aewYhYcbNbKVIlF8gCYBtA3GWrFu",
+    });
+    await user.save();
   });
 
   afterAll(async () => {
