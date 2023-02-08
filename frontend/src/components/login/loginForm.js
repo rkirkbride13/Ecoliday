@@ -73,6 +73,9 @@ const LoginForm = ({ navigate }) => {
                   value={email}
                   onChange={handleChange(setEmail)}
                 />
+                <p className="invisible text-xs pl-1 pt-1 text-red-500">
+                  Invalid email
+                </p>
               </div>
 
               <div
@@ -93,6 +96,9 @@ const LoginForm = ({ navigate }) => {
                   value={password}
                   onChange={handleChange(setPassword)}
                 />
+                <p className="invisible text-xs pl-1 pt-1 text-red-500">
+                  Invalid email
+                </p>
               </div>
 
               <div className="flex flex-row justify-between items-center">

@@ -53,7 +53,7 @@ const SignUpForm = ({ navigate }) => {
             <form onSubmit={handleSubmit} className="w-full">
               <div
                 id="signup-email-container"
-                className="text-xl w-full mx-auto mb-2"
+                className="text-xl w-full mx-auto mb-4"
               >
                 <label htmlFor="signup-email" className="text-base">
                   Email:
@@ -77,7 +77,7 @@ const SignUpForm = ({ navigate }) => {
 
               <div
                 id="login-password-container"
-                className="mb-6 text-xl mx-auto w-full"
+                className="mb-8 text-xl mx-auto w-full"
               >
                 <label htmlFor="login-password" className="text-base">
                   Password:
