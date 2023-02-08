@@ -110,7 +110,7 @@ const TravelForm = ({
           data-cy="travelFormSubmit"
           type="submit"
           value="Submit"
-          className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
+          className="btn bg-transparent border-white rounded-full"
         />
       </form>
     </div>

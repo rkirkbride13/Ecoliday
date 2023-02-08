@@ -51,7 +51,9 @@ const LoginForm = ({ navigate }) => {
       <div id="main-container" className="pt-16">
         <div className="flex justify-center">
           <div className="flex flex-col p-10 items-center mt-20 w-96">
-            <div className="w-fit text-4xl mb-10 font-semibold">Login</div>
+            <div className="w-fit text-4xl mb-10 font-semibold text-white">
+              Login
+            </div>
             {invalidDetails()}
             <form onSubmit={handleSubmit} className="w-full">
               <div
@@ -104,12 +106,12 @@ const LoginForm = ({ navigate }) => {
               <div className="flex flex-row justify-between items-center">
                 <input
                   id="login-submit"
-                  className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"
+                  className="btn bg-transparent border-white rounded-full"
                   data-cy="login-submit"
                   type="submit"
                   value="submit"
                 />
-                <a href="/signup" className="ml-6 text-blue-600">
+                <a href="/signup" className="ml-6 text-white">
                   Don't have an account?
                 </a>
               </div>
