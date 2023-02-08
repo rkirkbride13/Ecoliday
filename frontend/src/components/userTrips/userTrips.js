@@ -76,26 +76,38 @@ const UserTrips = ({ navigate }) => {
                 </span>
                 <div className="mb-2"></div>
 
-                <div className="mb-4">
-                  <div className="overflow-x-auto">
-                    <table className="table table-zebra w-full">
-                      <thead>
-                        <tr>
-                          <th>CO2e(kg)</th>
-                          <th>Plane</th>
-                          <th>Petrol Car</th>
-                          <th>Electric Car</th>
-                          <th>Rail</th>
+                <div className="container">
+                  <div className="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+                    <table className="w-full text-sm text-left   text-gray-500 dark:text-gray-400">
+                      <thead className="text-xs text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400">
+                        <tr className="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+                          <th scope="col" class="p-5 text-left">
+                            CO2e(kg)
+                          </th>
+                          <th class="p-3 text-left">Plane</th>
+                          <th class="p-3 text-left">Petrol Car</th>
+                          <th class="p-3 text-left">Electric Car</th>
+                          <th class="p-3 text-left">Rail</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody className="flex-1 sm:flex-none">
                         {unpackEmissionsTwo(trip).map((emissions) => (
-                          <tr>
-                            <td>{emissions.type}</td>
-                            <td>{`${emissions.plane.toFixed(1)}`}</td>
-                            <td>{`${emissions.petrolCar.toFixed(1)}`}</td>
-                            <td>{`${emissions.electricCar.toFixed(1)}`}</td>
-                            <td>{`${emissions.train.toFixed(1)}`}</td>
+                          <tr className="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+                            <td class="hover:bg-gray-100 p-3">
+                              {emissions.type}
+                            </td>
+                            <td class="hover:bg-gray-100 p-3">{`${emissions.plane.toFixed(
+                              1
+                            )}`}</td>
+                            <td class="hover:bg-gray-100 p-3">{`${emissions.petrolCar.toFixed(
+                              1
+                            )}`}</td>
+                            <td class="hover:bg-gray-100 p-3">{`${emissions.electricCar.toFixed(
+                              1
+                            )}`}</td>
+                            <td class="hover:bg-gray-100 p-3">{`${emissions.train.toFixed(
+                              1
+                            )}`}</td>
                           </tr>
                         ))}
                       </tbody>
