@@ -41,15 +41,21 @@ const UserTrips = ({ navigate }) => {
     }
   }, []);
 
-  const logout = () => {
-    window.localStorage.removeItem("token");
-  };
-
   return (
     <>
       <main id="main-container">
         <nav className="sticky z-50">
-          <NavBar logout={logout} />
+          <NavBar
+            links={[
+              {
+                href: "/",
+                text: "Logout",
+                handleClick: () => {
+                  window.localStorage.removeItem("token");
+                },
+              },
+            ]}
+          />
         </nav>
         <div className="h-28"></div>
         <div
