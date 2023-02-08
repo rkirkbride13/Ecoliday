@@ -10,6 +10,7 @@ const TravelForm = ({
   passengers,
   setPassengers,
   setSaveToggle,
+  setLoading,
 }) => {
   TravelForm.propTypes = {
     setEmissions: PropTypes.func,
@@ -43,6 +44,8 @@ const TravelForm = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    setLoading(true);
+
     await fetch(
       `/emissions?from=${fromForm}&to=${toForm}&passengers=${passengers}`
     )
@@ -50,6 +53,7 @@ const TravelForm = ({
         return response.json();
       })
       .then((responseData) => {
+        setLoading(false);
         setEmissions(responseData.emissions);
         setRenderEmissions(true);
         setToDisplay(responseData.to);

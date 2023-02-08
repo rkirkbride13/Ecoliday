@@ -10,6 +10,7 @@ const HomePage = ({ navigate }) => {
   const [fromDisplay, setFromDisplay] = useState("");
   const [passengers, setPassengers] = useState("");
   const [saveToggle, setSaveToggle] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const renderFoundLocation = () => {
     if (renderEmissions)
@@ -40,7 +41,7 @@ const HomePage = ({ navigate }) => {
         <div className="h-28"></div>
 
         {renderFoundLocation()}
-        <div className="flex justify-center">
+        <div className="flex justify-center items-center">
           <TravelForm
             setEmissions={setEmissions}
             setRenderEmissions={setRenderEmissions}
@@ -49,6 +50,7 @@ const HomePage = ({ navigate }) => {
             passengers={passengers}
             setPassengers={setPassengers}
             setSaveToggle={setSaveToggle}
+            setLoading={setLoading}
           />
           <div className="w-40"></div>
           <EmissionResults
@@ -59,6 +61,7 @@ const HomePage = ({ navigate }) => {
             passengers={passengers}
             setSaveToggle={setSaveToggle}
             saveToggle={saveToggle}
+            loading={loading}
           />
         </div>
       </main>
