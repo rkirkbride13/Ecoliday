@@ -23,43 +23,67 @@ const EmissionResults = ({
     { type: "train", emissions: emissions.train },
   ];
 
-  const emissionStats = (result) => {
-    if (Object.values(result.emissions).some((value) => value === null)) {
-      return (
-        <div className="stats border">
-          <div className="stat w-60">
-            <div className="stat-title">CO2e by {result.type}</div>
-            <div
-              data-cy={`total-emissions-${result.type}`}
-              className="stat-value text-2xl"
-            >
-              Route not found
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <>
-          {emissionsContext(result)}
-          <div className="stats border">
-            <div className="stat w-60">
-              <div className="stat-title">CO2e by {result.type}</div>
-              <div
-                data-cy={`total-emissions-${result.type}`}
-                className="stat-value"
-              >{`${result.emissions.total.toFixed(1)} kg`}</div>
-              <div
-                data-cy={`person-emissions-${result.type}`}
-                className="stat-desc"
-              >{`Per Person: ${result.emissions.perPassenger.toFixed(
-                1
-              )} kg`}</div>
-            </div>
-          </div>
-        </>
-      );
-    }
+  const emissionStats = () => {
+    return (
+      <>
+        <table className="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th>Transport</th>
+              <th>Total</th>
+              <th>Per Passenger</th>
+            </tr>
+          </thead>
+          <tbody>
+            {resultsArray.map((result) => (
+              <tr>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow-2xl shadow-green-700 bg-green-500 rounded-box w-60 text-base font-bold text-white text-left ml-2"
+                >
+                  Equivalent to...
+                  <li>
+                    &#x1F42E;
+                    {`  Eating ${Math.ceil(
+                      result.emissions.total / CO2eSteak
+                    )} ${
+                      Math.ceil(result.emissions.total / CO2eSteak) === 1
+                        ? "steak"
+                        : "steaks"
+                    }`}
+                  </li>
+                  <li>
+                    &#x1F455;
+                    {`  Buying ${Math.ceil(
+                      result.emissions.total / CO2eTshirt
+                    )} ${
+                      Math.ceil(result.emissions.total / CO2eTshirt) === 1
+                        ? "T-shirt"
+                        : "T-shirts"
+                    }`}
+                  </li>
+                  <li>
+                    &#x1F333;
+                    {`  Saving ${Math.ceil(
+                      result.emissions.total / CO2eTree
+                    )} ${
+                      Math.ceil(result.emissions.total / CO2eTree) === 1
+                        ? "tree"
+                        : "trees"
+                    } this year`}
+                  </li>
+                </ul>
+                {/* {emissionsContext(result)} */}
+                <td>{result.type}</td>
+                <td>{`${result.emissions.total.toFixed(1)}`}</td>
+                <td>{`${result.emissions.perPassenger.toFixed(1)}`}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
+    );
+    // }
   };
 
   const emissionsContext = (result) => {
@@ -97,17 +121,6 @@ const EmissionResults = ({
     );
   };
 
-  let resultDivs = resultsArray.map((result) => (
-    <div>
-      <div
-        data-cy={`emissions-dropdown-${result.type}`}
-        className="dropdown dropdown-hover dropdown-right mb-2"
-      >
-        {emissionStats(result)}
-      </div>
-    </div>
-  ));
-
   const handleSave = async (e) => {
     e.preventDefault();
 
@@ -137,7 +150,7 @@ const EmissionResults = ({
   return (
     <>
       <div id="emissionResults">
-        <div>{resultDivs}</div>
+        <div>{emissionStats()}</div>
         <form onSubmit={handleSave}>
           <input
             data-cy="saveButton"
