@@ -99,7 +99,7 @@ describe("Trips button", () => {
     });
   });
 
-  it("when user logged in the save button is visible", () => {
+  it("when user sves a trip it is visible on trips pages", () => {
     cy.session(["newuser200@email.com", "12345678"], () => {
       cy.request({
         method: "POST",
