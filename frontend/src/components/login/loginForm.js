@@ -36,9 +36,7 @@ const LoginForm = ({ navigate }) => {
   const invalidDetails = () => {
     if (notFound) {
       return (
-        <div className="text-red-500 text-base font-semibold">
-          Invalid Details
-        </div>
+        <div className="text-white text-base font-semibold">User not found</div>
       );
     } else {
       return <></>;
@@ -60,7 +58,7 @@ const LoginForm = ({ navigate }) => {
                 id="login-email-container"
                 className="text-xl w-full mx-auto mb-4"
               >
-                <label htmlFor="login-email" className="text-base">
+                <label htmlFor="login-email" className="text-base text-white">
                   Email:
                 </label>
                 <br />
@@ -84,7 +82,10 @@ const LoginForm = ({ navigate }) => {
                 id="login-password-container"
                 className="mb-8 text-xl mx-auto w-full"
               >
-                <label htmlFor="login-password" className="text-base">
+                <label
+                  htmlFor="login-password"
+                  className="text-base text-white"
+                >
                   Password:
                 </label>
                 <br />
@@ -106,7 +107,7 @@ const LoginForm = ({ navigate }) => {
               <div className="flex flex-row justify-between items-center">
                 <input
                   id="login-submit"
-                  className="btn bg-transparent border-white rounded-full"
+                  className="btn bg-transparent hover:bg-transparent hover:border-white border-white rounded-full "
                   data-cy="login-submit"
                   type="submit"
                   value="submit"
