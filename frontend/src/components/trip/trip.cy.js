@@ -21,4 +21,10 @@ describe("Trip", () => {
       "From:London, ENG, United KingdomTo:New YorkPassengers:2"
     );
   });
+  it("renders with a delete button on a trip", () => {
+    cy.mount(<Trip trip={trip} />);
+    cy.get('[data-cy="deleteButton"]')
+      .invoke("attr", "type")
+      .should("eq", "submit");
+  });
 });
