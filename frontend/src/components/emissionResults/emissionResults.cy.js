@@ -24,7 +24,7 @@ describe("EmissionResults", () => {
   it("Renders component with total emission result", () => {
     cy.get('[data-cy="total-emissions-plane"]').should(
       "contain.text",
-      "302.0 kg"
+      "302.0"
     );
   });
 
@@ -37,38 +37,38 @@ describe("EmissionResults", () => {
   it("Renders component with total emission plane, petrol car, electric car and train", () => {
     cy.get('[data-cy="total-emissions-plane"]').should(
       "contain.text",
-      "302.0 kg"
+      "302.0"
     );
     cy.get('[data-cy="person-emissions-plane"]').should(
       "contain.text",
-      "Per Person: 150.0 kg"
+      "150.0"
     );
 
     cy.get('[data-cy="total-emissions-petrol car"]').should(
       "contain.text",
-      "174.3 kg"
+      "174.3"
     );
     cy.get('[data-cy="person-emissions-petrol car"]').should(
       "contain.text",
-      "Per Person: 87.2 kg"
+      "87.2"
     );
 
     cy.get('[data-cy="total-emissions-electric car"]').should(
       "contain.text",
-      "50.3 kg"
+      "50.3"
     );
     cy.get('[data-cy="person-emissions-electric car"]').should(
       "contain.text",
-      "Per Person: 25.2 kg"
+      "25.2"
     );
 
     cy.get('[data-cy="total-emissions-train"]').should(
       "contain.text",
-      "8.9 kg"
+      "8.9"
     );
     cy.get('[data-cy="person-emissions-train"]').should(
       "contain.text",
-      "Per Person: 4.5 kg"
+      "4.5"
     );
   });
 
@@ -119,7 +119,7 @@ describe("EmissionResults", () => {
   });
 
   describe("with null results", () => {
-    it("Renders 'route not found' if plane results are null", () => {
+    it("Renders 'N/A' if plane results are null", () => {
       cy.mount(
         <EmissionResults
           emissions={{
@@ -134,11 +134,11 @@ describe("EmissionResults", () => {
 
       cy.get('[data-cy="total-emissions-plane"]').should(
         "contain.text",
-        "Route not found"
+        "N/A"
       );
     });
 
-    it("Renders 'route not found' if petrolCar results are null", () => {
+    it("Renders 'N/A' if petrolCar results are null", () => {
       cy.mount(
         <EmissionResults
           emissions={{
@@ -153,11 +153,11 @@ describe("EmissionResults", () => {
 
       cy.get('[data-cy="total-emissions-petrol car"]').should(
         "contain.text",
-        "Route not found"
+        "N/A"
       );
     });
 
-    it("Renders 'route not found' if electricCar results are null", () => {
+    it("Renders 'N/A' if electricCar results are null", () => {
       cy.mount(
         <EmissionResults
           emissions={{
@@ -172,11 +172,11 @@ describe("EmissionResults", () => {
 
       cy.get('[data-cy="total-emissions-electric car"]').should(
         "contain.text",
-        "Route not found"
+        "N/A"
       );
     });
 
-    it("Renders 'route not found' if train results are null", () => {
+    it("Renders 'N/A' if train results are null", () => {
       cy.mount(
         <EmissionResults
           emissions={{
@@ -191,7 +191,7 @@ describe("EmissionResults", () => {
 
       cy.get('[data-cy="total-emissions-train"]').should(
         "contain.text",
-        "Route not found"
+        "N/A"
       );
     });
   });
