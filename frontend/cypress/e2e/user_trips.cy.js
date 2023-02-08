@@ -22,4 +22,37 @@ describe("Trips button", () => {
     cy.visit("/");
     cy.get('[data-cy="navbar-trips"]').should("not.exist");
   });
+
+  it("when user not logged in the save button is not visible", () => {
+    cy.intercept(
+      "GET",
+      "/emissions?from=London&to=Berlin&passengers=2",
+      (req) => {
+        req.reply({
+          statusCode: 200,
+          body: {
+            message: "OK",
+            emissions: {
+              plane: { total: 31.547396, perPassenger: 15.773698 },
+              petrolCar: { total: 30.547396, perPassenger: 14.773698 },
+              electricCar: { total: 29.547396, perPassenger: 13.773698 },
+              train: { total: 28.547396, perPassenger: 12.773698 },
+            },
+            from: "London, ENG, United Kingdom",
+            to: "Berlin, Germany",
+          },
+        });
+      }
+    ).as("getEmissions");
+
+    cy.visit("/");
+    cy.get('[data-cy="from"]').type("London");
+    cy.get('[data-cy="to"]').type("Berlin");
+    cy.get('[data-cy="passengers"]').type("2");
+    cy.get('[data-cy="travelFormSubmit"]').click();
+
+    cy.wait("@getEmissions").then(() => {
+      cy.get('[data-cy="saveButton"]').should("not.exist");
+    });
+  });
 });
