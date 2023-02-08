@@ -8,7 +8,7 @@ const NavBar = (props) => {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="4 4 18 18"
                 className="inline-block w-5 h-5 stroke-current scale-150 text-white"
               >
                 <path
@@ -39,15 +39,15 @@ const NavBar = (props) => {
   };
 
   return (
-    <div className="fixed top-0 navbar w-full z-50 justify-between">
+    <div className="fixed top-0 navbar w-full h-fit z-50 justify-between items-center">
       <a
         href="/"
-        className="btn btn-ghost text-white text-3xl font-bold normal-case"
+        className="btn btn-ghost text-white text-5xl font-bold normal-case h-fit"
       >
-        <span className="material-symbols-outlined mr-2 text-3xl hover:animate-spin">
+        <span className="material-symbols-outlined mr-2 text-6xl hover:animate-spin">
           eco
         </span>{" "}
-        Ecoliday
+        <span className="mt-1">Ecoliday</span>
       </a>
       {renderDropdown()}
     </div>
