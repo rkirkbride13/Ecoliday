@@ -60,10 +60,10 @@ const TravelForm = ({
 
   return (
     <div id="travelForm" className="mt-8">
-      <h1 className="text-3xl mb-10 font-medium">Plan your journey...</h1>
+      <h1 className="text-3xl mb-10 font-medium text-white">Plan your journey...</h1>
       <form onSubmit={handleSubmit}>
         <div id="from" className="mb-5 text-xl">
-          <label htmlFor="from-input">From: </label>
+          <label htmlFor="from-input" className="text-white">From: </label>
           <br />
           <input
             id="from-input"
@@ -81,7 +81,7 @@ const TravelForm = ({
         </div>
 
         <div id="to" className="mb-5 text-xl">
-          <label htmlFor="to-input">To: </label>
+          <label htmlFor="to-input" className="text-white">To: </label>
           <br />
           <input
             id="to-input"
@@ -99,7 +99,7 @@ const TravelForm = ({
         </div>
 
         <div id="passengers" className="mb-5 text-xl">
-          <label htmlFor="passengers-input">Number of Passengers: </label>
+          <label htmlFor="passengers-input" className="text-white">Number of Passengers: </label>
           <br />
           <input
             id="passengers-input"
@@ -123,7 +123,7 @@ const TravelForm = ({
           className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
         />
       </form>
-      <div className="mt-2">Why not try the UK?</div>
+      <div className="mt-2 text-white">Why not try the UK?</div>
       <form onSubmit={handleRandomPlace}>
         <input
           data-cy="randomPlace"

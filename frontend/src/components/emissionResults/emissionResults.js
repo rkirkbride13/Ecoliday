@@ -60,52 +60,90 @@ const EmissionResults = ({
   const emissionStats = () => {
     return (
       <>
-        <div>
-          <table className="table h-max">
-            <thead>
-              <tr>
-                <th>Transport</th>
-                <th>
-                  Total <br /> <span className="normal-case">(kg C02e)</span>
-                </th>
-                <th>
-                  Passenger <br />{" "}
-                  <span className="normal-case">(kg C02e)</span>
-                </th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {resultsArray.map((result) => {
-                return (
-                  <>
-                    <tr
-                      data-cy={`emissions-dropdown-${result.type}`}
-                      className="hover"
-                    >
-                      <td>{result.logo}</td>
-                      <td data-cy={`total-emissions-${result.type}`}>
-                        {result.emissions.total
-                          ? `${result.emissions.total.toFixed(1)}`
-                          : "N/A"}
-                      </td>
-                      <td data-cy={`person-emissions-${result.type}`}>
-                        {result.emissions.perPassenger
-                          ? `${result.emissions.perPassenger.toFixed(1)}`
-                          : "N/A"}
-                      </td>
-                      <td className="dropdown dropdown-hover dropdown-right h-full">
-                        <span className="material-symbols-outlined text-center">
-                          help
-                        </span>
-                        {emissionsContext(result)}
-                      </td>
+        <div className="bg-white bg-opacity-20 p-4 rounded-lg">
+          <div className="bg-white bg-opacity-75 p-7 rounded-lg">
+            <span className="text-green-900 font-bold mr-2 mix-blend-darken">
+              From:
+            </span>
+
+            <span className="text-gray-600 font-medium">{fromDisplay}</span>
+            <span className="text-green-900 font-bold mr-2">
+              <br></br>
+              To:
+            </span>
+            <span className="text-gray-600 font-medium">{toDisplay}</span>
+            <span className="text-green-900 font-bold mr-2">
+              <br></br>
+              Passengers:
+            </span>
+            <span className="text-gray-600 font-medium">{passengers}</span>
+            <div className="container">
+              <div className="w-full flex flex-row flex-no-wrap rounded-lg  sm:shadow-lg mt-1 mb-5">
+                <table className="w-full text-sm text-left bg-white bg-opacity-40  text-gray-500 dark:text-gray-400">
+                  <thead className="text-green-900 uppercase dark:bg-gray-700 dark:text-gray-400">
+                    <tr className="flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none sm:mb-0">
+                      <th class="p-5 ">Transport</th>
+                      <th class="p-5 ">
+                        Total <br />{" "}
+                        <span className="normal-case">(kg C02e)</span>
+                      </th>
+                      <th class="p-5">
+                        Passenger <br />{" "}
+                        <span className="normal-case">(kg C02e)</span>
+                      </th>
+                      <th></th>
                     </tr>
-                  </>
-                );
-              })}
-            </tbody>
-          </table>
+                  </thead>
+                  <tbody className="flex-1 sm:flex-none">
+                    {resultsArray.map((result) => {
+                      return (
+                        <>
+                          <tr
+                            data-cy={`emissions-dropdown-${result.type}`}
+                            className="hover"
+                          >
+                            <td>{result.logo}</td>
+                            <td data-cy={`total-emissions-${result.type}`}>
+                              {result.emissions.total
+                                ? `${result.emissions.total.toFixed(1)}`
+                                : "N/A"}
+                            </td>
+                            <td data-cy={`person-emissions-${result.type}`}>
+                              {result.emissions.perPassenger
+                                ? `${result.emissions.perPassenger.toFixed(1)}`
+                                : "N/A"}
+                            </td>
+                            <td className="dropdown dropdown-hover dropdown-right h-full">
+                              <span className="material-symbols-outlined text-center">
+                                help
+                              </span>
+                              {emissionsContext(result)}
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              {saveButtonView && (
+                <div className="relative h-10">
+                  <form
+                    onSubmit={handleSave}
+                    className="absolute inset-y-0 right-0"
+                  >
+                    <input
+                      data-cy="saveButton"
+                      type="submit"
+                      disabled={saveToggle}
+                      value={saveToggle ? "SAVED" : "SAVE"}
+                      className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
+                    />
+                  </form>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </>
     );
@@ -178,17 +216,6 @@ const EmissionResults = ({
     <>
       <div id="emissionResults" className="mt-20">
         <div>{emissionStats()}</div>
-        {saveButtonView && (
-          <form onSubmit={handleSave}>
-            <input
-              data-cy="saveButton"
-              type="submit"
-              disabled={saveToggle}
-              value={saveToggle ? "SAVED" : "SAVE"}
-              className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
-            />
-          </form>
-        )}
       </div>
     </>
   );

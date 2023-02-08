@@ -11,21 +11,21 @@ const HomePage = ({ navigate }) => {
   const [passengers, setPassengers] = useState("");
   const [saveToggle, setSaveToggle] = useState(false);
 
-  const renderFoundLocation = () => {
-    if (renderEmissions)
-      return (
-        <div className="mb-10 text-center text-2xl">
-          <div className="">
-            <span className="text-green-500 font-bold text-xl mr-2">From:</span>
-            <span className="text-gray-600">{fromDisplay}</span>
-          </div>
-          <div className="">
-            <span className="text-green-500 font-bold text-xl mr-2">To:</span>
-            <span className="text-gray-600">{toDisplay}</span>
-          </div>
-        </div>
-      );
-  };
+  // const renderFoundLocation = () => {
+  //   if (renderEmissions)
+  //     return (
+  //       <div className="mb-10 text-center text-2xl">
+  //         <div className="">
+  //           <span className="text-green-500 font-bold text-xl mr-2">From:</span>
+  //           <span className="text-gray-600">{fromDisplay}</span>
+  //         </div>
+  //         <div className="">
+  //           <span className="text-green-500 font-bold text-xl mr-2">To:</span>
+  //           <span className="text-gray-600">{toDisplay}</span>
+  //         </div>
+  //       </div>
+  //     );
+  // };
 
   const logout = () => {
     window.localStorage.removeItem("token");
@@ -37,9 +37,9 @@ const HomePage = ({ navigate }) => {
         <nav>
           <NavBar logout={logout} />
         </nav>
-        <div className="h-28"></div>
+        <div className="h-20"></div>
 
-        {renderFoundLocation()}
+        {/* {renderFoundLocation()} */}
         <div className="flex justify-center">
           <TravelForm
             setEmissions={setEmissions}
