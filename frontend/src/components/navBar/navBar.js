@@ -27,8 +27,8 @@ const NavBar = ({ logout }) => {
           </a>
           <a
             className="absolute top-2 right-28 btn font-lobster text-green-500 bg-white hover:bg-slate-200 text-right hover:text-green-700 text-1xl border-none"
-            href="/signup"
-            data-cy="navbar-saved"
+            href="/trips"
+            data-cy="navbar-trips"
             id="logo-link"
           >
             Trips
