@@ -63,8 +63,14 @@ const EmissionResults = ({
             <thead>
               <tr>
                 <th>Transport</th>
-                <th>Total</th>
-                <th>Passenger</th>
+                <th>
+                  Total <br /> <span className="normal-case">(kg C02e)</span>
+                </th>
+                <th>
+                  Passenger <br />{" "}
+                  <span className="normal-case">(kg C02e)</span>
+                </th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -78,7 +84,12 @@ const EmissionResults = ({
                       <td>{result.logo}</td>
                       <td>{`${result.emissions.total.toFixed(1)}`}</td>
                       <td>{`${result.emissions.perPassenger.toFixed(1)}`}</td>
-                      <td>{emissionsContext(result)}</td>
+                      <td className="dropdown dropdown-hover dropdown-right h-full">
+                        <span className="material-symbols-outlined text-center">
+                          help
+                        </span>
+                        {emissionsContext(result)}
+                      </td>
                     </tr>
                   </>
                 );
