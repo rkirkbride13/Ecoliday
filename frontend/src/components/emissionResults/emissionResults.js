@@ -82,8 +82,16 @@ const EmissionResults = ({
                       className="hover"
                     >
                       <td>{result.logo}</td>
-                      <td>{`${result.emissions.total.toFixed(1)}`}</td>
-                      <td>{`${result.emissions.perPassenger.toFixed(1)}`}</td>
+                      <td>
+                        {result.emissions.total
+                          ? `${result.emissions.total.toFixed(1)}`
+                          : "N/A"}
+                      </td>
+                      <td>
+                        {result.emissions.perPassenger
+                          ? `${result.emissions.perPassenger.toFixed(1)}`
+                          : "N/A"}
+                      </td>
                       <td className="dropdown dropdown-hover dropdown-right h-full">
                         <span className="material-symbols-outlined text-center">
                           help
