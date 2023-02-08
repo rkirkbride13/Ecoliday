@@ -2,6 +2,7 @@ import EmissionResults from "./emissionResults";
 
 describe("EmissionResults", () => {
   beforeEach(() => {
+    window.localStorage.setItem("token", "fakeToken");
     cy.mount(
       <EmissionResults
         emissions={{
