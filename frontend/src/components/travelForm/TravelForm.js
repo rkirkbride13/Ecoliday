@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import places from "./randomPlaces";
 
 const TravelForm = ({
   setEmissions,
@@ -22,12 +23,21 @@ const TravelForm = ({
 
   const [toForm, setToForm] = useState("");
   const [fromForm, setFromForm] = useState("");
-  // const [passengers, setPassengers] = useState("");
 
   const handleChange = (setFunction) => {
     return (event) => {
       setFunction(event.target.value);
     };
+  };
+
+  const handleRandomPlace = (event) => {
+    event.preventDefault();
+
+    const random = () => {
+      return Math.floor(Math.random() * places.length);
+    };
+
+    setToForm(places[random()]);
   };
 
   const handleSubmit = async (event) => {
@@ -53,7 +63,7 @@ const TravelForm = ({
       <h1 className="text-3xl mb-10 font-medium">Plan your journey...</h1>
       <form onSubmit={handleSubmit}>
         <div id="from" className="mb-5 text-xl">
-          <label for="from-input">From: </label>
+          <label htmlFor="from-input">From: </label>
           <br />
           <input
             id="from-input"
@@ -71,7 +81,7 @@ const TravelForm = ({
         </div>
 
         <div id="to" className="mb-5 text-xl">
-          <label for="to-input">To: </label>
+          <label htmlFor="to-input">To: </label>
           <br />
           <input
             id="to-input"
@@ -89,7 +99,7 @@ const TravelForm = ({
         </div>
 
         <div id="passengers" className="mb-5 text-xl">
-          <label for="passengers-input">Number of Passengers: </label>
+          <label htmlFor="passengers-input">Number of Passengers: </label>
           <br />
           <input
             id="passengers-input"
@@ -111,6 +121,15 @@ const TravelForm = ({
           type="submit"
           value="Submit"
           className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
+        />
+      </form>
+      <div className="mt-2">Why not try the UK?</div>
+      <form onSubmit={handleRandomPlace}>
+        <input
+          data-cy="randomPlace"
+          type="submit"
+          value="Get a suggestion"
+          className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full mt-2"
         />
       </form>
     </div>

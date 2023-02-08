@@ -72,4 +72,11 @@ describe("TravelForm", () => {
       }, 1000);
     });
   });
+
+  it("populates random location in to to field when get a suggestion button is pressed", () => {
+    cy.get('[data-cy="to"]').type("Berlin");
+    cy.get('[data-cy="randomPlace"]').click();
+    cy.get('[data-cy="to"]').should("not.contain.text", "Berlin");
+    cy.get('[data-cy="to"]').invoke("val").should("not.be.empty");
+  });
 });

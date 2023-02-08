@@ -39,17 +39,16 @@ const NavBar = ({ logout }) => {
   };
 
   return (
-    <div className="navbar bg-green-500 fixed w-full top-0">
-      <h1 className="text-white text-3xl font-bold ml-6">Ecoliday</h1>
-      {/* <a
-        className="absolute top-2 right-2 btn font-lobster text-green-500 bg-white hover:bg-slate-200 text-right hover:text-green-700 text-1xl border-none"
-        onClick={hasToken ? logout : null}
-        href={hasToken ? "/" : "/login"}
-        data-cy="navbar-login-logout"
-        id="logo-link"
+    <div className="fixed top-0 navbar w-full z-50">
+      <a
+        href="/"
+        className="btn btn-ghost text-white text-3xl font-bold normal-case"
       >
-        {hasToken ? "Logout" : "Login"}
-      </a> */}
+        <span className="material-symbols-outlined mr-2 text-3xl hover:animate-spin">
+          eco
+        </span>{" "}
+        Ecoliday
+      </a>
       {renderButton()}
     </div>
   );

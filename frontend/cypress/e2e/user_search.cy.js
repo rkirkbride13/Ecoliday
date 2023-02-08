@@ -176,6 +176,14 @@ describe("User emission search", () => {
     });
   });
 
+  it("user can click suggestion button and it populates the to field with random UK location", () => {
+    cy.visit("/");
+    cy.get('[data-cy="to"]').type("New York");
+    cy.get('[data-cy="randomPlace"]').click();
+    cy.get('[data-cy="to"]').should("not.contain.text", "Berlin");
+    cy.get('[data-cy="to"]').invoke("val").should("not.be.empty");
+  });
+
   describe("from London to New York", () => {
     beforeEach(() => {
       cy.intercept(
