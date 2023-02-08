@@ -18,6 +18,8 @@ const EmissionResults = ({
   const CO2eTshirt = 7;
   const CO2eTree = 25;
 
+  let carFactor = Math.ceil(passengers / 5);
+
   const resultsArray = [
     {
       type: "plane",
@@ -26,7 +28,8 @@ const EmissionResults = ({
           <span class="material-symbols-outlined">flight_takeoff</span>
         </>
       ),
-      emissions: emissions.plane,
+      total: emissions.plane.total,
+      perPassenger: emissions.plane.perPassenger,
     },
     {
       type: "petrol car",
@@ -35,7 +38,8 @@ const EmissionResults = ({
           <span class="material-symbols-outlined">directions_car</span>
         </>
       ),
-      emissions: emissions.petrolCar,
+      total: emissions.petrolCar.total * carFactor,
+      perPassenger: (emissions.petrolCar.total * carFactor) / passengers,
     },
     {
       type: "electric car",
@@ -44,7 +48,8 @@ const EmissionResults = ({
           <span class="material-symbols-outlined">electric_car</span>
         </>
       ),
-      emissions: emissions.electricCar,
+      total: emissions.electricCar.total * carFactor,
+      perPassenger: (emissions.electricCar.total * carFactor) / passengers,
     },
     {
       type: "train",
@@ -53,7 +58,8 @@ const EmissionResults = ({
           <span class="material-symbols-outlined">train</span>
         </>
       ),
-      emissions: emissions.train,
+      total: emissions.train.total,
+      perPassenger: emissions.train.perPassenger,
     },
   ];
 
@@ -104,13 +110,13 @@ const EmissionResults = ({
                           >
                             <td>{result.logo}</td>
                             <td data-cy={`total-emissions-${result.type}`}>
-                              {result.emissions.total
-                                ? `${result.emissions.total.toFixed(1)}`
+                              {result.total
+                                ? `${result.total.toFixed(1)}`
                                 : "N/A"}
                             </td>
                             <td data-cy={`person-emissions-${result.type}`}>
-                              {result.emissions.perPassenger
-                                ? `${result.emissions.perPassenger.toFixed(1)}`
+                              {result.perPassenger
+                                ? `${result.perPassenger.toFixed(1)}`
                                 : "N/A"}
                             </td>
                             <td className="dropdown dropdown-hover dropdown-right h-full">
@@ -150,36 +156,32 @@ const EmissionResults = ({
   };
 
   const emissionsContext = (result) => {
-    if (result.emissions.total) {
+    if (result.total) {
       return (
         <ul
           tabIndex={0}
-          className="dropdown-content menu p-2 shadow-2xl shadow-green-700 bg-green-500 rounded-box w-60 text-base font-bold text-white text-left z-50"
+          className="dropdown-content menu p-2 shadow-2xl shadow-green-700 bg-opacity-70 bg-green-500 rounded-box w-52 text-base text-white text-left z-50"
         >
           Equivalent to...
           <li>
             &#x1F42E;
-            {`  Eating ${Math.ceil(result.emissions.total / CO2eSteak)} ${
-              Math.ceil(result.emissions.total / CO2eSteak) === 1
-                ? "steak"
-                : "steaks"
+            {`  Eating ${Math.ceil(result.total / CO2eSteak)} ${
+              Math.ceil(result.total / CO2eSteak) === 1 ? "steak" : "steaks"
             }`}
           </li>
           <li>
             &#x1F455;
-            {`  Buying ${Math.ceil(result.emissions.total / CO2eTshirt)} ${
-              Math.ceil(result.emissions.total / CO2eTshirt) === 1
+            {`  Buying ${Math.ceil(result.total / CO2eTshirt)} ${
+              Math.ceil(result.total / CO2eTshirt) === 1
                 ? "T-shirt"
                 : "T-shirts"
             }`}
           </li>
           <li>
             &#x1F333;
-            {`  Saving ${Math.ceil(result.emissions.total / CO2eTree)} ${
-              Math.ceil(result.emissions.total / CO2eTree) === 1
-                ? "tree"
-                : "trees"
-            } this year`}
+            {`  Saving ${Math.ceil(result.total / CO2eTree)} ${
+              Math.ceil(result.total / CO2eTree) === 1 ? "tree" : "trees"
+            } a year`}
           </li>
         </ul>
       );
