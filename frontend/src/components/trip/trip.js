@@ -7,23 +7,37 @@ const Trip = ({ trip, token, setTrips }) => {
     setTrips: PropTypes.func,
   };
 
-  const unpackEmissions = (trip) => {
-    return [
-      {
-        type: "Total",
-        plane: trip.emissions.plane.total,
-        petrolCar: trip.emissions.petrolCar.total,
-        electricCar: trip.emissions.electricCar.total,
-        train: trip.emissions.train.total,
-      },
-      {
-        type: "Per Passenger",
-        plane: trip.emissions.plane.perPassenger,
-        petrolCar: trip.emissions.petrolCar.perPassenger,
-        electricCar: trip.emissions.electricCar.perPassenger,
-        train: trip.emissions.train.perPassenger,
-      },
-    ];
+  const unpackEmissions = (trip, type) => {
+    if (type === "Total") {
+      return [
+        { result: trip.emissions.plane.total },
+        { result: trip.emissions.petrolCar.total },
+        { result: trip.emissions.electricCar.total },
+        { result: trip.emissions.train.total },
+      ];
+    } else {
+      return [
+        { result: trip.emissions.plane.perPassenger },
+        { result: trip.emissions.petrolCar.perPassenger },
+        { result: trip.emissions.electricCar.perPassenger },
+        { result: trip.emissions.train.perPassenger },
+      ];
+    }
+  };
+
+  const formatEmissions = (trip, type) => {
+    return (
+      <>
+        <tr>
+          <td>{type}</td>
+          {unpackEmissions(trip, type).map((emissions) => (
+            <td>
+              {emissions.result ? `${emissions.result.toFixed(1)}` : "N/A"}
+            </td>
+          ))}
+        </tr>
+      </>
+    );
   };
 
   const handleDelete = async (e) => {
@@ -35,8 +49,6 @@ const Trip = ({ trip, token, setTrips }) => {
         trip_id: trip._id,
       },
     });
-
-    await response.json();
 
     if (response.status !== 200) {
       console.log("trip NOT deleted");
@@ -90,31 +102,8 @@ const Trip = ({ trip, token, setTrips }) => {
                 </tr>
               </thead>
               <tbody>
-                {unpackEmissions(trip).map((emissions) => (
-                  <tr>
-                    <td>{emissions.type}</td>
-                    <td>
-                      {emissions.plane
-                        ? `${emissions.plane.toFixed(1)}`
-                        : "N/A"}
-                    </td>
-                    <td>
-                      {emissions.petrolCar
-                        ? `${emissions.petrolCar.toFixed(1)}`
-                        : "N/A"}
-                    </td>
-                    <td>
-                      {emissions.electricCar
-                        ? `${emissions.electricCar.toFixed(1)}`
-                        : "N/A"}
-                    </td>
-                    <td>
-                      {emissions.train
-                        ? `${emissions.train.toFixed(1)}`
-                        : "N/A"}
-                    </td>
-                  </tr>
-                ))}
+                {formatEmissions(trip, "Total")}
+                {formatEmissions(trip, "Per Person")}
               </tbody>
             </table>
           </div>
