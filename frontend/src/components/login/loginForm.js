@@ -38,9 +38,9 @@ const LoginForm = ({ navigate }) => {
       <NavBar />
       <div id="main-container" className="pt-16 h-full">
         <div className="flex justify-center">
-          <div className="flex flex-col p-20 items-center mt-20">
+          <div className="flex flex-col p-10 items-center mt-20 w-96">
             <div className="w-fit text-4xl mb-10 font-semibold">Login</div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="w-full">
               <div
                 id="login-email-container"
                 className="text-xl w-full mx-auto mb-4"
@@ -70,14 +70,14 @@ const LoginForm = ({ navigate }) => {
                 <input
                   id="login-password"
                   name="login-password"
-                  className="pl-1 border-2 rounded peer w-full"
+                  className="pl-1 border-2 rounded w-full"
                   data-cy="login-password"
                   type="password"
                   value={password}
                   onChange={handleChange(setPassword)}
                 />
               </div>
-              <div>
+              <div className="flex flex-row justify-between items-center">
                 <input
                   id="login-submit"
                   className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"

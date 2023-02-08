@@ -34,9 +34,9 @@ const SignUpForm = ({ navigate }) => {
       <NavBar />
       <div id="main-container" className="pt-16 h-full">
         <div className="flex justify-center">
-          <div className="flex flex-col p-20 items-center mt-20">
+          <div className="flex flex-col p-10 items-center mt-20 w-96">
             <div className="w-fit text-4xl mb-10 font-semibold">Sign Up</div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="w-full">
               <div
                 id="signup-email-container"
                 className="text-xl w-full mx-auto mb-4"
@@ -73,7 +73,7 @@ const SignUpForm = ({ navigate }) => {
                   onChange={handleChange(setPassword)}
                 />
               </div>
-              <div>
+              <div className="flex flex-row justify-between items-center">
                 <input
                   id="signup-submit"
                   className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"
@@ -81,7 +81,7 @@ const SignUpForm = ({ navigate }) => {
                   type="submit"
                   value="submit"
                 />
-                <a href="/login" className="ml-6 text-blue-600">
+                <a href="/login" className="text-blue-600">
                   Already have an account?
                 </a>
               </div>
