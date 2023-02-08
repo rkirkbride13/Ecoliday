@@ -17,80 +17,84 @@ const EmissionResults = ({
   const CO2eTree = 25;
 
   const resultsArray = [
-    { type: "plane", emissions: emissions.plane },
-    { type: "petrol car", emissions: emissions.petrolCar },
-    { type: "electric car", emissions: emissions.electricCar },
-    { type: "train", emissions: emissions.train },
+    {
+      type: "plane",
+      logo: (
+        <>
+          <span class="material-symbols-outlined">flight_takeoff</span>
+        </>
+      ),
+      emissions: emissions.plane,
+    },
+    {
+      type: "petrolCar",
+      logo: (
+        <>
+          <span class="material-symbols-outlined">directions_car</span>
+        </>
+      ),
+      emissions: emissions.petrolCar,
+    },
+    {
+      type: "electricCar",
+      logo: (
+        <>
+          <span class="material-symbols-outlined">electric_car</span>
+        </>
+      ),
+      emissions: emissions.electricCar,
+    },
+    {
+      type: "train",
+      logo: (
+        <>
+          <span class="material-symbols-outlined">train</span>
+        </>
+      ),
+      emissions: emissions.train,
+    },
   ];
 
   const emissionStats = () => {
     return (
       <>
-        <table className="table table-zebra w-full">
-          <thead>
-            <tr>
-              <th>Transport</th>
-              <th>Total</th>
-              <th>Per Passenger</th>
-            </tr>
-          </thead>
-          <tbody>
-            {resultsArray.map((result) => (
+        <div>
+          <table className="table h-max">
+            <thead>
               <tr>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 shadow-2xl shadow-green-700 bg-green-500 rounded-box w-60 text-base font-bold text-white text-left ml-2"
-                >
-                  Equivalent to...
-                  <li>
-                    &#x1F42E;
-                    {`  Eating ${Math.ceil(
-                      result.emissions.total / CO2eSteak
-                    )} ${
-                      Math.ceil(result.emissions.total / CO2eSteak) === 1
-                        ? "steak"
-                        : "steaks"
-                    }`}
-                  </li>
-                  <li>
-                    &#x1F455;
-                    {`  Buying ${Math.ceil(
-                      result.emissions.total / CO2eTshirt
-                    )} ${
-                      Math.ceil(result.emissions.total / CO2eTshirt) === 1
-                        ? "T-shirt"
-                        : "T-shirts"
-                    }`}
-                  </li>
-                  <li>
-                    &#x1F333;
-                    {`  Saving ${Math.ceil(
-                      result.emissions.total / CO2eTree
-                    )} ${
-                      Math.ceil(result.emissions.total / CO2eTree) === 1
-                        ? "tree"
-                        : "trees"
-                    } this year`}
-                  </li>
-                </ul>
-                {/* {emissionsContext(result)} */}
-                <td>{result.type}</td>
-                <td>{`${result.emissions.total.toFixed(1)}`}</td>
-                <td>{`${result.emissions.perPassenger.toFixed(1)}`}</td>
+                <th>Transport</th>
+                <th>Total</th>
+                <th>Passenger</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {resultsArray.map((result) => {
+                return (
+                  <>
+                    <tr
+                      data-cy={`emissions-dropdown-${result.type}`}
+                      className="hover"
+                    >
+                      <td>{result.logo}</td>
+                      <td>{`${result.emissions.total.toFixed(1)}`}</td>
+                      <td>{`${result.emissions.perPassenger.toFixed(1)}`}</td>
+                      <td>{emissionsContext(result)}</td>
+                    </tr>
+                  </>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </>
     );
-    // }
   };
 
   const emissionsContext = (result) => {
     return (
       <ul
         tabIndex={0}
-        className="dropdown-content menu p-2 shadow-2xl shadow-green-700 bg-green-500 rounded-box w-60 text-base font-bold text-white text-left ml-2"
+        className="dropdown-content menu p-2 shadow-2xl shadow-green-700 bg-green-500 rounded-box w-60 text-base font-bold text-white text-left z-50"
       >
         Equivalent to...
         <li>
@@ -149,7 +153,7 @@ const EmissionResults = ({
 
   return (
     <>
-      <div id="emissionResults">
+      <div id="emissionResults" className="mt-20">
         <div>{emissionStats()}</div>
         <form onSubmit={handleSave}>
           <input
