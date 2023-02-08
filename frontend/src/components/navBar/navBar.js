@@ -9,7 +9,7 @@ const NavBar = (props) => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="4 4 18 18"
-                className="inline-block w-5 h-5 stroke-current scale-150 mt-1 text-white"
+                className="inline-block w-5 h-5 stroke-current scale-150 mt-1 text-white hover:animate-ping"
               >
                 <path
                   strokeLinecap="round"

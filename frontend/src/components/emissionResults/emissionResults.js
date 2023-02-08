@@ -144,7 +144,7 @@ const EmissionResults = ({
             type="submit"
             disabled={saveToggle}
             value={saveToggle ? "SAVED" : "SAVE"}
-            className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
+            className="btn bg-green-800 border-0 hover:bg-green-700 rounded-full"
           />
         </form>
       </div>
