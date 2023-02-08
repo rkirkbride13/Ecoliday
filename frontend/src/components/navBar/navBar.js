@@ -39,12 +39,14 @@ const NavBar = ({ logout }) => {
   };
 
   return (
-    <div className="fixed top-0 navbar bg-green-500 w-full z-50">
+    <div className="fixed top-0 navbar w-full z-50">
       <a
         href="/"
         className="btn btn-ghost text-white text-3xl font-bold normal-case"
       >
-        <span className="material-symbols-outlined mr-2 text-3xl">eco</span>{" "}
+        <span className="material-symbols-outlined mr-2 text-3xl hover:animate-spin">
+          eco
+        </span>{" "}
         Ecoliday
       </a>
       {renderButton()}

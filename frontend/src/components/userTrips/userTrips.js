@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../navBar/navBar";
-import Trip from '../trip/trip'
+import Trip from "../trip/trip";
 
 const UserTrips = ({ navigate }) => {
   const [trips, setTrips] = useState([]);
@@ -39,11 +39,7 @@ const UserTrips = ({ navigate }) => {
         >
           {trips
             .map((trip) => (
-              <Trip
-                trip={trip}
-                token={token}
-                setTrips={setTrips}
-              />
+              <Trip trip={trip} token={token} setTrips={setTrips} />
             ))
             .reverse()}
         </div>

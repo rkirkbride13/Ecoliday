@@ -28,10 +28,10 @@ const Trip = ({ trip, token, setTrips }) => {
   const formatEmissions = (trip, type) => {
     return (
       <>
-        <tr>
-          <td>{type}</td>
+        <tr className="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+          <td className="p-3 text-lg uppercase text-green-900">{type}</td>
           {unpackEmissions(trip, type).map((emissions) => (
-            <td>
+            <td className="hover:text-xl hover:text-green-900 text-lg text-left pl-3 pr-3">
               {emissions.result ? `${emissions.result.toFixed(1)}` : "N/A"}
             </td>
           ))}
@@ -71,50 +71,70 @@ const Trip = ({ trip, token, setTrips }) => {
 
   return (
     <>
-      <div data-cy="trip">
-        <span className="text-green-500 font-bold mr-2">From:</span>
+      <div className="bg-white bg-opacity-20 p-4 rounded-lg">
+        <div data-cy="trip" className="bg-white bg-opacity-75 p-7 rounded-lg">
+          <span className="text-green-900 font-bold mr-2 mix-blend-darken">
+            From:
+          </span>
 
-        <span className="text-gray-600 font-medium">{trip.from}</span>
-        <span className="text-green-500 font-bold mr-2">
-          <br></br>
-          To:
-        </span>
-        <span className="text-gray-600 font-medium">{trip.to}</span>
-        <span className="text-green-500 font-bold mr-2">
-          <br></br>
-          Passengers:
-        </span>
-        <span className="text-gray-600 font-medium mb-2">
-          {trip.passengers}
-        </span>
-        <div className="mb-2"></div>
+          <span className="text-gray-600 font-medium">{trip.from}</span>
+          <span className="text-green-900 font-bold mr-2">
+            <br></br>
+            To:
+          </span>
+          <span className="text-gray-600 font-medium">{trip.to}</span>
+          <span className="text-green-900 font-bold mr-2">
+            <br></br>
+            Passengers:
+          </span>
+          <span className="text-gray-600 font-medium mb-2">
+            {trip.passengers}
+          </span>
+          <div className="mb-2"></div>
 
-        <div className="mb-4">
-          <div className="overflow-x-auto">
-            <table className="table table-zebra w-full">
-              <thead>
-                <tr>
-                  <th>CO2e(kg)</th>
-                  <th>Plane</th>
-                  <th>Petrol Car</th>
-                  <th>Electric Car</th>
-                  <th>Rail</th>
-                </tr>
-              </thead>
-              <tbody>
-                {formatEmissions(trip, "Total")}
-                {formatEmissions(trip, "Per Person")}
-              </tbody>
-            </table>
+          <div className="container">
+            <div className="w-full flex flex-row flex-no-wrap rounded-lg overflow-hidden sm:shadow-lg my-5">
+              <table className="w-full text-sm text-left bg-white bg-opacity-40  text-gray-500 dark:text-gray-400">
+                <thead className="text-xl text-green-900 uppercase dark:bg-gray-700 dark:text-gray-400">
+                  <tr className="flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+                    <th class="p-5 text-left">CO2e(kg)</th>
+                    <th>
+                      <span className="material-symbols-outlined ml-6">
+                        flight_land
+                      </span>
+                    </th>
+                    <th>
+                      <span className="material-symbols-outlined ml-6">
+                        directions_car
+                      </span>
+                    </th>
+                    <th>
+                      <span className="material-symbols-outlined ml-6">
+                        electric_car
+                      </span>
+                    </th>
+                    <th>
+                      <span className="material-symbols-outlined ml-6">
+                        train
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="flex-1 sm:flex-none">
+                  {formatEmissions(trip, "Total")}
+                  {formatEmissions(trip, "Per Person")}
+                </tbody>
+              </table>
+            </div>
+            <form onSubmit={handleDelete}>
+              <input
+                data-cy="deleteButton"
+                type="submit"
+                value="Delete"
+                className="btn bg-green-900 border-0 hover:bg-green-700 rounded-full"
+              />
+            </form>
           </div>
-          <form onSubmit={handleDelete}>
-            <input
-              data-cy="deleteButton"
-              type="submit"
-              value="Delete"
-              className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
-            />
-          </form>
         </div>
       </div>
     </>
