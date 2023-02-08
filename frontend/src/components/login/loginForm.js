@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavBar from "../navBar/navBar";
 
 const LoginForm = ({ navigate }) => {
   const handleChange = (setFunction) => {
@@ -34,42 +35,64 @@ const LoginForm = ({ navigate }) => {
 
   return (
     <>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div id="login-email" className="mb-5 text-xl mx-auto">
-          <label for="login-email"></label>
-          <br />
-          <input
-            id="login-email-input"
-            className="pl-1 border-2 rounded peer"
-            data-cy="login-email"
-            type="text"
-            value={email}
-            onChange={handleChange(setEmail)}
-          />
+      <NavBar />
+      <div id="main-container" className="pt-16 h-full">
+        <div className="flex justify-center">
+          <div className="flex flex-col p-20 items-center mt-20">
+            <div className="w-fit text-4xl mb-10 font-semibold">Login</div>
+            <form onSubmit={handleSubmit}>
+              <div
+                id="login-email-container"
+                className="text-xl w-full mx-auto mb-4"
+              >
+                <label for="login-email" className="text-base">
+                  Email:
+                </label>
+                <br />
+                <input
+                  id="login-email"
+                  name="login-email"
+                  className="pl-1 border-2 rounded w-full"
+                  data-cy="login-email"
+                  type="text"
+                  value={email}
+                  onChange={handleChange(setEmail)}
+                />
+              </div>
+              <div
+                id="login-password-container"
+                className="mb-8 text-xl mx-auto w-full"
+              >
+                <label for="login-password" className="text-base">
+                  Password:
+                </label>
+                <br />
+                <input
+                  id="login-password"
+                  className="pl-1 border-2 rounded peer w-full"
+                  data-cy="login-password"
+                  type="password"
+                  name="login-password"
+                  value={password}
+                  onChange={handleChange(setPassword)}
+                />
+              </div>
+              <div>
+                <input
+                  id="login-submit"
+                  className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"
+                  data-cy="login-submit"
+                  type="submit"
+                  value="submit"
+                />
+                <a href="/signup" className="ml-6 text-blue-600">
+                  Don't have an account?
+                </a>
+              </div>
+            </form>
+          </div>
         </div>
-        <div id="login-password" className="mb-5 text-xl mx-auto">
-          <label for="login-password"></label>
-          <br />
-          <input
-            id="login-password-input"
-            className="pl-1 border-2 rounded peer"
-            data-cy="login-password"
-            type="password"
-            value={password}
-            onChange={handleChange(setPassword)}
-          />
-        </div>
-        <div>
-          <input
-            id="login-submit"
-            className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"
-            data-cy="login-submit"
-            type="submit"
-            value="submit"
-          />
-        </div>
-      </form>
+      </div>
     </>
   );
 };

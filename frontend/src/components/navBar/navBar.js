@@ -39,7 +39,7 @@ const NavBar = ({ logout }) => {
   };
 
   return (
-    <div className="navbar bg-green-500 fixed w-full top-0">
+    <div className="fixed top-0 navbar bg-green-500 w-full z-50">
       <h1 className="text-white text-3xl font-bold ml-6">Ecoliday</h1>
       {/* <a
         className="absolute top-2 right-2 btn font-lobster text-green-500 bg-white hover:bg-slate-200 text-right hover:text-green-700 text-1xl border-none"

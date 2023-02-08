@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavBar from "../navBar/navBar";
 
 const SignUpForm = ({ navigate }) => {
   const handleChange = (setFunction) => {
@@ -30,6 +31,7 @@ const SignUpForm = ({ navigate }) => {
 
   return (
     <>
+      <NavBar />
       <h1>Sign up</h1>
       <form onSubmit={handleSubmit}>
         <div id="email" className="mb-5 text-xl mx-auto">
