@@ -36,7 +36,7 @@ const LoginForm = ({ navigate }) => {
   return (
     <>
       <NavBar />
-      <div id="main-container" className="pt-16 h-full">
+      <div id="main-container" className="pt-16">
         <div className="flex justify-center">
           <div className="flex flex-col p-10 items-center mt-20 w-96">
             <div className="w-fit text-4xl mb-10 font-semibold">Login</div>
