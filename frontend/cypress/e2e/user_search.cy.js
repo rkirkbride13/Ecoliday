@@ -22,87 +22,6 @@ describe("User emission search", () => {
     ).as("getEmissions");
   });
 
-  it("user sucessfully completes a search and renders plane results on the page", () => {
-    cy.visit("/");
-    cy.get('[data-cy="from"]').type("London");
-    cy.get('[data-cy="to"]').type("Berlin");
-    cy.get('[data-cy="passengers"]').type("2");
-    cy.get('[data-cy="travelFormSubmit"]').click();
-
-    cy.wait("@getEmissions").then(() => {
-      cy.get('[data-cy="total-emissions-plane"]').should(
-        "contain.text",
-        "31.5 kg"
-      );
-      cy.get('[data-cy="person-emissions-plane"]').should(
-        "contain.text",
-        "Per Person: 15.8 kg"
-      );
-    });
-  });
-
-  it("user sucessfully completes a search and renders plane and petrol car results on the page", () => {
-    cy.visit("/");
-    cy.get('[data-cy="from"]').type("London");
-    cy.get('[data-cy="to"]').type("Berlin");
-    cy.get('[data-cy="passengers"]').type("2");
-    cy.get('[data-cy="travelFormSubmit"]').click();
-
-    cy.wait("@getEmissions").then(() => {
-      cy.get('[data-cy="total-emissions-plane"]').should(
-        "contain.text",
-        "31.5 kg"
-      );
-      cy.get('[data-cy="person-emissions-plane"]').should(
-        "contain.text",
-        "Per Person: 15.8 kg"
-      );
-      cy.get('[data-cy="total-emissions-petrol car"]').should(
-        "contain.text",
-        "30.5 kg"
-      );
-      cy.get('[data-cy="person-emissions-petrol car"]').should(
-        "contain.text",
-        "Per Person: 14.8 kg"
-      );
-    });
-  });
-
-  it("user sucessfully completes a search and renders plane, petrol car and electric car results on the page", () => {
-    cy.visit("/");
-    cy.get('[data-cy="from"]').type("London");
-    cy.get('[data-cy="to"]').type("Berlin");
-    cy.get('[data-cy="passengers"]').type("2");
-    cy.get('[data-cy="travelFormSubmit"]').click();
-
-    cy.wait("@getEmissions").then(() => {
-      cy.get('[data-cy="total-emissions-plane"]').should(
-        "contain.text",
-        "31.5 kg"
-      );
-      cy.get('[data-cy="person-emissions-plane"]').should(
-        "contain.text",
-        "Per Person: 15.8 kg"
-      );
-      cy.get('[data-cy="total-emissions-petrol car"]').should(
-        "contain.text",
-        "30.5 kg"
-      );
-      cy.get('[data-cy="person-emissions-petrol car"]').should(
-        "contain.text",
-        "Per Person: 14.8 kg"
-      );
-      cy.get('[data-cy="total-emissions-electric car"]').should(
-        "contain.text",
-        "29.5 kg"
-      );
-      cy.get('[data-cy="person-emissions-electric car"]').should(
-        "contain.text",
-        "Per Person: 13.8 kg"
-      );
-    });
-  });
-
   it("user sucessfully completes a search and renders plane, petrol car, electric car and train results on the page", () => {
     cy.visit("/");
     cy.get('[data-cy="from"]').type("London");
@@ -174,6 +93,14 @@ describe("User emission search", () => {
         "Eating 3 steaks"
       );
     });
+  });
+
+  it("user can click suggestion button and it populates the to field with random UK location", () => {
+    cy.visit("/");
+    cy.get('[data-cy="to"]').type("New York");
+    cy.get('[data-cy="randomPlace"]').click();
+    cy.get('[data-cy="to"]').should("not.contain.text", "Berlin");
+    cy.get('[data-cy="to"]').invoke("val").should("not.be.empty");
   });
 
   describe("from London to New York", () => {

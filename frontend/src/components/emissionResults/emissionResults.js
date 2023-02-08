@@ -12,6 +12,8 @@ const EmissionResults = ({
   const [token] = useState(window.localStorage.getItem("token"));
   if (renderEmissions === false) return <></>;
 
+  const saveButtonView = token !== null;
+
   const CO2eSteak = 14;
   const CO2eTshirt = 7;
   const CO2eTree = 25;
@@ -138,15 +140,17 @@ const EmissionResults = ({
     <>
       <div id="emissionResults">
         <div>{resultDivs}</div>
-        <form onSubmit={handleSave}>
-          <input
-            data-cy="saveButton"
-            type="submit"
-            disabled={saveToggle}
-            value={saveToggle ? "SAVED" : "SAVE"}
-            className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
-          />
-        </form>
+        {saveButtonView && (
+          <form onSubmit={handleSave}>
+            <input
+              data-cy="saveButton"
+              type="submit"
+              disabled={saveToggle}
+              value={saveToggle ? "SAVED" : "SAVE"}
+              className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
+            />
+          </form>
+        )}
       </div>
     </>
   );
