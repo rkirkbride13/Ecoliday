@@ -4,12 +4,14 @@ import NavBar from "../navBar/navBar";
 const LoginForm = ({ navigate }) => {
   const handleChange = (setFunction) => {
     return (event) => {
+      setNotFound(false);
       setFunction(event.target.value);
     };
   };
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [notFound, setNotFound] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,13 +25,23 @@ const LoginForm = ({ navigate }) => {
     });
 
     if (response.status !== 201) {
-      console.log("failed login");
-      navigate("/login");
+      setNotFound(true);
     } else {
-      console.log("successful login");
       let data = await response.json();
       window.localStorage.setItem("token", data.token);
       navigate("/");
+    }
+  };
+
+  const invalidDetails = () => {
+    if (notFound) {
+      return (
+        <div className="text-red-500 text-base font-semibold">
+          Invalid Details
+        </div>
+      );
+    } else {
+      return <></>;
     }
   };
 
@@ -40,43 +52,49 @@ const LoginForm = ({ navigate }) => {
         <div className="flex justify-center">
           <div className="flex flex-col p-10 items-center mt-20 w-96">
             <div className="w-fit text-4xl mb-10 font-semibold">Login</div>
+            {invalidDetails()}
             <form onSubmit={handleSubmit} className="w-full">
               <div
                 id="login-email-container"
                 className="text-xl w-full mx-auto mb-4"
               >
-                <label for="login-email" className="text-base">
+                <label htmlFor="login-email" className="text-base">
                   Email:
                 </label>
                 <br />
                 <input
                   id="login-email"
                   name="login-email"
-                  className="pl-1 border-2 rounded w-full"
+                  className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded w-full peer"
                   data-cy="login-email"
                   type="text"
+                  required
+                  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
                   value={email}
                   onChange={handleChange(setEmail)}
                 />
               </div>
+
               <div
                 id="login-password-container"
                 className="mb-8 text-xl mx-auto w-full"
               >
-                <label for="login-password" className="text-base">
+                <label htmlFor="login-password" className="text-base">
                   Password:
                 </label>
                 <br />
                 <input
                   id="login-password"
                   name="login-password"
-                  className="pl-1 border-2 rounded w-full"
+                  className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded w-full"
                   data-cy="login-password"
                   type="password"
+                  required
                   value={password}
                   onChange={handleChange(setPassword)}
                 />
               </div>
+
               <div className="flex flex-row justify-between items-center">
                 <input
                   id="login-submit"
