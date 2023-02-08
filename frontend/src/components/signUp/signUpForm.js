@@ -32,42 +32,63 @@ const SignUpForm = ({ navigate }) => {
   return (
     <>
       <NavBar />
-      <h1>Sign up</h1>
-      <form onSubmit={handleSubmit}>
-        <div id="email" className="mb-5 text-xl mx-auto">
-          <label for="email"></label>
-          <br />
-          <input
-            id="email-input"
-            className="pl-1 border-2 rounded peer"
-            data-cy="email"
-            type="text"
-            value={email}
-            onChange={handleChange(setEmail)}
-          />
+      <div id="main-container" className="pt-16 h-full">
+        <div className="flex justify-center">
+          <div className="flex flex-col p-20 items-center mt-20">
+            <div className="w-fit text-4xl mb-10 font-semibold">Sign Up</div>
+            <form onSubmit={handleSubmit}>
+              <div
+                id="signup-email-container"
+                className="text-xl w-full mx-auto mb-4"
+              >
+                <label for="signup-email" className="text-base">
+                  Email:
+                </label>
+                <br />
+                <input
+                  id="signup-email"
+                  name="signup-email"
+                  className="pl-1 border-2 rounded w-full"
+                  data-cy="email"
+                  type="text"
+                  value={email}
+                  onChange={handleChange(setEmail)}
+                />
+              </div>
+              <div
+                id="login-password-container"
+                className="mb-8 text-xl mx-auto w-full"
+              >
+                <label for="login-password" className="text-base">
+                  Password:
+                </label>
+                <br />
+                <input
+                  id="login-password"
+                  name="login-password"
+                  className="pl-1 border-2 rounded w-full"
+                  data-cy="password"
+                  type="password"
+                  value={password}
+                  onChange={handleChange(setPassword)}
+                />
+              </div>
+              <div>
+                <input
+                  id="signup-submit"
+                  className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"
+                  data-cy="signup-submit"
+                  type="submit"
+                  value="submit"
+                />
+                <a href="/login" className="ml-6 text-blue-600">
+                  Already have an account?
+                </a>
+              </div>
+            </form>
+          </div>
         </div>
-        <div id="password" className="mb-5 text-xl mx-auto">
-          <label for="password"></label>
-          <br />
-          <input
-            id="password-input"
-            className="pl-1 border-2 rounded peer"
-            data-cy="password"
-            type="password"
-            value={password}
-            onChange={handleChange(setPassword)}
-          />
-        </div>
-        <div>
-          <input
-            id="signup-submit"
-            className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"
-            data-cy="signup-submit"
-            type="submit"
-            value="submit"
-          />
-        </div>
-      </form>
+      </div>
     </>
   );
 };

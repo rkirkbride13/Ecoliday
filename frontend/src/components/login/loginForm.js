@@ -69,10 +69,10 @@ const LoginForm = ({ navigate }) => {
                 <br />
                 <input
                   id="login-password"
+                  name="login-password"
                   className="pl-1 border-2 rounded peer w-full"
                   data-cy="login-password"
                   type="password"
-                  name="login-password"
                   value={password}
                   onChange={handleChange(setPassword)}
                 />
