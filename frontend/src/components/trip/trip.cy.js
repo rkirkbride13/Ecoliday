@@ -21,10 +21,22 @@ describe("Trip", () => {
       "From:London, ENG, United KingdomTo:New YorkPassengers:2"
     );
   });
+
   it("renders with a delete button on a trip", () => {
     cy.mount(<Trip trip={trip} />);
     cy.get('[data-cy="deleteButton"]')
       .invoke("attr", "type")
       .should("eq", "submit");
+  });
+
+  it("can create a DELETE request to /trips", () => {
+    cy.mount(<Trip trip={trip} />);
+
+    cy.intercept("DELETE", "trips", { message: "DELETED" }).as("deleteTrip");
+
+    cy.get('[data-cy="deleteButton"]').click();
+    cy.wait("@deleteTrip").then((interception) => {
+      expect(interception.response.body.message).to.eq("DELETED");
+    });
   });
 });
