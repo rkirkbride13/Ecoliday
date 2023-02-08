@@ -53,7 +53,7 @@ const TravelForm = ({
       <h1 className="text-3xl mb-10 font-medium">Plan your journey...</h1>
       <form onSubmit={handleSubmit}>
         <div id="from" className="mb-5 text-xl">
-          <label for="from-input">From: </label>
+          <label htmlFor="from-input">From: </label>
           <br />
           <input
             id="from-input"
@@ -71,7 +71,7 @@ const TravelForm = ({
         </div>
 
         <div id="to" className="mb-5 text-xl">
-          <label for="to-input">To: </label>
+          <label htmlFor="to-input">To: </label>
           <br />
           <input
             id="to-input"
@@ -89,7 +89,7 @@ const TravelForm = ({
         </div>
 
         <div id="passengers" className="mb-5 text-xl">
-          <label for="passengers-input">Number of Passengers: </label>
+          <label htmlFor="passengers-input">Number of Passengers: </label>
           <br />
           <input
             id="passengers-input"
