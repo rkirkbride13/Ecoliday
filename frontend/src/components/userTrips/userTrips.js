@@ -1,29 +1,10 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../navBar/navBar";
+import Trip from '../trip/trip'
 
 const UserTrips = ({ navigate }) => {
   const [trips, setTrips] = useState([]);
   const [token] = useState(window.localStorage.getItem("token"));
-  // uncomment when tokens added const user_id = window.localStorage.getItem("user_id");
-
-  const unpackEmissions = (trip) => {
-    return [
-      {
-        type: "Total",
-        plane: trip.emissions.plane.total,
-        petrolCar: trip.emissions.petrolCar.total,
-        electricCar: trip.emissions.electricCar.total,
-        train: trip.emissions.train.total,
-      },
-      {
-        type: "Per Passenger",
-        plane: trip.emissions.plane.perPassenger,
-        petrolCar: trip.emissions.petrolCar.perPassenger,
-        electricCar: trip.emissions.electricCar.perPassenger,
-        train: trip.emissions.train.perPassenger,
-      },
-    ];
-  };
 
   useEffect(() => {
     if (token) {
@@ -58,51 +39,11 @@ const UserTrips = ({ navigate }) => {
         >
           {trips
             .map((trip) => (
-              <div data-cy="trip">
-                <span className="text-green-500 font-bold mr-2">From:</span>
-
-                <span className="text-gray-600 font-medium">{trip.from}</span>
-                <span className="text-green-500 font-bold mr-2">
-                  <br></br>
-                  To:
-                </span>
-                <span className="text-gray-600 font-medium">{trip.to}</span>
-                <span className="text-green-500 font-bold mr-2">
-                  <br></br>
-                  Passengers:
-                </span>
-                <span className="text-gray-600 font-medium mb-2">
-                  {trip.passengers}
-                </span>
-                <div className="mb-2"></div>
-
-                <div className="mb-4">
-                  <div className="overflow-x-auto">
-                    <table className="table table-zebra w-full">
-                      <thead>
-                        <tr>
-                          <th>CO2e(kg)</th>
-                          <th>Plane</th>
-                          <th>Petrol Car</th>
-                          <th>Electric Car</th>
-                          <th>Rail</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {unpackEmissions(trip).map((emissions) => (
-                          <tr>
-                            <td>{emissions.type}</td>
-                            <td>{emissions.plane ? `${emissions.plane.toFixed(1)}` : "N/A"}</td>
-                            <td>{emissions.petrolCar ? `${emissions.petrolCar.toFixed(1)}` : "N/A"}</td>
-                            <td>{emissions.electricCar ? `${emissions.electricCar.toFixed(1)}` : "N/A"}</td>
-                            <td>{emissions.train ? `${emissions.train.toFixed(1)}` : "N/A"}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+              <Trip
+                trip={trip}
+                token={token}
+                setTrips={setTrips}
+              />
             ))
             .reverse()}
         </div>
