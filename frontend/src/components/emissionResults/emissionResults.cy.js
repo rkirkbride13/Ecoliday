@@ -31,6 +31,7 @@ describe("EmissionResults", () => {
   it("It doesn't render component when renderEmissions is false", () => {
     cy.mount(<EmissionResults renderEmissions={false} />);
 
+    // cy.get('[data-cy="total-emissions-plane"]').should("contain.text", "123");
     cy.get('[data-cy="total-emissions-plane"]').should("not.exist");
   });
 

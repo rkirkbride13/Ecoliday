@@ -7,6 +7,7 @@ describe("TravelForm", () => {
   let setFromDisplayMock;
   let setPassengersMock;
   let passengersMock;
+  let setLoading;
 
   beforeEach(() => {
     setEmissionsMock = cy.stub();
@@ -15,6 +16,7 @@ describe("TravelForm", () => {
     setFromDisplayMock = cy.stub();
     setPassengersMock = cy.stub();
     passengersMock = 2;
+    setLoading = cy.stub()
 
     cy.mount(
       <TravelForm
@@ -24,6 +26,7 @@ describe("TravelForm", () => {
         setFromDisplay={setFromDisplayMock}
         setPassengers={setPassengersMock}
         passengers={passengersMock}
+        setLoading={setLoading}
       />
     );
   });

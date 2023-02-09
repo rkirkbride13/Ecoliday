@@ -17,47 +17,50 @@ const EmissionResults = ({
   const CO2eSteak = 14;
   const CO2eTshirt = 7;
   const CO2eTree = 25;
-
-  const resultsArray = [
-    {
-      type: "plane",
-      logo: (
-        <>
-          <span class="material-symbols-outlined">flight_takeoff</span>
-        </>
-      ),
-      emissions: emissions.plane,
-    },
-    {
-      type: "petrol car",
-      logo: (
-        <>
-          <span class="material-symbols-outlined">directions_car</span>
-        </>
-      ),
-      emissions: emissions.petrolCar,
-    },
-    {
-      type: "electric car",
-      logo: (
-        <>
-          <span class="material-symbols-outlined">electric_car</span>
-        </>
-      ),
-      emissions: emissions.electricCar,
-    },
-    {
-      type: "train",
-      logo: (
-        <>
-          <span class="material-symbols-outlined">train</span>
-        </>
-      ),
-      emissions: emissions.train,
-    },
-  ];
+  
+  
 
   const emissionStats = () => {
+
+    const resultsArray = [
+      {
+        type: "plane",
+        logo: (
+          <>
+            <span class="material-symbols-outlined">flight_takeoff</span>
+          </>
+        ),
+        emissions: emissions.plane,
+      },
+      {
+        type: "petrol car",
+        logo: (
+          <>
+            <span class="material-symbols-outlined">directions_car</span>
+          </>
+        ),
+        emissions: emissions.petrolCar,
+      },
+      {
+        type: "electric car",
+        logo: (
+          <>
+            <span class="material-symbols-outlined">electric_car</span>
+          </>
+        ),
+        emissions: emissions.electricCar,
+      },
+      {
+        type: "train",
+        logo: (
+          <>
+            <span class="material-symbols-outlined">train</span>
+          </>
+        ),
+        emissions: emissions.train,
+      },
+    ];
+    
     return (
       <>
       <div className="w-40"></div>
