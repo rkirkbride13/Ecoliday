@@ -36,9 +36,7 @@ const LoginForm = ({ navigate }) => {
   const invalidDetails = () => {
     if (notFound) {
       return (
-        <div className="text-red-500 text-base font-semibold">
-          Invalid Details
-        </div>
+        <div className="text-white text-base font-semibold">User not found</div>
       );
     } else {
       return <></>;
@@ -47,18 +45,20 @@ const LoginForm = ({ navigate }) => {
 
   return (
     <>
-      <NavBar />
+      <NavBar links={[]} />
       <div id="main-container" className="pt-16">
         <div className="flex justify-center">
           <div className="flex flex-col p-10 items-center mt-20 w-96">
-            <div className="w-fit text-4xl mb-10 font-semibold">Login</div>
+            <div className="w-fit text-4xl mb-10 font-semibold text-white">
+              Login
+            </div>
             {invalidDetails()}
             <form onSubmit={handleSubmit} className="w-full">
               <div
                 id="login-email-container"
                 className="text-xl w-full mx-auto mb-4"
               >
-                <label htmlFor="login-email" className="text-base">
+                <label htmlFor="login-email" className="text-base text-white">
                   Email:
                 </label>
                 <br />
@@ -82,7 +82,10 @@ const LoginForm = ({ navigate }) => {
                 id="login-password-container"
                 className="mb-8 text-xl mx-auto w-full"
               >
-                <label htmlFor="login-password" className="text-base">
+                <label
+                  htmlFor="login-password"
+                  className="text-base text-white"
+                >
                   Password:
                 </label>
                 <br />
@@ -104,12 +107,12 @@ const LoginForm = ({ navigate }) => {
               <div className="flex flex-row justify-between items-center">
                 <input
                   id="login-submit"
-                  className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"
+                  className="btn bg-transparent hover:bg-transparent hover:border-white border-white rounded-full "
                   data-cy="login-submit"
                   type="submit"
                   value="submit"
                 />
-                <a href="/signup" className="ml-6 text-blue-600">
+                <a href="/signup" className="ml-6 text-white">
                   Don't have an account?
                 </a>
               </div>

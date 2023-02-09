@@ -60,10 +60,14 @@ const TravelForm = ({
 
   return (
     <div id="travelForm" className="mt-8">
-      <h1 className="text-3xl mb-10 font-medium">Plan your journey...</h1>
+      <h1 className="text-3xl mb-10 font-medium text-white">
+        Plan your journey
+      </h1>
       <form onSubmit={handleSubmit}>
         <div id="from" className="mb-5 text-xl">
-          <label htmlFor="from-input">From: </label>
+          <label htmlFor="from-input" className="text-white">
+            From:{" "}
+          </label>
           <br />
           <input
             id="from-input"
@@ -75,13 +79,15 @@ const TravelForm = ({
             // pattern="\d*"
             className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
           />
-          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-white">
             Enter details
           </p>
         </div>
 
         <div id="to" className="mb-5 text-xl">
-          <label htmlFor="to-input">To: </label>
+          <label htmlFor="to-input" className="text-white">
+            To:{" "}
+          </label>
           <br />
           <input
             id="to-input"
@@ -93,13 +99,15 @@ const TravelForm = ({
             // pattern="\d*"
             className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
           />
-          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-white">
             Enter details
           </p>
         </div>
 
         <div id="passengers" className="mb-5 text-xl">
-          <label htmlFor="passengers-input">Number of Passengers: </label>
+          <label htmlFor="passengers-input" className="text-white">
+            Number of Passengers:{" "}
+          </label>
           <br />
           <input
             id="passengers-input"
@@ -111,7 +119,7 @@ const TravelForm = ({
             // pattern="\d*"
             className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 invalid:border-red-600 border-2 rounded peer"
           />
-          <p className="invisible peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+          <p className="invisible peer-invalid:visible text-xs pl-1 pt-1 text-white">
             Must be a positive whole number
           </p>
         </div>
@@ -120,7 +128,7 @@ const TravelForm = ({
           data-cy="travelFormSubmit"
           type="submit"
           value="Submit"
-          className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
+          className="btn bg-transparent hover:bg-transparent hover:border-white border-white rounded-full"
         />
       </form>
       <div className="mt-2">Why not try the UK?</div>
