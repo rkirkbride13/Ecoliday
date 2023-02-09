@@ -33,7 +33,7 @@ const SignUpForm = ({ navigate }) => {
   const invalidDetails = () => {
     if (emailUsed) {
       return (
-        <div className="text-red-500 text-base font-semibold">
+        <div className="text-red-600 text-base font-semibold">
           Email already in use
         </div>
       );
@@ -44,7 +44,7 @@ const SignUpForm = ({ navigate }) => {
 
   return (
     <>
-      <NavBar />
+      <NavBar links={[]} />
       <div id="main-container" className="pt-16">
         <div className="flex justify-center">
           <div className="flex flex-col items-center mt-20 w-96 bg-white bg-opacity-20 py-4 rounded-xl">

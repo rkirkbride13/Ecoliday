@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import TravelForm from "../travelForm/TravelForm";
 import EmissionResults from "../emissionResults/emissionResults";
 import NavBar from "../navBar/navBar";
@@ -11,6 +11,9 @@ const HomePage = ({ navigate }) => {
   const [passengers, setPassengers] = useState("");
   const [saveToggle, setSaveToggle] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [_, forceUpdate] = useReducer((x) => x + 1, 0);
+
+  const hasToken = Boolean(window.localStorage.getItem("token"));
 
   // const renderFoundLocation = () => {
   //   if (renderEmissions)
@@ -28,15 +31,34 @@ const HomePage = ({ navigate }) => {
   //     );
   // };
 
-  const logout = () => {
-    window.localStorage.removeItem("token");
+  const navbarLinks = () => {
+    if (!hasToken) {
+      return [{ href: "/login", text: "Login", handleClick: () => {} }];
+    } else {
+      return [
+        {
+          href: "/trips",
+          text: "Trips",
+          handleClick: () => {},
+        },
+        {
+          href: "/",
+          text: "Logout",
+          handleClick: (e) => {
+            e.preventDefault();
+            window.localStorage.removeItem("token");
+            forceUpdate();
+          },
+        },
+      ];
+    }
   };
 
   return (
     <>
       <main id="main-container">
         <nav>
-          <NavBar logout={logout} />
+          <NavBar links={navbarLinks()} />
         </nav>
         <div className="h-20"></div>
 

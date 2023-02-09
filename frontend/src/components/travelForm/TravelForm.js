@@ -80,7 +80,7 @@ const TravelForm = ({
             // pattern="\d*"
             className="w-full pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
           />
-          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-600">
             Enter details
           </p>
         </div>
@@ -98,7 +98,7 @@ const TravelForm = ({
             // pattern="\d*"
             className="w-full pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
           />
-          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-600">
             Enter details
           </p>
         </div>
@@ -116,7 +116,7 @@ const TravelForm = ({
             // pattern="\d*"
             className="w-full pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 invalid:border-red-600 border-2 rounded peer"
           />
-          <p className="invisible peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+          <p className="invisible peer-invalid:visible text-xs pl-1 pt-1 text-red-600">
             Must be a positive whole number
           </p>
         </div>
