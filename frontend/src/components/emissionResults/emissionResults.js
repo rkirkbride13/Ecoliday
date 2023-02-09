@@ -80,7 +80,7 @@ const EmissionResults = ({
             <span className="text-gray-600 font-medium">{passengers}</span>
             <div className="container">
               <div className="w-full flex flex-row flex-no-wrap rounded-lg  sm:shadow-lg mt-1 mb-5">
-                <table className="w-full text-sm text-left bg-white bg-opacity-40  text-gray-500 dark:text-gray-400">
+                <table className="w-full text-sm text-center bg-white bg-opacity-40  text-gray-500 dark:text-gray-400">
                   <thead className="text-green-900 uppercase dark:bg-gray-700 dark:text-gray-400">
                     <tr className="flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none sm:mb-0">
                       <th class="p-5 ">Transport</th>
@@ -92,10 +92,10 @@ const EmissionResults = ({
                         Passenger <br />{" "}
                         <span className="normal-case">(kg C02e)</span>
                       </th>
-                      <th></th>
+                      <th class="pr-16"></th>
                     </tr>
                   </thead>
-                  <tbody className="flex-1 sm:flex-none">
+                  <tbody className="flex-1 sm:flex-none text-center">
                     {resultsArray.map((result) => {
                       return (
                         <>
@@ -155,7 +155,7 @@ const EmissionResults = ({
       return (
         <ul
           tabIndex={0}
-          className="dropdown-content menu p-2 shadow-2xl ml-10 bg-opacity-70 bg-white rounded-box w-56 text-base text-gray-800 text-left"
+          className="dropdown-content menu p-2 shadow-2xl ml-14 bg-opacity-70 bg-white rounded-box w-56 text-base text-gray-800 text-left"
         >
           Equivalent to...
           <li>
