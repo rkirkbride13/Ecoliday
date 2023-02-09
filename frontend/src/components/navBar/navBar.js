@@ -46,7 +46,7 @@ const NavBar = (props) => {
     <div className="fixed top-0 navbar w-full h-fit z-50 justify-between items-center">
       <a
         href="/"
-        className="btn btn-ghost text-white text-5xl font-bold normal-case h-fit"
+        className="btn btn-ghost text-white text-5xl font-bold normal-case h-fit hover:bg-opacity-0"
       >
         <span className="material-symbols-outlined mr-2 text-6xl hover:animate-spin">
           eco
