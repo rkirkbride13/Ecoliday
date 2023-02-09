@@ -26,8 +26,12 @@ const NavBar = (props) => {
           >
             {props.links.map((link) => {
               return (
-                <li>
-                  <a href={link.href} onClick={link.handleClick}>
+                <li className="visible">
+                  <a
+                    href={link.href}
+                    data-cy={`navbar-${link.text.toLowerCase()}`}
+                    onClick={link.handleClick}
+                  >
                     {link.text}
                   </a>
                 </li>
