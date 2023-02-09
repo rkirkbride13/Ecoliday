@@ -18,8 +18,6 @@ const EmissionResults = ({
   const CO2eTshirt = 7;
   const CO2eTree = 25;
 
-  let carFactor = Math.ceil(passengers / 5);
-
   const resultsArray = [
     {
       type: "plane",
@@ -28,8 +26,7 @@ const EmissionResults = ({
           <span class="material-symbols-outlined">flight_takeoff</span>
         </>
       ),
-      total: emissions.plane.total,
-      perPassenger: emissions.plane.perPassenger,
+      emissions: emissions.plane,
     },
     {
       type: "petrol car",
@@ -38,8 +35,7 @@ const EmissionResults = ({
           <span class="material-symbols-outlined">directions_car</span>
         </>
       ),
-      total: emissions.petrolCar.total * carFactor,
-      perPassenger: (emissions.petrolCar.total * carFactor) / passengers,
+      emissions: emissions.petrolCar,
     },
     {
       type: "electric car",
@@ -48,8 +44,7 @@ const EmissionResults = ({
           <span class="material-symbols-outlined">electric_car</span>
         </>
       ),
-      total: emissions.electricCar.total * carFactor,
-      perPassenger: (emissions.electricCar.total * carFactor) / passengers,
+      emissions: emissions.electricCar,
     },
     {
       type: "train",
@@ -58,15 +53,15 @@ const EmissionResults = ({
           <span class="material-symbols-outlined">train</span>
         </>
       ),
-      total: emissions.train.total,
-      perPassenger: emissions.train.perPassenger,
+      emissions: emissions.train,
     },
   ];
 
   const emissionStats = () => {
     return (
       <>
-        <div className="bg-white bg-opacity-20 p-4 rounded-lg">
+      <div className="w-40"></div>
+        <div className="bg-white bg-opacity-20 p-4 rounded-lg ml-10">
           <div className="bg-white bg-opacity-75 p-7 rounded-lg">
             <span className="text-green-900 font-bold mr-2 mix-blend-darken">
               From:
@@ -110,13 +105,13 @@ const EmissionResults = ({
                           >
                             <td>{result.logo}</td>
                             <td data-cy={`total-emissions-${result.type}`}>
-                              {result.total
-                                ? `${result.total.toFixed(1)}`
+                              {result.emissions.total
+                                ? `${result.emissions.total.toFixed(1)}`
                                 : "N/A"}
                             </td>
                             <td data-cy={`person-emissions-${result.type}`}>
-                              {result.perPassenger
-                                ? `${result.perPassenger.toFixed(1)}`
+                              {result.emissions.perPassenger
+                                ? `${result.emissions.perPassenger.toFixed(1)}`
                                 : "N/A"}
                             </td>
                             <td className="dropdown dropdown-hover dropdown-right h-full">
@@ -143,7 +138,7 @@ const EmissionResults = ({
                       type="submit"
                       disabled={saveToggle}
                       value={saveToggle ? "SAVED" : "SAVE"}
-                      className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
+                      className="btn bg-green-900 border-0 hover:bg-green-700 rounded-full"
                     />
                   </form>
                 </div>
@@ -156,7 +151,7 @@ const EmissionResults = ({
   };
 
   const emissionsContext = (result) => {
-    if (result.total) {
+    if (result.emissions.total) {
       return (
         <ul
           tabIndex={0}
@@ -165,22 +160,22 @@ const EmissionResults = ({
           Equivalent to...
           <li>
             &#x1F42E;
-            {`  Eating ${Math.ceil(result.total / CO2eSteak)} ${
-              Math.ceil(result.total / CO2eSteak) === 1 ? "steak" : "steaks"
+            {`  Eating ${Math.ceil(result.emissions.total / CO2eSteak)} ${
+              Math.ceil(result.emissions.total / CO2eSteak) === 1 ? "steak" : "steaks"
             }`}
           </li>
           <li>
             &#x1F455;
-            {`  Buying ${Math.ceil(result.total / CO2eTshirt)} ${
-              Math.ceil(result.total / CO2eTshirt) === 1
+            {`  Buying ${Math.ceil(result.emissions.total / CO2eTshirt)} ${
+              Math.ceil(result.emissions.total / CO2eTshirt) === 1
                 ? "T-shirt"
                 : "T-shirts"
             }`}
           </li>
           <li>
             &#x1F333;
-            {`  Saving ${Math.ceil(result.total / CO2eTree)} ${
-              Math.ceil(result.total / CO2eTree) === 1 ? "tree" : "trees"
+            {`  Saving ${Math.ceil(result.emissions.total / CO2eTree)} ${
+              Math.ceil(result.emissions.total / CO2eTree) === 1 ? "tree" : "trees"
             } a year`}
           </li>
         </ul>

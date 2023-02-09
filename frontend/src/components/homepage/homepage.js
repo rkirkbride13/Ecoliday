@@ -50,7 +50,7 @@ const HomePage = ({ navigate }) => {
             setPassengers={setPassengers}
             setSaveToggle={setSaveToggle}
           />
-          <div className="w-40"></div>
+          
           <EmissionResults
             emissions={emissions}
             renderEmissions={renderEmissions}
