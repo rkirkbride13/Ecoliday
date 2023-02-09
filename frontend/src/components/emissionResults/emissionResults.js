@@ -8,9 +8,9 @@ const EmissionResults = ({
   passengers,
   setSaveToggle,
   saveToggle,
+  loading,
 }) => {
   const [token] = useState(window.localStorage.getItem("token"));
-  if (renderEmissions === false) return <></>;
 
   const saveButtonView = token !== null;
 
@@ -209,13 +209,41 @@ const EmissionResults = ({
     }
   };
 
-  return (
-    <>
-      <div id="emissionResults" className="mt-20">
-        <div>{emissionStats()}</div>
-      </div>
-    </>
-  );
+  if (loading) {
+    return (
+      <>
+        <div className="flex flex-col w-96 h-96 bg-white justify-center items-center">
+          <div className="text-3xl">Loading...</div>
+          <div>
+            <span className="material-symbols-outlined animate-spin text-9xl">
+              eco
+            </span>
+          </div>
+        </div>
+      </>
+    );
+  } else if (renderEmissions) {
+    return (
+      <>
+        <div id="emissionResults" className="mt-20">
+          <div>{emissionStats()}</div>
+          {/* {saveButtonView && (
+            <form onSubmit={handleSave}>
+              <input
+                data-cy="saveButton"
+                type="submit"
+                disabled={saveToggle}
+                value={saveToggle ? "SAVED" : "SAVE"}
+                className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
+              />
+            </form>
+          )} */}
+        </div>
+      </>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default EmissionResults;
