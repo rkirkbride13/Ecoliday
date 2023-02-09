@@ -1,55 +1,59 @@
-const NavBar = ({ logout }) => {
-  const hasToken = Boolean(window.localStorage.getItem("token"));
-
-  const renderButton = () => {
-    if (!hasToken) {
+const NavBar = (props) => {
+  const renderDropdown = () => {
+    if (props.links.length !== 0)
       return (
-        <a
-          className="absolute top-2 right-2 btn font-lobster text-green-500 bg-white hover:bg-slate-200 text-right hover:text-green-700 text-1xl border-none"
-          href="/login"
-          data-cy="navbar-login"
-          id="logo-link"
-        >
-          Login
-        </a>
-      );
-    } else if (hasToken) {
-      return (
-        <>
-          <a
-            className="absolute top-2 right-2 btn font-lobster text-green-500 bg-white hover:bg-slate-200 text-right hover:text-green-700 text-1xl border-none"
-            onClick={logout}
-            href="/"
-            data-cy="navbar-logout"
-            id="logo-link"
+        <div className="dropdown dropdown-end">
+          <label tabIndex={0} className="btn btn-ghost btn-circle">
+            <div className="w-10 rounded-full">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="4 4 18 18"
+                className="inline-block w-5 h-5 stroke-current scale-150 mt-1 text-white hover:animate-ping"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </div>
+          </label>
+          <ul
+            tabIndex={0}
+            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
-            Logout
-          </a>
-          <a
-            className="absolute top-2 right-28 btn font-lobster text-green-500 bg-white hover:bg-slate-200 text-right hover:text-green-700 text-1xl border-none"
-            href="/trips"
-            data-cy="navbar-trips"
-            id="logo-link"
-          >
-            Trips
-          </a>
-        </>
+            {props.links.map((link) => {
+              return (
+                <li className="visible">
+                  <a
+                    href={link.href}
+                    data-cy={`navbar-${link.text.toLowerCase()}`}
+                    onClick={link.handleClick}
+                  >
+                    {link.text}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       );
-    }
   };
 
   return (
-    <div className="fixed top-0 navbar w-full z-50">
+    <div className="fixed top-0 navbar w-full h-fit z-50 justify-between items-center">
       <a
         href="/"
-        className="btn btn-ghost text-white text-3xl font-bold normal-case"
+        className="btn btn-ghost text-white text-5xl font-bold normal-case h-fit"
       >
-        <span className="material-symbols-outlined mr-2 text-3xl hover:animate-spin">
+        <span className="material-symbols-outlined mr-2 text-6xl hover:animate-spin">
           eco
         </span>{" "}
-        Ecoliday
+        <span className="mt-1">Ecoliday</span>
       </a>
-      {renderButton()}
+      {renderDropdown()}
     </div>
   );
 };

@@ -22,16 +22,22 @@ const UserTrips = ({ navigate }) => {
     }
   }, []);
 
-  const logout = () => {
-    window.localStorage.removeItem("token");
-  };
-
   return (
     <>
-      <nav className="sticky z-50">
-        <NavBar logout={logout} />
-      </nav>
       <main id="main-container">
+        <nav className="sticky z-50">
+          <NavBar
+            links={[
+              {
+                href: "/",
+                text: "Logout",
+                handleClick: () => {
+                  window.localStorage.removeItem("token");
+                },
+              },
+            ]}
+          />
+        </nav>
         <div className="h-28"></div>
         <div
           data-cy="trips"

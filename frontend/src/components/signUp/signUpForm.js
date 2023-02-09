@@ -33,7 +33,7 @@ const SignUpForm = ({ navigate }) => {
   const invalidDetails = () => {
     if (emailUsed) {
       return (
-        <div className="text-red-500 text-base font-semibold">
+        <div className="text-white text-base font-semibold">
           Email already in use
         </div>
       );
@@ -44,11 +44,13 @@ const SignUpForm = ({ navigate }) => {
 
   return (
     <>
-      <NavBar />
+      <NavBar links={[]} />
       <div id="main-container" className="pt-16">
         <div className="flex justify-center">
           <div className="flex flex-col p-10 items-center mt-20 w-96">
-            <div className="w-fit text-4xl mb-10 font-semibold">Sign Up</div>
+            <div className="w-fit text-white text-4xl mb-10 font-semibold">
+              Sign Up
+            </div>
             {invalidDetails()}
             <form onSubmit={handleSubmit} className="w-full">
               <div
@@ -70,7 +72,7 @@ const SignUpForm = ({ navigate }) => {
                   value={email}
                   onChange={handleChange(setEmail)}
                 />
-                <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+                <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-white">
                   Invalid email
                 </p>
               </div>
@@ -93,7 +95,7 @@ const SignUpForm = ({ navigate }) => {
                   value={password}
                   onChange={handleChange(setPassword)}
                 />
-                <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-500">
+                <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-white">
                   Enter a password
                 </p>
               </div>
@@ -101,12 +103,12 @@ const SignUpForm = ({ navigate }) => {
               <div className="flex flex-row justify-between items-center">
                 <input
                   id="signup-submit"
-                  className="btn bg-green-600 border-0 hover:bg-green-700 rounded-full"
+                  className="btn bg-transparent hover:bg-transparent hover:border-white border-white rounded-full"
                   data-cy="signup-submit"
                   type="submit"
                   value="submit"
                 />
-                <a href="/login" className="text-blue-600">
+                <a href="/login" className="text-white">
                   Already have an account?
                 </a>
               </div>
