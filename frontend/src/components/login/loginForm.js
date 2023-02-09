@@ -51,7 +51,7 @@ const LoginForm = ({ navigate }) => {
       <div id="main-container" className="pt-16 ">
         <div className="flex justify-center">
           <div className="flex flex-col items-center mt-20 w-96 bg-white bg-opacity-20 py-4 rounded-xl">
-            <div className="bg-white bg-opacity-75 p-8 rounded-xl">
+            <div className="bg-white bg-opacity-75 py-8 px-9 rounded-xl">
               <div className="w-fit text-4xl mb-10 font-semibold text-green-900">
                 Login
               </div>
