@@ -31,6 +31,7 @@ describe("EmissionResults", () => {
   it("It doesn't render component when renderEmissions is false", () => {
     cy.mount(<EmissionResults renderEmissions={false} />);
 
+    // cy.get('[data-cy="total-emissions-plane"]').should("contain.text", "123");
     cy.get('[data-cy="total-emissions-plane"]').should("not.exist");
   });
 
@@ -208,19 +209,19 @@ describe("EmissionResults", () => {
     it("renders the emissions context for all methods of transport in a drop-down", () => {
       cy.get('[data-cy="emissions-dropdown-plane"]').should(
         "contain.text",
-        "Eating 22 steaks"
+        "Eating 121 burgers"
       );
       cy.get('[data-cy="emissions-dropdown-petrol car"]').should(
         "contain.text",
-        "Eating 13 steaks"
+        "Eating 70 burgers"
       );
       cy.get('[data-cy="emissions-dropdown-electric car"]').should(
         "contain.text",
-        "Eating 4 steaks"
+        "Eating 21 burgers"
       );
       cy.get('[data-cy="emissions-dropdown-train"]').should(
         "contain.text",
-        "Eating 1 steak"
+        "Eating 4 burgers"
       );
     });
 

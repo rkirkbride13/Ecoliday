@@ -10,25 +10,26 @@ const HomePage = ({ navigate }) => {
   const [fromDisplay, setFromDisplay] = useState("");
   const [passengers, setPassengers] = useState("");
   const [saveToggle, setSaveToggle] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const hasToken = Boolean(window.localStorage.getItem("token"));
 
-  const renderFoundLocation = () => {
-    if (renderEmissions)
-      return (
-        <div className="mb-10 text-center text-2xl">
-          <div className="">
-            <span className="text-green-500 font-bold text-xl mr-2">From:</span>
-            <span className="text-gray-600">{fromDisplay}</span>
-          </div>
-          <div className="">
-            <span className="text-green-500 font-bold text-xl mr-2">To:</span>
-            <span className="text-gray-600">{toDisplay}</span>
-          </div>
-        </div>
-      );
-  };
+  // const renderFoundLocation = () => {
+  //   if (renderEmissions)
+  //     return (
+  //       <div className="mb-10 text-center text-2xl">
+  //         <div className="">
+  //           <span className="text-green-500 font-bold text-xl mr-2">From:</span>
+  //           <span className="text-gray-600">{fromDisplay}</span>
+  //         </div>
+  //         <div className="">
+  //           <span className="text-green-500 font-bold text-xl mr-2">To:</span>
+  //           <span className="text-gray-600">{toDisplay}</span>
+  //         </div>
+  //       </div>
+  //     );
+  // };
 
   const navbarLinks = () => {
     if (!hasToken) {
@@ -59,9 +60,9 @@ const HomePage = ({ navigate }) => {
         <nav>
           <NavBar links={navbarLinks()} />
         </nav>
-        <div className="h-28"></div>
+        <div className="h-20"></div>
 
-        {renderFoundLocation()}
+        {/* {renderFoundLocation()} */}
         <div className="flex justify-center">
           <TravelForm
             setEmissions={setEmissions}
@@ -71,8 +72,9 @@ const HomePage = ({ navigate }) => {
             passengers={passengers}
             setPassengers={setPassengers}
             setSaveToggle={setSaveToggle}
+            setLoading={setLoading}
           />
-          <div className="w-40"></div>
+          
           <EmissionResults
             emissions={emissions}
             renderEmissions={renderEmissions}
@@ -81,6 +83,7 @@ const HomePage = ({ navigate }) => {
             passengers={passengers}
             setSaveToggle={setSaveToggle}
             saveToggle={saveToggle}
+            loading={loading}
           />
         </div>
       </main>

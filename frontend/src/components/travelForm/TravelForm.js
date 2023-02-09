@@ -10,6 +10,7 @@ const TravelForm = ({
   passengers,
   setPassengers,
   setSaveToggle,
+  setLoading,
 }) => {
   TravelForm.propTypes = {
     setEmissions: PropTypes.func,
@@ -43,6 +44,8 @@ const TravelForm = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    setLoading(true);
+
     await fetch(
       `/emissions?from=${fromForm}&to=${toForm}&passengers=${passengers}`
     )
@@ -50,6 +53,7 @@ const TravelForm = ({
         return response.json();
       })
       .then((responseData) => {
+        setLoading(false);
         setEmissions(responseData.emissions);
         setRenderEmissions(true);
         setToDisplay(responseData.to);
@@ -59,15 +63,12 @@ const TravelForm = ({
   };
 
   return (
-    <div id="travelForm" className="mt-8">
-      <h1 className="text-3xl mb-10 font-medium text-white">
-        Plan your journey
-      </h1>
+    <div className="bg-white bg-opacity-20 p-4 rounded-xl mb-12">
+    <div id="travelForm" className="bg-white bg-opacity-75 p-10 px-16 rounded-xl">
+      <h1 className="text-3xl mb-10 font-medium text-green-900">Plan your journey...</h1>
       <form onSubmit={handleSubmit}>
         <div id="from" className="mb-5 text-xl">
-          <label htmlFor="from-input" className="text-white">
-            From:{" "}
-          </label>
+          <label htmlFor="from-input" className="text-green-900">From: </label>
           <br />
           <input
             id="from-input"
@@ -77,17 +78,15 @@ const TravelForm = ({
             value={fromForm}
             onChange={handleChange(setFromForm)}
             // pattern="\d*"
-            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
+            className="w-full pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
           />
-          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-white">
+          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-600">
             Enter details
           </p>
         </div>
 
         <div id="to" className="mb-5 text-xl">
-          <label htmlFor="to-input" className="text-white">
-            To:{" "}
-          </label>
+          <label htmlFor="to-input" className="text-green-900">To: </label>
           <br />
           <input
             id="to-input"
@@ -97,17 +96,15 @@ const TravelForm = ({
             value={toForm}
             onChange={handleChange(setToForm)}
             // pattern="\d*"
-            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
+            className="w-full pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
           />
-          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-white">
+          <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-600">
             Enter details
           </p>
         </div>
 
         <div id="passengers" className="mb-5 text-xl">
-          <label htmlFor="passengers-input" className="text-white">
-            Number of Passengers:{" "}
-          </label>
+          <label htmlFor="passengers-input" className="text-green-900">Number of Passengers: </label>
           <br />
           <input
             id="passengers-input"
@@ -117,9 +114,9 @@ const TravelForm = ({
             value={passengers}
             onChange={handleChange(setPassengers)}
             // pattern="\d*"
-            className="pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 invalid:border-red-600 border-2 rounded peer"
+            className="w-full pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 invalid:border-red-600 border-2 rounded peer"
           />
-          <p className="invisible peer-invalid:visible text-xs pl-1 pt-1 text-white">
+          <p className="invisible peer-invalid:visible text-xs pl-1 pt-1 text-red-600">
             Must be a positive whole number
           </p>
         </div>
@@ -128,18 +125,19 @@ const TravelForm = ({
           data-cy="travelFormSubmit"
           type="submit"
           value="Submit"
-          className="btn bg-transparent hover:bg-transparent hover:border-white border-white rounded-full"
+          className="btn bg-green-900 border-0 hover:bg-green-700 rounded-full"
         />
       </form>
-      <div className="mt-2">Why not try the UK?</div>
+      <div className="mt-2 text-green-900">Why not try the UK?</div>
       <form onSubmit={handleRandomPlace}>
         <input
           data-cy="randomPlace"
           type="submit"
           value="Get a suggestion"
-          className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full mt-2"
+          className="btn bg-green-900 border-0 hover:bg-green-700 rounded-full mt-2"
         />
       </form>
+    </div>
     </div>
   );
 };
