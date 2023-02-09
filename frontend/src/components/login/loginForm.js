@@ -36,7 +36,9 @@ const LoginForm = ({ navigate }) => {
   const invalidDetails = () => {
     if (notFound) {
       return (
-        <div className="text-red-600 text-base font-semibold">User not found</div>
+        <div className="text-red-600 text-base font-semibold">
+          Invalid User Details
+        </div>
       );
     } else {
       return <></>;
@@ -45,7 +47,7 @@ const LoginForm = ({ navigate }) => {
 
   return (
     <>
-      <NavBar links={[]}/>
+      <NavBar links={[]} />
       <div id="main-container" className="pt-16 ">
         <div className="flex justify-center">
           <div className="flex flex-col items-center mt-20 w-96 bg-white bg-opacity-20 py-4 rounded-xl">
