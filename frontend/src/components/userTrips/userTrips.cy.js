@@ -2,6 +2,10 @@ import UserTrips from "./userTrips";
 const navigate = () => {};
 
 describe("UserTrips", () => {
+  beforeEach(() => {
+    window.localStorage.setItem("token", "fakeToken");
+  });
+
   let trip = {
     to: "Berlin, Germany",
     from: "London, ENG, United Kingdom",
@@ -29,7 +33,6 @@ describe("UserTrips", () => {
   };
 
   it("sends POST request on user save submition", () => {
-    window.localStorage.setItem("token", "fakeToken");
     cy.intercept("GET", "/trips", {
       trips: [trip, tripTwo],
     }).as("getTrips");
@@ -44,7 +47,6 @@ describe("UserTrips", () => {
   });
 
   it("lists trips for the user on the page", () => {
-    window.localStorage.setItem("token", "fakeToken");
     cy.intercept("GET", "/trips", {
       trips: [trip, tripTwo],
     }).as("getTrips");
@@ -65,6 +67,37 @@ describe("UserTrips", () => {
         .and("contain.text", "30.5")
         .and("contain.text", "29.5")
         .and("contain.text", "28.5");
+    });
+  });
+
+  it("lists trips with N/A if a route is not available", () => {
+    let tripThree = {
+      to: "New York",
+      from: "London, ENG, United Kingdom",
+      user_id: "63e0ddcb06e90257776466a2",
+      passengers: "2",
+      emissions: {
+        plane: { total: 31.547396, perPassenger: 15.773698 },
+        petrolCar: { total: null, perPassenger: null },
+        electricCar: { total: null, perPassenger: null },
+        train: { total: null, perPassenger: null },
+      },
+    };
+
+    cy.intercept("GET", "/trips", {
+      trips: [tripThree],
+    }).as("getTrips");
+
+    cy.mount(<UserTrips navigate={navigate} />);
+
+    cy.wait("@getTrips").then(() => {
+      cy.get('[data-cy="trips"]')
+        .should(
+          "contain.text",
+          "From:London, ENG, United KingdomTo:New YorkPassengers:2"
+        )
+        .and("contain.text", "31.5")
+        .and("contain.text", "N/A");
     });
   });
 });

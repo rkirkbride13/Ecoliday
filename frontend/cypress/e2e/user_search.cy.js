@@ -32,11 +32,11 @@ describe("User emission search", () => {
     cy.wait("@getEmissions").then(() => {
       cy.get('[data-cy="total-emissions-plane"]').should(
         "contain.text",
-        "31.5 kg"
+        "31.5"
       );
       cy.get('[data-cy="person-emissions-plane"]').should(
         "contain.text",
-        "Per Person: 15.8 kg"
+        "15.8"
       );
     });
   });
@@ -51,19 +51,19 @@ describe("User emission search", () => {
     cy.wait("@getEmissions").then(() => {
       cy.get('[data-cy="total-emissions-plane"]').should(
         "contain.text",
-        "31.5 kg"
+        "31.5"
       );
       cy.get('[data-cy="person-emissions-plane"]').should(
         "contain.text",
-        "Per Person: 15.8 kg"
+        "15.8"
       );
       cy.get('[data-cy="total-emissions-petrol car"]').should(
         "contain.text",
-        "30.5 kg"
+        "30.5"
       );
       cy.get('[data-cy="person-emissions-petrol car"]').should(
         "contain.text",
-        "Per Person: 14.8 kg"
+        "14.8"
       );
     });
   });
@@ -78,27 +78,27 @@ describe("User emission search", () => {
     cy.wait("@getEmissions").then(() => {
       cy.get('[data-cy="total-emissions-plane"]').should(
         "contain.text",
-        "31.5 kg"
+        "31.5"
       );
       cy.get('[data-cy="person-emissions-plane"]').should(
         "contain.text",
-        "Per Person: 15.8 kg"
+        "15.8"
       );
       cy.get('[data-cy="total-emissions-petrol car"]').should(
         "contain.text",
-        "30.5 kg"
+        "30.5"
       );
       cy.get('[data-cy="person-emissions-petrol car"]').should(
         "contain.text",
-        "Per Person: 14.8 kg"
+        "14.8"
       );
       cy.get('[data-cy="total-emissions-electric car"]').should(
         "contain.text",
-        "29.5 kg"
+        "29.5"
       );
       cy.get('[data-cy="person-emissions-electric car"]').should(
         "contain.text",
-        "Per Person: 13.8 kg"
+        "13.8"
       );
     });
   });
@@ -113,35 +113,35 @@ describe("User emission search", () => {
     cy.wait("@getEmissions").then(() => {
       cy.get('[data-cy="total-emissions-plane"]').should(
         "contain.text",
-        "31.5 kg"
+        "31.5"
       );
       cy.get('[data-cy="person-emissions-plane"]').should(
         "contain.text",
-        "Per Person: 15.8 kg"
+        "15.8"
       );
       cy.get('[data-cy="total-emissions-petrol car"]').should(
         "contain.text",
-        "30.5 kg"
+        "30.5"
       );
       cy.get('[data-cy="person-emissions-petrol car"]').should(
         "contain.text",
-        "Per Person: 14.8 kg"
+        "14.8"
       );
       cy.get('[data-cy="total-emissions-electric car"]').should(
         "contain.text",
-        "29.5 kg"
+        "29.5"
       );
       cy.get('[data-cy="person-emissions-electric car"]').should(
         "contain.text",
-        "Per Person: 13.8 kg"
+        "13.8"
       );
       cy.get('[data-cy="total-emissions-train"]').should(
         "contain.text",
-        "28.5 kg"
+        "28.5"
       );
       cy.get('[data-cy="person-emissions-train"]').should(
         "contain.text",
-        "Per Person: 12.8 kg"
+        "12.8"
       );
     });
   });
@@ -174,6 +174,14 @@ describe("User emission search", () => {
         "Eating 3 steaks"
       );
     });
+  });
+
+  it("user can click suggestion button and it populates the to field with random UK location", () => {
+    cy.visit("/");
+    cy.get('[data-cy="to"]').type("New York");
+    cy.get('[data-cy="randomPlace"]').click();
+    cy.get('[data-cy="to"]').should("not.contain.text", "Berlin");
+    cy.get('[data-cy="to"]').invoke("val").should("not.be.empty");
   });
 
   describe("from London to New York", () => {
@@ -210,7 +218,7 @@ describe("User emission search", () => {
       cy.wait("@getEmissions").then(() => {
         cy.get('[data-cy="emissions-dropdown-plane"]').should(
           "contain.text",
-          "31.5 kg"
+          "31.5"
         );
 
         cy.get('[data-cy="emissions-dropdown-plane"]').should(
@@ -224,7 +232,7 @@ describe("User emission search", () => {
       cy.wait("@getEmissions").then(() => {
         cy.get('[data-cy="emissions-dropdown-petrol car"]').should(
           "contain.text",
-          "Route not found"
+          "N/A"
         );
 
         cy.get('[data-cy="emissions-dropdown-petrol car"]').should(
@@ -238,7 +246,7 @@ describe("User emission search", () => {
       cy.wait("@getEmissions").then(() => {
         cy.get('[data-cy="emissions-dropdown-electric car"]').should(
           "contain.text",
-          "Route not found"
+          "N/A"
         );
 
         cy.get('[data-cy="emissions-dropdown-electric car"]').should(
@@ -252,7 +260,7 @@ describe("User emission search", () => {
       cy.wait("@getEmissions").then(() => {
         cy.get('[data-cy="emissions-dropdown-train"]').should(
           "contain.text",
-          "Route not found"
+          "N/A"
         );
 
         cy.get('[data-cy="emissions-dropdown-train"]').should(
