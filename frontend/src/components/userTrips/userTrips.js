@@ -31,7 +31,7 @@ const UserTrips = ({ navigate }) => {
       <nav className="sticky z-50">
         <NavBar logout={logout} />
       </nav>
-      <main id="main-container" className="h-fit bg-cover bg-fixed">
+      <main id="main-container">
         <div className="h-28"></div>
         <div
           data-cy="trips"
