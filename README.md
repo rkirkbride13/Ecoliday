@@ -173,3 +173,25 @@ To calculate the emissions based on user selection, the back-end fetches informa
 - [Geoapify - Geocoding API](https://www.geoapify.com/geocoding-api) finds the longitude and latitude information for selected destinations to enable distance calculation
 - [Google Maps - Distance Matrix Api](https://developers.google.com/maps/documentation/distance-matrix) finds road and train routes and calculates distance
 - [Climatiq Api](https://www.climatiq.io) calculates CO2e emissions for the Plane, Petrol Car, Electric Car and Train based on distance and number of passengers
+
+# Screens
+
+## Homepage
+
+![Homepage](./images/Search.png)
+
+## Emission Results with context
+
+![Emissions](./images/Emissions.png)
+
+## Login
+
+![Login](./images/Login.png)
+
+## Signup
+
+![Signup](./images/Signup.png)
+
+## Trips
+
+![Trips](./images/Trips.png)
