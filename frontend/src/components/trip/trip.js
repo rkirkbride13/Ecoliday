@@ -71,7 +71,7 @@ const Trip = ({ trip, token, setTrips }) => {
 
   return (
     <>
-      <div className="bg-white bg-opacity-20 p-4 rounded-lg">
+      <div className="bg-white bg-opacity-20 p-4 rounded-lg last:mb-10">
         <div data-cy="trip" className="bg-white bg-opacity-75 p-7 rounded-lg">
           <span className="text-green-900 font-bold mr-2 mix-blend-darken">
             From:
@@ -100,7 +100,7 @@ const Trip = ({ trip, token, setTrips }) => {
                     <th class="p-5 text-left">CO2e(kg)</th>
                     <th>
                       <span className="material-symbols-outlined ml-6">
-                        flight_land
+                        flight_takeoff
                       </span>
                     </th>
                     <th>
