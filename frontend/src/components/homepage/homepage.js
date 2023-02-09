@@ -15,22 +15,6 @@ const HomePage = ({ navigate }) => {
 
   const hasToken = Boolean(window.localStorage.getItem("token"));
 
-  // const renderFoundLocation = () => {
-  //   if (renderEmissions)
-  //     return (
-  //       <div className="mb-10 text-center text-2xl">
-  //         <div className="">
-  //           <span className="text-green-500 font-bold text-xl mr-2">From:</span>
-  //           <span className="text-gray-600">{fromDisplay}</span>
-  //         </div>
-  //         <div className="">
-  //           <span className="text-green-500 font-bold text-xl mr-2">To:</span>
-  //           <span className="text-gray-600">{toDisplay}</span>
-  //         </div>
-  //       </div>
-  //     );
-  // };
-
   const navbarLinks = () => {
     if (!hasToken) {
       return [{ href: "/login", text: "Login", handleClick: () => {} }];
@@ -62,7 +46,6 @@ const HomePage = ({ navigate }) => {
         </nav>
         <div className="h-20"></div>
 
-        {/* {renderFoundLocation()} */}
         <div className="flex justify-center">
           <TravelForm
             setEmissions={setEmissions}
@@ -74,7 +57,7 @@ const HomePage = ({ navigate }) => {
             setSaveToggle={setSaveToggle}
             setLoading={setLoading}
           />
-          
+
           <EmissionResults
             emissions={emissions}
             renderEmissions={renderEmissions}

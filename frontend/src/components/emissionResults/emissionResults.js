@@ -232,17 +232,6 @@ const EmissionResults = ({
       <>
         <div id="emissionResults" className="mt-20">
           <div>{emissionStats()}</div>
-          {/* {saveButtonView && (
-            <form onSubmit={handleSave}>
-              <input
-                data-cy="saveButton"
-                type="submit"
-                disabled={saveToggle}
-                value={saveToggle ? "SAVED" : "SAVE"}
-                className="btn bg-green-500 border-0 hover:bg-green-700 rounded-full"
-              />
-            </form>
-          )} */}
         </div>
       </>
     );

@@ -77,7 +77,6 @@ const TravelForm = ({
             required
             value={fromForm}
             onChange={handleChange(setFromForm)}
-            // pattern="\d*"
             className="w-full pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
           />
           <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-600">
@@ -95,7 +94,6 @@ const TravelForm = ({
             required
             value={toForm}
             onChange={handleChange(setToForm)}
-            // pattern="\d*"
             className="w-full pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 border-2 rounded peer"
           />
           <p className="invisible peer-focus:peer-invalid:visible text-xs pl-1 pt-1 text-red-600">
@@ -113,7 +111,6 @@ const TravelForm = ({
             min="1"
             value={passengers}
             onChange={handleChange(setPassengers)}
-            // pattern="\d*"
             className="w-full pl-1 focus:outline-none focus:border-sky-500 focus:invalid:border-red-600 invalid:border-red-600 border-2 rounded peer"
           />
           <p className="invisible peer-invalid:visible text-xs pl-1 pt-1 text-red-600">
