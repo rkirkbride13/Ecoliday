@@ -41,7 +41,7 @@ const UserTrips = ({ navigate }) => {
         <div className="h-28"></div>
         <div
           data-cy="trips"
-          className="h-56 grid grid-cols-1 gap-8 content-start w-1/2 mx-auto z-30"
+          className="grid grid-cols-1 gap-8 content-start w-1/2 mx-auto z-30"
         >
           {trips
             .map((trip) => (

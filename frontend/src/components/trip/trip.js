@@ -71,7 +71,7 @@ const Trip = ({ trip, token, setTrips }) => {
 
   return (
     <>
-      <div className="bg-white bg-opacity-20 p-4 rounded-lg">
+      <div className="bg-white bg-opacity-20 p-4 rounded-lg last:mb-10">
         <div data-cy="trip" className="bg-white bg-opacity-75 p-7 rounded-lg">
           <span className="text-green-900 font-bold mr-2 mix-blend-darken">
             From:
