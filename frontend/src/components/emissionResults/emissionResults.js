@@ -14,14 +14,11 @@ const EmissionResults = ({
 
   const saveButtonView = token !== null;
 
-  const CO2eSteak = 14;
+  const CO2eBurger = 2.5;
   const CO2eTshirt = 7;
   const CO2eTree = 25;
-  
-  
 
   const emissionStats = () => {
-
     const resultsArray = [
       {
         type: "plane",
@@ -60,10 +57,10 @@ const EmissionResults = ({
         emissions: emissions.train,
       },
     ];
-    
+
     return (
       <>
-      <div className="w-40"></div>
+        <div className="w-40"></div>
         <div className="bg-white bg-opacity-20 p-4 rounded-lg ml-10">
           <div className="bg-white bg-opacity-75 p-7 rounded-lg">
             <span className="text-green-900 font-bold mr-2 mix-blend-darken">
@@ -158,29 +155,34 @@ const EmissionResults = ({
       return (
         <ul
           tabIndex={0}
-          className="dropdown-content menu p-2 shadow-2xl shadow-green-700 bg-opacity-70 bg-green-500 rounded-box w-52 text-base text-white text-left z-50"
+          className="dropdown-content menu p-2 shadow-2xl ml-10 bg-opacity-70 bg-white rounded-box w-56 text-base text-gray-800 text-left"
         >
           Equivalent to...
           <li>
-            &#x1F42E;
-            {`  Eating ${Math.ceil(result.emissions.total / CO2eSteak)} ${
-              Math.ceil(result.emissions.total / CO2eSteak) === 1 ? "steak" : "steaks"
+            <p>
+            <span class="material-symbols-outlined">lunch_dining </span>
+            {`Eating ${Math.ceil(result.emissions.total / CO2eBurger)} ${
+              Math.ceil(result.emissions.total / CO2eBurger) === 1
+                ? "burger"
+                : "burgers"
             }`}
-          </li>
-          <li>
-            &#x1F455;
-            {`  Buying ${Math.ceil(result.emissions.total / CO2eTshirt)} ${
+          </p></li>
+          <li><p>
+            <span class="material-symbols-outlined">laundry</span>
+            {`Buying ${Math.ceil(result.emissions.total / CO2eTshirt)} ${
               Math.ceil(result.emissions.total / CO2eTshirt) === 1
                 ? "T-shirt"
                 : "T-shirts"
             }`}
-          </li>
-          <li>
-            &#x1F333;
-            {`  Saving ${Math.ceil(result.emissions.total / CO2eTree)} ${
-              Math.ceil(result.emissions.total / CO2eTree) === 1 ? "tree" : "trees"
+          </p></li>
+          <li><p>
+            <span class="material-symbols-outlined">park</span>
+            {`Saving ${Math.ceil(result.emissions.total / CO2eTree)} ${
+              Math.ceil(result.emissions.total / CO2eTree) === 1
+                ? "tree"
+                : "trees"
             } a year`}
-          </li>
+          </p></li>
         </ul>
       );
     }
@@ -215,7 +217,7 @@ const EmissionResults = ({
   if (loading) {
     return (
       <>
-        <div className="flex flex-col w-96 h-96 bg-white justify-center items-center">
+        <div className="flex flex-col w-96 h-96 bg-white bg-opacity-75 justify-center items-center rounded-xl mt-24 ml-10">
           <div className="text-3xl">Loading...</div>
           <div>
             <span className="material-symbols-outlined animate-spin text-9xl">

@@ -100,7 +100,7 @@ const Trip = ({ trip, token, setTrips }) => {
                     <th class="p-5 text-left">CO2e(kg)</th>
                     <th>
                       <span className="material-symbols-outlined ml-6">
-                        flight_land
+                        flight_takeoff
                       </span>
                     </th>
                     <th>

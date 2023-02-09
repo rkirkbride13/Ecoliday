@@ -156,22 +156,22 @@ describe("User emission search", () => {
     cy.wait("@getEmissions").then(() => {
       cy.get('[data-cy="emissions-dropdown-plane"]').should(
         "contain.text",
-        "Eating 3 steaks"
+        "Eating 13 steaks"
       );
 
       cy.get('[data-cy="emissions-dropdown-petrol car"]').should(
         "contain.text",
-        "Eating 3 steaks"
+        "Eating 13 steaks"
       );
 
       cy.get('[data-cy="emissions-dropdown-electric car"]').should(
         "contain.text",
-        "Eating 3 steaks"
+        "Eating 13 steaks"
       );
 
       cy.get('[data-cy="emissions-dropdown-train"]').should(
         "contain.text",
-        "Eating 3 steaks"
+        "Eating 13 steaks"
       );
     });
   });
