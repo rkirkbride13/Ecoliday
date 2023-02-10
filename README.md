@@ -4,7 +4,7 @@
 
 Ecoliday has been developed to enable people to make a more environmentally informed decision when planning a holiday.
 
-It provides users with estimated CO2e emissions for different destinations and vehicle types as well suggesting local alternatives.
+It provides users with estimated CO2e emissions for different destinations and vehicle types as well as suggesting local alternatives.
 
 ## Project Goal
 
@@ -41,7 +41,7 @@ Every member of the team:
 - Worked on both the front-end and back-end
 - Paired with each member of the team
 - Made commits
-- Can explain why any part of the application exits and how it works
+- Can explain why any part of the application exists and how it works
 - Felt like they made a good contribution to the overall success of the project
 - Learned a lot and had fun!
 
