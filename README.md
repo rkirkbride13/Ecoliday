@@ -58,6 +58,12 @@ Every member of the team:
 - Unit and E2E tested all features
 - Achieved over 90% coverage
 
+### Future features
+
+- Using React Native to have a mobile version
+- Incorporate journey times
+- Make the "get a suggestion" button be sensitive to the "From" location (e.g. provide a French location if travelling from France)
+
 # Set-up and Testing
 
 ## Installation
