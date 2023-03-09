@@ -6,6 +6,8 @@ Ecoliday has been developed to enable people to make a more environmentally info
 
 It provides users with estimated CO2e emissions for different destinations and vehicle types as well as suggesting local alternatives.
 
+Why not [try it](https://ecoliday-cxyz.onrender.com/) for yourself!
+
 ## Project Goal
 
 In the last two weeks of the Makers Software Engineering Bootcamp, we were tasked to work in a team on a final project of our choosing with the goal to be able to answer "yes" to the week's primary question:
